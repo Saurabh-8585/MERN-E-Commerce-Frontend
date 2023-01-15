@@ -13,10 +13,10 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { Badge, Tooltip } from '@mui/material';
 import { FaShoppingCart } from 'react-icons/fa'
-import { AiOutlineMenu } from 'react-icons/ai'
+import { AiFillHome, AiOutlineMenu } from 'react-icons/ai'
 import { FiChevronLeft, FiChevronRight, FiLogOut } from 'react-icons/fi'
 import './sidebar.css'
 import { ContextFunction } from '../../Context/Context';
@@ -101,7 +101,7 @@ const SideBar = () => {
         setCart(response.data);
     }
     useEffect(() => {
-            getCart()
+        getCart()
     }, [])
     const theme = useTheme();
     const [open, setOpen] = useState(false);
@@ -113,6 +113,7 @@ const SideBar = () => {
     const handleDrawerClose = () => {
         setOpen(false);
     };
+
 
     return (
         <>
@@ -147,8 +148,22 @@ const SideBar = () => {
                     <Divider />
                     <Divider />
                     <List>
-                        <Tooltip title="logout">
-                            <Link to='/cart'>
+                        <NavLink to='/' >
+                            <Tooltip title="Home">
+                                <ListItem disablePadding sx={{ display: 'block' }}>
+                                    <ListItemButton
+                                        sx={{ minHeight: 48, justifyContent: open ? 'initial' : 'center', px: 2.5 }}>
+                                        <ListItemIcon
+                                            sx={{ minWidth: 0, mr: open ? 3 : 'auto', justifyContent: 'space-between', }}>
+                                            <AiFillHome style={{ marginLeft: open ? 0 : 40 }} className='nav-icon' />
+                                            <ListItemText sx={{ opacity: open ? 1 : 0, marginLeft: open ? 3 : 0 }}>Home</ListItemText>
+                                        </ListItemIcon>
+                                    </ListItemButton>
+                                </ListItem>
+                            </Tooltip>
+                        </NavLink>
+                        <NavLink to='/cart'>
+                            <Tooltip title="Cart">
                                 <ListItem disablePadding sx={{ display: 'block' }}>
                                     <ListItemButton
                                         sx={{ minHeight: 48, justifyContent: open ? 'initial' : 'center', px: 2.5 }}>
@@ -162,10 +177,10 @@ const SideBar = () => {
                                         </ListItemIcon>
                                     </ListItemButton>
                                 </ListItem>
-                            </Link>
-                        </Tooltip>
-                        <Tooltip title="logout">
-                            <Link to='/login'>
+                            </Tooltip>
+                        </NavLink>
+                        <NavLink to='/login'>
+                            <Tooltip title="Logout">
                                 <ListItem disablePadding sx={{ display: 'block' }}>
                                     <ListItemButton
                                         sx={{ minHeight: 48, justifyContent: open ? 'initial' : 'center', px: 2.5 }}>
@@ -176,8 +191,9 @@ const SideBar = () => {
                                         </ListItemIcon>
                                     </ListItemButton>
                                 </ListItem>
-                            </Link>
-                        </Tooltip>
+                            </Tooltip>
+                        </NavLink>
+
                     </List>
                 </Drawer>
                 <DrawerHeader />

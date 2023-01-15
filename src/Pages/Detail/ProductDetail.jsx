@@ -10,7 +10,6 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const ProductDetail = () => {
     const { cart, setCart } = useContext(ContextFunction)
-    console.log(cart);
     const { id } = useParams()
     const [product, setProduct] = useState([])
     const getProduct = async () => {
