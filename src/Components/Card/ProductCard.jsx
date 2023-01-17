@@ -16,7 +16,7 @@ export default function ProductCard({ prod }) {
 
 
     return (
-        <Card sx={{ width: 300, margin: "30px 10px 0 10px" }}>
+        <Card sx={{ width: 300, margin: "30px 10px 0px 10px" }}>
             <CardActionArea>
                 <Box className='img-box'  >
                     <CardMedia

@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect } from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
@@ -15,10 +15,10 @@ import axios from 'axios';
 
 
 export default function CartItem({ prod }) {
-    const { cart, setCart, addToCart } = useContext(ContextFunction)
-    const [isReadMode, SetisReadMode] = useState(true)
+    const { setCart } = useContext(ContextFunction)
     useEffect(() => {
         getCart()
+        window.scroll(0, 0)
     }, [])
     const getCart = async () => {
         const response = await axios.get(process.env.REACT_APP_GET_CART, {
@@ -28,16 +28,14 @@ export default function CartItem({ prod }) {
         })
         setCart(response.data)
     }
+    
     const removeFromCart = async (product) => {
         const response = await axios.delete(`${process.env.REACT_APP_DELETE_CART}/${product.productId}`, {
             headers: {
                 'Authorization': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjNhMDBjNGM0NTRiNDM5MTJjOTllY2JlIn0sImlhdCI6MTY3MTQzMzMyMX0._y5gcnwfNGlv9Uc2Hfqm7c_uwjaJiWn2XG0sSV-mGXg'
             }
         })
-       
-        // setCart(cart.filter(c => c.id !== product.id))
         toast.error("Removed From Cart", { autoClose: 500, })
-        console.log("removed cart", cart);
         getCart()
     }
 

@@ -19,7 +19,7 @@ const ProductDetail = () => {
     useEffect(() => {
         getProduct()
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const addToCart = async (product) => {
@@ -42,7 +42,7 @@ const ProductDetail = () => {
                 <img alt={product.name} src={product.image} className='img' />
             </Box>
             <Box>
-                 <Button variant='contained' startIcon={<MdAddShoppingCart />} onClick={() => addToCart(product)}>Buy</Button>
+                <Button variant='contained' startIcon={<MdAddShoppingCart />} onClick={() => addToCart(product)}>Buy</Button>
             </Box>
             <ToastContainer />
         </Container>
