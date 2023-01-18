@@ -6,20 +6,23 @@ import axios from 'axios';
 import { ContextFunction } from '../../Context/Context';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Loading from '../../Components/loading/Loading';
 
 
 const ProductDetail = () => {
     const { cart, setCart } = useContext(ContextFunction)
+    const [isLoading, setIsLoading] = useState(false)
+
     const { id } = useParams()
     const [product, setProduct] = useState([])
     const getProduct = async () => {
+        setIsLoading(true)
         const response = await axios.get(`${process.env.REACT_APP_FETCH_PRODUCT}/${id}`)
         setProduct(response.data)
+        setIsLoading(false)
     }
     useEffect(() => {
         getProduct()
-
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const addToCart = async (product) => {
@@ -31,21 +34,28 @@ const ProductDetail = () => {
             }
         })
         setCart(response.data)
-        console.log("added cart", cart);
         toast.success("Added To Cart", { autoClose: 500, })
         setCart([...cart, product])
     }
+    const loading = isLoading ?
+        (
+            <Container maxWidth='xl' style={{ marginTop: 10, display: "flex", flexWrap: "wrap", paddingLeft: 10, paddingBottom: 20 }}><Loading /></Container >
+        )
+        : ""
     return (
-        <Container maxWidth='xl' sx={{ background: "", marginTop: 20 }}>
-            <Typography variant='body1'>{product.name}</Typography>
-            <Box className='img-box'  >
-                <img alt={product.name} src={product.image} className='img' />
-            </Box>
-            <Box>
-                <Button variant='contained' startIcon={<MdAddShoppingCart />} onClick={() => addToCart(product)}>Buy</Button>
-            </Box>
-            <ToastContainer />
-        </Container>
+        <>
+            {loading}
+            <Container  maxWidth='xl' sx={{ background: "", marginTop: 20 }}>
+                <Typography variant='body1'>{product.name}</Typography>
+                <Box className='img-box'  >
+                    <img alt={product.name} src={product.image} className='img' />
+                </Box>
+                <Box>
+                    <Button variant='contained' startIcon={<MdAddShoppingCart />} onClick={() => addToCart(product)}>Buy</Button>
+                </Box>
+                <ToastContainer />
+            </Container >
+        </>
     )
 }
 

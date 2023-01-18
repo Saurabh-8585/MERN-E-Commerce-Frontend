@@ -9,7 +9,7 @@ import Book from '../../Assets/Banner/Book.jpg'
 import Electronics from '../../Assets/Banner/Mobile-Laptop-Banner.jpg'
 import Shoes from '../../Assets/Banner/Nike-Shoe.jpg'
 import Cloths from '../../Assets/Banner/Cloths.jpg'
-import Jwelery from '../../Assets/Banner/jwelery.jpg'
+import Jewelry from '../../Assets/Banner/jwelery.jpg'
 
 const HomePage = () => {
     const [productData, setProductData] = useState([])
@@ -46,9 +46,9 @@ const HomePage = () => {
                             </Link>
                             <Link to="product/type/jewelry">
                                 <div className="carousel-item">
-                                    <img src={Jwelery} className="d-block w-100" alt="Jwelery" />
+                                    <img src={Jewelry} className="d-block w-100" alt="Jewelry" />
                                     <div className="carousel-caption d-none d-md-block">
-                                        <Button className='carousel-btn' variant='contained'>Jwelery</Button>
+                                        <Button className='carousel-btn' variant='contained'>Jewelry</Button>
                                     </div>
                                 </div>
                             </Link>
@@ -88,7 +88,7 @@ const HomePage = () => {
                     </div>
                 </Box>
 
-                <Container maxWidth='xl' style={{ marginTop: 90, display: "flex", flexWrap: "wrap", paddingLeft: 50,paddingBottom:20 }}>
+                <Container maxWidth='xl' style={{ marginTop: 90, display: "flex", flexWrap: "wrap", paddingLeft: 10,paddingBottom:20 }}>
                     {productData.map(prod => (
                         <Link to={`/Detail/${prod._id}`} key={prod._id}>
                             <ProductCard prod={prod} />

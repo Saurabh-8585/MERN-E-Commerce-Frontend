@@ -1,9 +1,9 @@
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-import { Button, CardActionArea, CardActions } from '@mui/material';
+import { Button, CardActionArea, CardActions, Container } from '@mui/material';
 import Rating from '../../Components/Rating';
 import { Box } from '@mui/system';
 import { MdRemoveShoppingCart } from 'react-icons/md'
@@ -12,9 +12,11 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { ContextFunction } from '../../Context/Context';
 import axios from 'axios';
+import Loading from '../../Components/loading/Loading';
 
 
 export default function CartItem({ prod }) {
+
     const { setCart } = useContext(ContextFunction)
     useEffect(() => {
         getCart()
@@ -28,7 +30,7 @@ export default function CartItem({ prod }) {
         })
         setCart(response.data)
     }
-    
+
     const removeFromCart = async (product) => {
         const response = await axios.delete(`${process.env.REACT_APP_DELETE_CART}/${product.productId}`, {
             headers: {
@@ -38,7 +40,7 @@ export default function CartItem({ prod }) {
         toast.error("Removed From Cart", { autoClose: 500, })
         getCart()
     }
-
+ 
     return (
         <Card sx={{ width: 300, margin: "30px 10px 0 10px" }}>
             <Link to={`/Detail/${prod.productId}`} key={prod.productId}>
@@ -65,9 +67,6 @@ export default function CartItem({ prod }) {
                 </CardActionArea>
             </Link>
             <CardActions style={{ display: "flex", justifyContent: "space-around" }}>
-                {/* <Typography variant="h6" color="primary">
-                   
-                </Typography> */}
                 <Button variant='contained' color='error' onClick={() => removeFromCart(prod)} endIcon={<MdRemoveShoppingCart />} >Remove</Button>
                 <Typography variant="body2" color="text.secondary">
                     <Rating rating={prod.rating} />
