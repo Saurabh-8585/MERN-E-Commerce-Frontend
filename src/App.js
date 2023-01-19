@@ -1,13 +1,13 @@
 import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import HomePage from './Pages/Home/HomePage';
-import Login from './Auth/Login';
-import Register from './Auth/Register';
+import Login from './Auth/Login/Login';
+import Register from './Auth/Register/Register';
 import SideBar from './Components/Sidebar/SideBar';
 import { Box } from '@mui/system';
 import Cart from './Pages/Cart/Cart';
 import ProductDetail from './Pages/Detail/ProductDetail';
-import SingleCategory from './SIngleCategory/SingleCategory';
+import SingleCategory from './SingleCategory/SingleCategory';
 function App() {
   return (
     <Router>

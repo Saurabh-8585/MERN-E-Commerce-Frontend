@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { Box, Button, Card, CardActionArea, CardActions, CardContent, CardMedia, Typography } from '@mui/material'
+import { Box, Button, Card, CardActionArea, CardActions, CardContent, CardMedia, Tooltip, Typography } from '@mui/material'
 import Rating from '../../Components/Rating';
 import axios from 'axios'
 import { Link } from 'react-router-dom'
@@ -10,6 +10,8 @@ import { AiFillDelete } from 'react-icons/ai'
 const Cart = () => {
     const { cart, setCart } = useContext(ContextFunction)
     const [total, setTotal] = useState()
+    const [isReadMode, SetisReadMode] = useState(true)
+
     useEffect(() => {
         setTotal(cart.reduce((acc, curr) => acc + (curr.price), 0))
     }, [cart])
@@ -18,10 +20,12 @@ const Cart = () => {
         getCart()
         window.scroll(0, 0)
     }, [])
+    let authToken = localStorage.getItem('Authorization')
+
     const getCart = async () => {
         const response = await axios.get(process.env.REACT_APP_GET_CART, {
             headers: {
-                'Authorization': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjNhMDBjNGM0NTRiNDM5MTJjOTllY2JlIn0sImlhdCI6MTY3MTQzMzMyMX0._y5gcnwfNGlv9Uc2Hfqm7c_uwjaJiWn2XG0sSV-mGXg'
+                'Authorization': authToken
             }
         })
         setCart(response.data)
@@ -30,7 +34,7 @@ const Cart = () => {
     const removeFromCart = async (product) => {
         const response = await axios.delete(`${process.env.REACT_APP_DELETE_CART}/${product.productId}`, {
             headers: {
-                'Authorization': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjNhMDBjNGM0NTRiNDM5MTJjOTllY2JlIn0sImlhdCI6MTY3MTQzMzMyMX0._y5gcnwfNGlv9Uc2Hfqm7c_uwjaJiWn2XG0sSV-mGXg'
+                'Authorization': authToken
             }
         })
         toast.error("Removed From Cart", { autoClose: 500, })
@@ -39,6 +43,7 @@ const Cart = () => {
     console.log("cart page  ", cart);
     return (
         <div style={{ marginTop: 90, display: "flex", flexWrap: "wrap" }}>
+            <ToastContainer />
             {cart.map(prod => <Card sx={{ width: 300, margin: "30px 10px 0 10px" }}>
 
                 <Link to={`/Detail/${prod.productId}`} key={prod.productId}>
@@ -57,7 +62,14 @@ const Cart = () => {
                         </Box>
                         <CardContent>
                             <Typography gutterBottom variant="h6" sx={{ textAlign: "center" }}>
-                                {prod.name}
+                                {isReadMode ? prod.name.slice(0, 20) : prod.name}
+                                {
+                                    prod.name.length > 15 &&
+                                    <span
+                                        onClick={() => SetisReadMode(!isReadMode)}>
+                                        {isReadMode ? "..." : ""}
+                                    </span>
+                                }
                             </Typography>
                             <Typography gutterBottom variant="h6" sx={{ textAlign: "center" }}>
                                 ₹{prod.price}
@@ -66,12 +78,13 @@ const Cart = () => {
                     </CardActionArea>
                 </Link>
                 <CardActions style={{ display: "flex", justifyContent: "space-around" }}>
-                    <Button variant='contained' color='error' onClick={() => removeFromCart(prod)} endIcon={<AiFillDelete />} >Remove</Button>
+                    <Tooltip title='Remove From Cart'>
+                        <Button variant='contained' color='error' onClick={() => removeFromCart(prod)} endIcon={<AiFillDelete />} >Remove</Button>
+                    </Tooltip>
                     <Typography variant="body2" color="text.secondary">
                         <Rating rating={prod.rating} />
                     </Typography>
                 </CardActions>
-                <ToastContainer />
             </Card >)}
         </div>
     )

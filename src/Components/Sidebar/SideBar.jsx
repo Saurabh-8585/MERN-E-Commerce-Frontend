@@ -170,7 +170,7 @@ const SideBar = () => {
                                         <ListItemIcon
                                             sx={{ minWidth: 0, mr: open ? 3 : 'auto', justifyContent: 'space-between', }}>
                                             <Badge badgeContent={cart.length} color="primary" sx={{ padding: 0.3 }}>
-                                                <FaShoppingCart title='Go to Cart' style={{ marginLeft: open ? -5 : 24 }} className='nav-icon' />
+                                                <FaShoppingCart  style={{ marginLeft: open ? -5 : 24 }} className='nav-icon' />
                                             </Badge>
 
                                             <ListItemText sx={{ opacity: open ? 1 : 0, marginLeft: open ? 2.8 : 0 }}>Cart</ListItemText>
