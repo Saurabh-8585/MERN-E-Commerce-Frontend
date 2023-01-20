@@ -9,12 +9,14 @@ import Cart from './Pages/Cart/Cart';
 import ProductDetail from './Pages/Detail/ProductDetail';
 import SingleCategory from './SingleCategory/SingleCategory';
 function App() {
+  let authToken = localStorage.getItem('Authorization')
+
   return (
     <Router>
       <Box sx={{ display: 'flex' }}>
-        {<SideBar />} 
+        {<SideBar />}
         <Routes>
-          <Route path='/login' element={<Login />} />
+          <Route path={authToken === null ? "/login" : "/"} element={authToken === null ? < Login /> : <HomePage />} />
           <Route path='/register' element={<Register />} />
           <Route path='/' element={<HomePage />} />
           <Route path='/Detail/:id' element={<ProductDetail />} />

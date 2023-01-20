@@ -1,27 +1,45 @@
-import { useContext, useState } from 'react';
+import { forwardRef, useContext, useState, useEffect } from 'react';
 import { styled, useTheme } from '@mui/material/styles';
-import Box from '@mui/material/Box';
 import MuiDrawer from '@mui/material/Drawer';
 import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
-import List from '@mui/material/List';
-import CssBaseline from '@mui/material/CssBaseline';
-import Typography from '@mui/material/Typography';
-import Divider from '@mui/material/Divider';
-import IconButton from '@mui/material/IconButton';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
 import { Link, NavLink } from 'react-router-dom';
 import { Badge, Tooltip } from '@mui/material';
 import { FaShoppingCart } from 'react-icons/fa'
-import { AiFillHome, AiOutlineMenu } from 'react-icons/ai'
+import { AiFillHome, AiOutlineMenu, AiFillCloseCircle } from 'react-icons/ai'
 import { FiChevronLeft, FiChevronRight, FiLogOut } from 'react-icons/fi'
 import './sidebar.css'
-import { ContextFunction } from '../../Context/Context';
-import { useEffect } from 'react';
 import axios from 'axios';
+
+import {
+    Box,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogContentText,
+    DialogTitle,
+    List,
+    CssBaseline,
+    Typography,
+    Divider,
+    IconButton,
+    ListItem,
+    ListItemButton,
+    ListItemIcon,
+    ListItemText,
+    Button
+
+} from '@mui/material';
+import Slide from '@mui/material/Slide';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { ContextFunction } from '../../Context/Context';
+
+
+
+
+
+
 const drawerWidth = 240;
 
 const openedMixin = (theme) => ({
@@ -89,22 +107,35 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
     }),
 );
 
+const Transition = forwardRef(function Transition(props, ref) {
+    return <Slide direction="up" ref={ref} {...props} />;
+});
+
 const SideBar = () => {
     const { cart, setCart } = useContext(ContextFunction)
+    const [open, setOpen] = useState(false);
+    const [openAlert, setOpenAlert] = useState(false);
+    let authToken = localStorage.getItem('Authorization')
+    let proceed = false
+    let setProceed = authToken !== null ? proceed = true : proceed = false
+
     const getCart = async () => {
-        const response = await axios.get(`${process.env.REACT_APP_GET_CART}`,
-            {
-                headers: {
-                    'Authorization': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjNhMDBjNGM0NTRiNDM5MTJjOTllY2JlIn0sImlhdCI6MTY3MTQzMzMyMX0._y5gcnwfNGlv9Uc2Hfqm7c_uwjaJiWn2XG0sSV-mGXg'
-                }
-            })
-        setCart(response.data);
+        if (setProceed === true) {
+            const response = await axios.get(`${process.env.REACT_APP_GET_CART}`,
+                {
+                    headers: {
+                        'Authorization': authToken
+                    }
+                })
+            setCart(response.data);
+        }
+
     }
+
     useEffect(() => {
         getCart()
     }, [])
     const theme = useTheme();
-    const [open, setOpen] = useState(false);
 
     const handleDrawerOpen = () => {
         setOpen(true);
@@ -114,11 +145,29 @@ const SideBar = () => {
         setOpen(false);
     };
 
+    const handleClickOpen = () => {
+        setOpenAlert(true);
+    };
+
+    const handleClose = () => {
+        setOpenAlert(false);
+    };
+    const handleLogOut = () => {
+        if (authToken === null) {
+            toast.error("User is already logged of", { autoClose: 500, })
+        }
+        else {
+            localStorage.removeItem('Authorization')
+            toast.success("Logout Successfully", { autoClose: 500, })
+        }
+        setOpenAlert(false);
+    }
+
 
     return (
         <>
             <Box sx={{ display: 'flex' }}>
-                {/* <ToastContainer /> */}
+                <ToastContainer />
                 <CssBaseline />
                 <AppBar position="fixed" open={open}>
                     <Toolbar>
@@ -170,7 +219,7 @@ const SideBar = () => {
                                         <ListItemIcon
                                             sx={{ minWidth: 0, mr: open ? 3 : 'auto', justifyContent: 'space-between', }}>
                                             <Badge badgeContent={cart.length} color="primary" sx={{ padding: 0.3 }}>
-                                                <FaShoppingCart  style={{ marginLeft: open ? -5 : 24 }} className='nav-icon' />
+                                                <FaShoppingCart style={{ marginLeft: open ? -5 : 24 }} className='nav-icon' />
                                             </Badge>
 
                                             <ListItemText sx={{ opacity: open ? 1 : 0, marginLeft: open ? 2.8 : 0 }}>Cart</ListItemText>
@@ -179,20 +228,18 @@ const SideBar = () => {
                                 </ListItem>
                             </Tooltip>
                         </NavLink>
-                        <NavLink to='/login'>
-                            <Tooltip title="Logout">
-                                <ListItem disablePadding sx={{ display: 'block' }}>
-                                    <ListItemButton
-                                        sx={{ minHeight: 48, justifyContent: open ? 'initial' : 'center', px: 2.5 }}>
-                                        <ListItemIcon
-                                            sx={{ minWidth: 0, mr: open ? 3 : 'auto', justifyContent: 'space-between', }}>
-                                            <FiLogOut style={{ marginLeft: open ? 0 : 50 }} className='nav-icon' />
-                                            <ListItemText sx={{ opacity: open ? 1 : 0, marginLeft: open ? 3 : 0 }}>Logout</ListItemText>
-                                        </ListItemIcon>
-                                    </ListItemButton>
-                                </ListItem>
-                            </Tooltip>
-                        </NavLink>
+                        <Tooltip title="Logout">
+                            <ListItem disablePadding sx={{ display: 'block' }}>
+                                <ListItemButton onClick={handleClickOpen}
+                                    sx={{ minHeight: 48, justifyContent: open ? 'initial' : 'center', px: 2.5 }}>
+                                    <ListItemIcon
+                                        sx={{ minWidth: 0, mr: open ? 3 : 'auto', justifyContent: 'space-between', }}>
+                                        <FiLogOut style={{ marginLeft: open ? 0 : 50 }} className='nav-icon' />
+                                        <ListItemText sx={{ opacity: open ? 1 : 0, marginLeft: open ? 3 : 0 }}>Logout</ListItemText>
+                                    </ListItemIcon>
+                                </ListItemButton>
+                            </ListItem>
+                        </Tooltip>
 
                     </List>
                 </Drawer>
@@ -200,6 +247,24 @@ const SideBar = () => {
                 <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
                 </Box>
                 {/* <HomePage /> */}
+                <Dialog
+                    open={openAlert}
+                    TransitionComponent={Transition}
+                    keepMounted
+                    onClose={handleClose}
+                    aria-describedby="alert-dialog-slide-description"
+                >
+                    {/* <DialogTitle>{"Use Google's location service?"}</DialogTitle> */}
+                    <DialogContent sx={{ width: { xs: 280, md: 350, xl: 400 } }}>
+                        <DialogContentText id="alert-dialog-slide-description">
+                            Do You Want To Logout?
+                        </DialogContentText>
+                    </DialogContent>
+                    <DialogActions sx={{ display: 'flex', justifyContent: 'space-evenly' }}>
+                        <Link to="/"> <Button variant='contained' endIcon=<FiLogOut /> color='primary' onClick={handleLogOut}>Logout</Button></Link>
+                        <Button variant='contained' color='error' endIcon=<AiFillCloseCircle /> onClick={handleClose}>Close</Button>
+                    </DialogActions>
+                </Dialog>
             </Box >
         </>
     );

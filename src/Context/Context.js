@@ -5,8 +5,8 @@ export const ContextFunction = createContext()
 
 const Context = ({ children }) => {
     const [cart, setCart] = useState([])
-   
-   
+
+
     return (
         <ContextFunction.Provider value={{ cart, setCart }}>
             {children}

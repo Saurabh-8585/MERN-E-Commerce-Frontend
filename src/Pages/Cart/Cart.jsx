@@ -1,15 +1,16 @@
 import React, { useContext, useEffect, useState } from 'react'
+import { ContextFunction } from '../../Context/Context';
 import { Box, Button, Card, CardActionArea, CardActions, CardContent, CardMedia, Tooltip, Typography } from '@mui/material'
 import Rating from '../../Components/Rating';
 import axios from 'axios'
 import { Link } from 'react-router-dom'
 import { toast, ToastContainer } from 'react-toastify'
-import { ContextFunction } from '../../Context/Context'
 import { AiFillDelete } from 'react-icons/ai'
+
 
 const Cart = () => {
     const { cart, setCart } = useContext(ContextFunction)
-    const [total, setTotal] = useState()
+    const [total, setTotal] = useState(0)
     const [isReadMode, SetisReadMode] = useState(true)
 
     useEffect(() => {
@@ -20,6 +21,8 @@ const Cart = () => {
         getCart()
         window.scroll(0, 0)
     }, [])
+    console.log(total);
+
     let authToken = localStorage.getItem('Authorization')
 
     const getCart = async () => {
@@ -40,13 +43,12 @@ const Cart = () => {
         toast.error("Removed From Cart", { autoClose: 500, })
         getCart()
     }
-    console.log("cart page  ", cart);
     return (
         <div style={{ marginTop: 90, display: "flex", flexWrap: "wrap" }}>
             <ToastContainer />
-            {cart.map(prod => <Card sx={{ width: 300, margin: "30px 10px 0 10px" }}>
+            {cart.map(prod => <Card key={prod.productId} sx={{ width: 300, margin: "30px 10px 0 10px" }}>
 
-                <Link to={`/Detail/${prod.productId}`} key={prod.productId}>
+                <Link to={`/Detail/${prod.productId}`} >
 
                     <CardActionArea>
                         <Box className='img-box'  >
