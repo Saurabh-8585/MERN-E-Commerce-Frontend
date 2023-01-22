@@ -1,12 +1,11 @@
 import '../Login/login.css'
+import React, { useState } from 'react'
+import axios from 'axios'
+import { Link, useNavigate } from 'react-router-dom'
 import { Button, TextField, Typography } from '@mui/material'
 import { Box, Container } from '@mui/system'
 
 
-import React from 'react'
-import { useState } from 'react'
-import axios from 'axios'
-import { Link, useNavigate } from 'react-router-dom'
 const Register = () => {
 
   const [credentials, setCredentials] = useState({ name: "", email: "", password: "" })

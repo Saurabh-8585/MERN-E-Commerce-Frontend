@@ -10,22 +10,39 @@ import Electronics from '../../Assets/Banner/Mobile-Laptop-Banner.jpg'
 import Shoes from '../../Assets/Banner/Nike-Shoe.jpg'
 import Cloths from '../../Assets/Banner/Cloths.jpg'
 import Jewelry from '../../Assets/Banner/jwelery.jpg'
+import { useContext } from 'react'
+import { ContextFunction } from '../../Context/Context'
 
 const HomePage = () => {
+    const { setCart } = useContext(ContextFunction)
     const [productData, setProductData] = useState([])
+    let authToken = localStorage.getItem('Authorization')
 
     useEffect(() => {
         getData()
+        getCart()
         window.scroll(0, 0)
     }, [])
+    const getCart = async () => {
+        if (authToken !== null) {
+            const { data } = await axios.get(`${process.env.REACT_APP_GET_CART}`,
+                {
+                    headers: {
+                        'Authorization': authToken
+                    }
+                })
+            setCart(data);
+        }
+
+    }
     const getData = async () => {
-        const response = await axios.get(process.env.REACT_APP_FETCH_PRODUCT)
-        setProductData(response.data);
+        const { data } = await axios.get(process.env.REACT_APP_FETCH_PRODUCT)
+        setProductData(data);
     }
 
     return (
         <>
-            <Container maxWidth='xl' style={{ marginTop: 90,paddingRight: 50, display: 'flex', justifyContent: "center", flexDirection: "column" }}>
+            <Container maxWidth='xl' style={{ marginTop: 90, paddingRight: 50, display: 'flex', justifyContent: "center", flexDirection: "column" }}>
                 <Box sx={{ display: "flex", alignItems: "center", }}>
                     <div id="carouselExampleAutoplaying" className="carousel slide" data-bs-ride="carousel">
                         <div className="carousel-inner">
@@ -88,9 +105,9 @@ const HomePage = () => {
                     </div>
                 </Box>
 
-                <Container maxWidth='xl' style={{ marginTop: 90, display: "flex", flexWrap: "wrap", paddingLeft: 10,paddingBottom:20 }}>
+                <Container maxWidth='xl' style={{ marginTop: 90, display: "flex", flexWrap: "wrap", paddingLeft: 10, paddingBottom: 20 }}>
                     {productData.map(prod => (
-                        <Link to={`/Detail/${prod._id}`} key={prod._id}>
+                        <Link to={`/Detail/type/${prod.type}/${prod._id}`} key={prod._id}>
                             <ProductCard prod={prod} />
                         </Link>
                     ))}

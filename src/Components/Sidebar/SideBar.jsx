@@ -1,23 +1,26 @@
+import './sidebar.css'
+import { ContextFunction } from '../../Context/Context';
 import { forwardRef, useContext, useState, useEffect } from 'react';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { styled, useTheme } from '@mui/material/styles';
 import MuiDrawer from '@mui/material/Drawer';
 import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
-import { Link, NavLink } from 'react-router-dom';
-import { Badge, Tooltip } from '@mui/material';
 import { FaShoppingCart } from 'react-icons/fa'
 import { AiFillHome, AiOutlineMenu, AiFillCloseCircle } from 'react-icons/ai'
 import { FiChevronLeft, FiChevronRight, FiLogOut } from 'react-icons/fi'
-import './sidebar.css'
-import axios from 'axios';
+import { CgProfile } from 'react-icons/cg'
+import Slide from '@mui/material/Slide';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import {
     Box,
     Dialog,
+    Badge,
+    Tooltip,
     DialogActions,
     DialogContent,
-    DialogContentText,
-    DialogTitle,
     List,
     CssBaseline,
     Typography,
@@ -30,10 +33,8 @@ import {
     Button
 
 } from '@mui/material';
-import Slide from '@mui/material/Slide';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { ContextFunction } from '../../Context/Context';
+import axios from 'axios';
+
 
 
 
@@ -112,29 +113,22 @@ const Transition = forwardRef(function Transition(props, ref) {
 });
 
 const SideBar = () => {
-    const { cart, setCart } = useContext(ContextFunction)
+    const { cart,setCart } = useContext(ContextFunction)
     const [open, setOpen] = useState(false);
     const [openAlert, setOpenAlert] = useState(false);
+    const navigate = useNavigate()
+
     let authToken = localStorage.getItem('Authorization')
     let proceed = false
     let setProceed = authToken !== null ? proceed = true : proceed = false
 
-    const getCart = async () => {
-        if (setProceed === true) {
-            const response = await axios.get(`${process.env.REACT_APP_GET_CART}`,
-                {
-                    headers: {
-                        'Authorization': authToken
-                    }
-                })
-            setCart(response.data);
-        }
-
-    }
 
     useEffect(() => {
         getCart()
     }, [])
+
+
+
     const theme = useTheme();
 
     const handleDrawerOpen = () => {
@@ -152,17 +146,29 @@ const SideBar = () => {
     const handleClose = () => {
         setOpenAlert(false);
     };
+    const getCart = async () => {
+        if (authToken !== null) {
+            const { data } = await axios.get(`${process.env.REACT_APP_GET_CART}`,
+                {
+                    headers: {
+                        'Authorization': authToken
+                    }
+                })
+            setCart(data);
+        }
+
+    }
     const handleLogOut = () => {
         if (authToken === null) {
             toast.error("User is already logged of", { autoClose: 500, })
         }
         else {
+            navigate('/login ')
             localStorage.removeItem('Authorization')
             toast.success("Logout Successfully", { autoClose: 500, })
         }
         setOpenAlert(false);
     }
-
 
     return (
         <>
@@ -184,7 +190,7 @@ const SideBar = () => {
                             <AiOutlineMenu />
                         </IconButton>
                         <Typography variant="h6" noWrap component="div">
-                            Mini variant drawer
+                            {/* Mini variant drawer */}
                         </Typography>
                     </Toolbar>
                 </AppBar>
@@ -218,7 +224,7 @@ const SideBar = () => {
                                         sx={{ minHeight: 48, justifyContent: open ? 'initial' : 'center', px: 2.5 }}>
                                         <ListItemIcon
                                             sx={{ minWidth: 0, mr: open ? 3 : 'auto', justifyContent: 'space-between', }}>
-                                            <Badge badgeContent={cart.length} color="primary" sx={{ padding: 0.3 }}>
+                                            <Badge badgeContent={setProceed ? cart.length : 0} color="primary" sx={{ padding: 0.3 }}>
                                                 <FaShoppingCart style={{ marginLeft: open ? -5 : 24 }} className='nav-icon' />
                                             </Badge>
 
@@ -228,25 +234,45 @@ const SideBar = () => {
                                 </ListItem>
                             </Tooltip>
                         </NavLink>
-                        <Tooltip title="Logout">
-                            <ListItem disablePadding sx={{ display: 'block' }}>
-                                <ListItemButton onClick={handleClickOpen}
-                                    sx={{ minHeight: 48, justifyContent: open ? 'initial' : 'center', px: 2.5 }}>
-                                    <ListItemIcon
-                                        sx={{ minWidth: 0, mr: open ? 3 : 'auto', justifyContent: 'space-between', }}>
-                                        <FiLogOut style={{ marginLeft: open ? 0 : 50 }} className='nav-icon' />
-                                        <ListItemText sx={{ opacity: open ? 1 : 0, marginLeft: open ? 3 : 0 }}>Logout</ListItemText>
-                                    </ListItemIcon>
-                                </ListItemButton>
-                            </ListItem>
-                        </Tooltip>
 
+                        {proceed ? (
+
+                            <Tooltip title="Logout">
+                                <ListItem disablePadding sx={{ display: 'block' }}>
+                                    <ListItemButton onClick={handleClickOpen}
+                                        sx={{ minHeight: 48, justifyContent: open ? 'initial' : 'center', px: 2.5 }}>
+                                        <ListItemIcon
+                                            sx={{ minWidth: 0, mr: open ? 3 : 'auto', justifyContent: 'space-between', }}>
+                                            <FiLogOut style={{ marginLeft: open ? 0 : 50 }} className='nav-icon' />
+                                            <ListItemText sx={{ opacity: open ? 1 : 0, marginLeft: open ? 3 : 0 }}>Logout</ListItemText>
+                                        </ListItemIcon>
+                                    </ListItemButton>
+                                </ListItem>
+                            </Tooltip>
+                        ) : (
+                            <Link to='/login'>
+                                <Tooltip title="Login">
+                                    <ListItem disablePadding sx={{ display: 'block' }}>
+                                        <ListItemButton
+                                            sx={{ minHeight: 48, justifyContent: open ? 'initial' : 'center', px: 2.5 }}>
+                                            <ListItemIcon
+                                                sx={{ minWidth: 0, mr: open ? 3 : 'auto', justifyContent: 'space-between', }}>
+                                                <CgProfile style={{ marginLeft: open ? 0 : 50 }} className='nav-icon' />
+                                                <ListItemText sx={{ opacity: open ? 1 : 0, marginLeft: open ? 3 : 0 }}>Logout</ListItemText>
+                                            </ListItemIcon>
+                                        </ListItemButton>
+                                    </ListItem>
+                                </Tooltip>
+                            </Link>
+                        )
+                        }
                     </List>
                 </Drawer>
                 <DrawerHeader />
                 <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
                 </Box>
-                {/* <HomePage /> */}
+
+
                 <Dialog
                     open={openAlert}
                     TransitionComponent={Transition}
@@ -254,11 +280,8 @@ const SideBar = () => {
                     onClose={handleClose}
                     aria-describedby="alert-dialog-slide-description"
                 >
-                    {/* <DialogTitle>{"Use Google's location service?"}</DialogTitle> */}
-                    <DialogContent sx={{ width: { xs: 280, md: 350, xl: 400 } }}>
-                        <DialogContentText id="alert-dialog-slide-description">
-                            Do You Want To Logout?
-                        </DialogContentText>
+                    <DialogContent sx={{ width: { xs: 280, md: 350, xl: 400 }, display: 'flex', justifyContent: 'center' }}>
+                        <Typography variant='h6'>  Do You Want To Logout?</Typography>
                     </DialogContent>
                     <DialogActions sx={{ display: 'flex', justifyContent: 'space-evenly' }}>
                         <Link to="/"> <Button variant='contained' endIcon=<FiLogOut /> color='primary' onClick={handleLogOut}>Logout</Button></Link>

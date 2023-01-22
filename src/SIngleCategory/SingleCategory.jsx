@@ -28,9 +28,9 @@ const SingleCategory = () => {
 
     const getCategoryProduct = async () => {
         setIsLoading(true)
-        const getData = await axios.post(`${process.env.REACT_APP_PRODUCT_TYPE}`, { userType: cat })
+        const { data } = await axios.post(`${process.env.REACT_APP_PRODUCT_TYPE}`, { userType: cat })
         setIsLoading(false)
-        setProductData(getData.data)
+        setProductData(data)
     }
 
     const productFilter = []
@@ -62,8 +62,8 @@ const SingleCategory = () => {
         const getData = async () => {
             setIsLoading(true)
             const filter = filterOption.toLowerCase()
-            const response = await axios.post(`${process.env.REACT_APP_PRODUCT_TYPE_CATEGORY_}`, { userType: cat, userCategory: filter })
-            setProductData(response.data)
+            const { data } = await axios.post(`${process.env.REACT_APP_PRODUCT_TYPE_CATEGORY_}`, { userType: cat, userCategory: filter })
+            setProductData(data)
             setIsLoading(false)
         }
         getData()
@@ -78,7 +78,7 @@ const SingleCategory = () => {
         <Container maxWidth='xl' style={{ marginTop: 90, paddingRight: 50, display: 'flex', justifyContent: "center", flexDirection: "column" }}>
             < Box sx={{ minWidth: 120 }}>
                 <FormControl sx={{ width: 140 }}>
-                    <Box sx={{ display: 'flex', justifyContent: 'flex-end',gap:1, width: "80vw"}}>
+                    <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 1, width: "80vw" }}>
                         <Button endIcon={<BiFilterAlt />}>Filters</Button>
                         <Select
                             labelId="demo-simple-select-label"
@@ -97,7 +97,7 @@ const SingleCategory = () => {
             {loading}
             <Container maxWidth='xl' style={{ marginTop: 10, display: "flex", flexWrap: "wrap", paddingLeft: 10, paddingBottom: 20 }}>
                 {productData.map(prod => (
-                    <Link to={`/Detail/${prod._id}`} key={prod._id}>
+                    <Link to={`/Detail/type/${cat}/${prod._id}`} key={prod._id}>
                         <ProductCard prod={prod} />
 
                     </Link>
