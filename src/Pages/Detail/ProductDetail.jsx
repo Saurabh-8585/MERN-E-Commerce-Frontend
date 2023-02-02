@@ -11,18 +11,12 @@ import {
     DialogActions,
     DialogContent,
     DialogContentText,
+    Chip,
 } from '@mui/material';
 import Slide from '@mui/material/Slide';
 import { MdAddShoppingCart } from 'react-icons/md'
 import { AiFillCloseCircle, AiOutlineLogin } from 'react-icons/ai'
 import axios from 'axios';
-
-
-
-
-
-
-
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { ContextFunction } from '../../Context/Context';
@@ -35,11 +29,12 @@ const Transition = forwardRef(function Transition(props, ref) {
 
 const ProductDetail = () => {
     const { cart, setCart } = useContext(ContextFunction)
-    const [openAlert, setOpenAlert] = useState(false);
+    const [openAlert, setOpenAlert] = useState(true);
     const { id, cat } = useParams()
     const [product, setProduct] = useState([])
     const [similarProduct, setSimilarProduct] = useState([])
-    console.log(cat);
+
+
     let authToken = localStorage.getItem('Authorization')
     let proceed = false
     let setProceed = authToken !== null ? proceed = true : proceed = false
@@ -52,7 +47,7 @@ const ProductDetail = () => {
     useEffect(() => {
         getProduct()
         getSimilarProducts()
-    }, [])
+    }, [id])
 
 
     const addToCart = async (product) => {
@@ -73,12 +68,23 @@ const ProductDetail = () => {
     }
     const handleClickOpen = () => {
         setOpenAlert(true);
-        console.log(1);
     };
 
     const handleClose = () => {
         setOpenAlert(false);
     };
+    let data;
+    if (cat == 'shoe') {
+        data =
+            <>
+                <Chip label={product.gender} variant="outlined" />
+                <Chip label={product.brand} variant="outlined" />
+                <Chip label={product.category} variant="outlined" />
+
+
+            </>
+
+    }
     return (
         <>
             <Container maxWidth='xl' sx={{ background: "", marginTop: 20 }}>
@@ -92,7 +98,7 @@ const ProductDetail = () => {
                     {/* <DialogTitle>{"Use Google's location service?"}</DialogTitle> */}
                     <DialogContent sx={{ width: { xs: 280, md: 350, xl: 400 } }}>
                         <DialogContentText id="alert-dialog-slide-description">
-                            Please Login To Proceed
+                            Please Login To Proceed 1
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions sx={{ display: 'flex', justifyContent: 'space-evenly' }}>
@@ -111,7 +117,10 @@ const ProductDetail = () => {
                         <Button variant='contained' startIcon={<MdAddShoppingCart />} onClick={setProceed ? (() => addToCart(product)) : (handleClickOpen)}>Buy</Button>
                     </Tooltip>
                 </Box>
-
+                <Typography>
+                    {product.description}
+                    {data}
+                </Typography>
                 <Typography sx={{ marginTop: 10, marginBottom: 5 }}>Similar Products</Typography>
                 <Box>
                     <Box className='similarProduct' sx={{ display: 'flex', overflowX: 'auto' }}>

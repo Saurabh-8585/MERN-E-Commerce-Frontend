@@ -19,7 +19,7 @@ const SingleCategory = () => {
     const [isLoading, setIsLoading] = useState(false)
     const [filterOption, setFilterOption] = useState('All')
     const [title, setTitle] = useState('All')
-    const { cat } = useParams()
+    const { cat, id } = useParams()
 
     useEffect(() => {
         getCategoryProduct()
@@ -41,8 +41,8 @@ const SingleCategory = () => {
     else if (cat === 'cloths') {
         productFilter.push('All', 'Men', 'Women', 'Price Low To High', 'Price High To Low', 'High Rated', 'Low Rated')
     }
-    else if (cat === 'shoes') {
-        productFilter.push('formal', 'Sneker', 'Price Low To High', 'Price High To Low', 'High Rated', 'Low Rated')
+    else if (cat === 'shoe') {
+        productFilter.push('All', 'Running', 'Football', 'Formal', 'Casual', 'Price Low To High', 'Price High To Low', 'High Rated', 'Low Rated')
     }
     else if (cat === 'electronics') {
         productFilter.push('All', 'Monitor', 'SSD', 'HDD', 'Price Low To High', 'Price High To Low', 'High Rated', 'Low Rated')
