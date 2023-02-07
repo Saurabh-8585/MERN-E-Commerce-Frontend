@@ -27,6 +27,8 @@ a {
 }
 
 .active {
-  color: #1976d2;
-  
+  /* color: #1976d2; */
+  background-color: #1976d2;
+  color: white;
+  border-radius: 50px;
 }

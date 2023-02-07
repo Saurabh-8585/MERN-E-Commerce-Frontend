@@ -9,6 +9,7 @@ import Cart from './Pages/Cart/Cart';
 import ProductDetail from './Pages/Detail/ProductDetail';
 import SingleCategory from './SingleCategory/SingleCategory';
 import { Box } from '@mui/system';
+import MobileNavigation from './Components/Navigation/MobileNavigation';
 
 
 
@@ -23,8 +24,8 @@ function App() {
   return (
     <>
       <Router>
-        <Box sx={{ display: 'flex' }}>
-          {<SideBar />}
+        {/* <Box sx={{ display: 'flex' }}> */}
+          {/* {<SideBar />} */}
           <Routes>
             <Route path="/login" element={< Login />} />
             <Route path='/register' element={<Register />} />
@@ -35,7 +36,8 @@ function App() {
 
 
           </Routes>
-        </Box>
+          <MobileNavigation />
+        {/* </Box> */}
       </Router >
 
 

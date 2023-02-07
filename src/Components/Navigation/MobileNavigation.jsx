@@ -1,26 +1,43 @@
 import Box from '@mui/material/Box';
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
-import { AiFillHome, AiOutlineMenu, AiFillCloseCircle } from 'react-icons/ai'
+import { AiFillHome, AiFillHeart, AiOutlineShoppingCart } from 'react-icons/ai'
 import { FaShoppingCart } from 'react-icons/fa'
 
 import { FiChevronLeft, FiChevronRight, FiLogOut } from 'react-icons/fi'
 import React from 'react'
 import { NavLink } from 'react-router-dom';
+import './Mobile.css'
+import { Badge } from '@mui/material';
 
 const MobileNavigation = () => {
-    const [value, setValue] = React.useState(0);
 
     return (
-        <Box sx={{ width: 500 }}>
-            <BottomNavigation
-                showLabels
-            >
-                <NavLink to='/'>  <BottomNavigationAction label="Home" icon={<AiFillHome />} /></NavLink>
-                <NavLink to='/cart' >  <BottomNavigationAction label="Cart" icon={<FaShoppingCart />} /></NavLink>
-                <NavLink to='/logout'>  <BottomNavigationAction label="Logout" icon={<FiLogOut />} /></NavLink>
-            </BottomNavigation>
-        </Box>
+        <Box >
+            <BottomNavigation showLabels className='nav-items'>
+                <NavLink to='/'>
+                    <div className='links'>
+                        <AiFillHome style={{ fontSize: 23 }} />
+                        <span>Home</span>
+                    </div>
+                </NavLink>
+                <NavLink to='/cart'>
+                    <div className='links'>
+                        <Badge badgeContent={3} color='primary' style={{ color: '#1976d2' }}>
+                            <AiOutlineShoppingCart style={{ fontSize: 23 }} />
+                        </Badge>
+                        <span>Cart</span>
+                    </div>
+                </NavLink>
+
+                <NavLink to='/whishlist' >
+                    <div className='links'>
+                        <AiFillHeart style={{ fontSize: 23 }} />
+                        <span>Wishlist</span>
+                    </div>
+                </NavLink>
+            </BottomNavigation >
+        </Box >
     );
 }
 

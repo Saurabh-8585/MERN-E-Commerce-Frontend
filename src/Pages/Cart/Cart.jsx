@@ -143,7 +143,7 @@ const Cart = () => {
                                 <br />
                                 <span>Bill Amount = ₹ {cart.length == 0 ? 0 : total + shipping}</span>
                             </CardContent>
-                        </CardActionArea>
+                        </CardActionArea> 
                     </Box>
                 </>
             }
