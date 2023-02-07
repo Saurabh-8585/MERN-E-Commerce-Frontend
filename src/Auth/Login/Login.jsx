@@ -17,7 +17,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
-      if (!credentials.email && !credentials.password.length) {
+      if (!credentials.email && !credentials.password) {
         toast.error("Please Fill the all Fields", { autoClose: 500, })
       }
       else if (credentials.email.length <= 3) {

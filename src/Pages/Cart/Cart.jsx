@@ -15,9 +15,9 @@ import {
     DialogContent,
     Slide,
     IconButton,
+    Rating,
 } from '@mui/material'
 import './Cart.css'
-import Rating from '../../Components/Rating';
 import axios from 'axios'
 import { Link, useNavigate } from 'react-router-dom'
 import { toast, ToastContainer } from 'react-toastify'
@@ -36,24 +36,19 @@ const Cart = () => {
     const [openAlert, setOpenAlert] = useState(false);
 
     const navigate = useNavigate()
+
     let shipping = total >= 1000 ? 0 : shippingCost
-    let proceed = false
     let authToken = localStorage.getItem('Authorization')
-    let setProceed = authToken ? proceed = true : proceed = false
+    let setProceed = authToken ? true : false
 
 
     useEffect(() => {
-        if (setProceed) {
-            getCart()
-        }
-        else {
-            setOpenAlert(true)
-        }
+        setProceed ? getCart() : setOpenAlert(true)
         window.scroll(0, 0)
     }, [])
 
     useEffect(() => {
-        setTotal(cart.reduce((acc, curr) => acc + (curr.price), 0))
+        setProceed && setTotal(cart.reduce((acc, curr) => acc + (curr.price), 0))
     }, [cart])
 
     const getCart = async () => {
@@ -93,16 +88,13 @@ const Cart = () => {
             {setProceed &&
                 <>
                     <Box className='cart-cards'>
-                        {cart.map(prod => <Card key={prod._id} sx={{ width: 300, margin: "30px 10px 0 10px" }}>
+                        {cart.map(prod => <Card key={prod._id} className='main-card' >
 
                             <Link to={`/Detail/type/${prod.type}/${prod.productId}`}>
-
                                 <CardActionArea>
                                     <Box className='img-box'  >
                                         <CardMedia
                                             component="img"
-                                            height="100%"
-                                            width="100%"
                                             alt={prod.name}
                                             src={prod.image}
                                             className='img'
@@ -125,12 +117,12 @@ const Cart = () => {
                                         </Typography>
                                     </CardContent>
                                 </CardActionArea>
-                            </Link>
-                            <CardActions style={{ display: "flex", justifyContent: "space-around" }}>
+                            </Link> 
+                            <CardActions style={{ display: "flex", justifyContent: "space-between", width: '100%' }}>
                                 <Tooltip title='Remove From Cart'>
-                                    <Button variant='contained' color='error' onClick={() => removeFromCart(prod)} endIcon={<AiFillDelete />} >Remove</Button>
+                                    <Button className='all-btn' variant='contained' color='error' onClick={() => removeFromCart(prod)} endIcon={<AiFillDelete />} >Remove</Button>
                                 </Tooltip>
-                                <Rating rating={prod.rating} />
+                                <Typography> <Rating name="read-only" value={Math.round(prod.rating)} readOnly /></Typography>
                             </CardActions>
                             <ToastContainer />
                         </Card >)}

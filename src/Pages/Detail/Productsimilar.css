@@ -1,3 +1,43 @@
 .similarProduct::-webkit-scrollbar {
     display: none;
 }
+
+.main-content {
+    display: flex;
+    justify-content: space-around;
+    /* align-items: center; */
+    /* background-color: red; */
+    width: 90%;
+    flex-wrap: wrap;
+}
+
+.product-image {
+    width: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.detail-img-box {
+    height: 300px;
+    width: 250px;
+}
+
+.detail-img-box .detail-img {
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+    /* object-fit: cover; */
+}
+
+.product-details {
+    width: 800px;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.chip {
+    display: flex;
+    gap: 0.5rem
+}

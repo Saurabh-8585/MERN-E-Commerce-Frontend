@@ -12,6 +12,7 @@ import {
     DialogContent,
     DialogContentText,
     Chip,
+    Rating,
 } from '@mui/material';
 import Slide from '@mui/material/Slide';
 import { MdAddShoppingCart } from 'react-icons/md'
@@ -29,16 +30,14 @@ const Transition = forwardRef(function Transition(props, ref) {
 
 const ProductDetail = () => {
     const { cart, setCart } = useContext(ContextFunction)
-    const [openAlert, setOpenAlert] = useState(true);
+    const [openAlert, setOpenAlert] = useState(false);
     const { id, cat } = useParams()
     const [product, setProduct] = useState([])
     const [similarProduct, setSimilarProduct] = useState([])
 
 
     let authToken = localStorage.getItem('Authorization')
-    let proceed = false
-    let setProceed = authToken !== null ? proceed = true : proceed = false
-
+    let setProceed = authToken ? true : false
 
     const getProduct = async () => {
         const { data } = await axios.get(`${process.env.REACT_APP_FETCH_PRODUCT}/${id}`)
@@ -47,6 +46,7 @@ const ProductDetail = () => {
     useEffect(() => {
         getProduct()
         getSimilarProducts()
+        window.scroll(0, 0)
     }, [id])
 
 
@@ -60,30 +60,33 @@ const ProductDetail = () => {
             setCart(data)
             toast.success("Added To Cart", { autoClose: 500, })
             setCart([...cart, product])
+            console.log(cart)
+        }
+        else {
+            setOpenAlert(true);
         }
     }
     const getSimilarProducts = async () => {
         const { data } = await axios.post(`${process.env.REACT_APP_PRODUCT_TYPE}`, { userType: cat })
         setSimilarProduct(data)
     }
-    const handleClickOpen = () => {
-        setOpenAlert(true);
-    };
 
     const handleClose = () => {
         setOpenAlert(false);
     };
-    let data;
-    if (cat == 'shoe') {
-        data =
-            <>
-                <Chip label={product.gender} variant="outlined" />
-                <Chip label={product.brand} variant="outlined" />
-                <Chip label={product.category} variant="outlined" />
+    let data = [];
+    if (cat === 'shoe') {
+        data.push(product.gender, product.brand, product.category)
 
-
-            </>
-
+    }
+    else if (cat === 'book') {
+        data.push(product.author, product.category)
+    }
+    else if (cat === 'cloths') {
+        data.push(product.category)
+    }
+    else if (cat === 'electronics') {
+        data.push(product.category)
     }
     return (
         <>
@@ -98,7 +101,7 @@ const ProductDetail = () => {
                     {/* <DialogTitle>{"Use Google's location service?"}</DialogTitle> */}
                     <DialogContent sx={{ width: { xs: 280, md: 350, xl: 400 } }}>
                         <DialogContentText id="alert-dialog-slide-description">
-                            Please Login To Proceed 1
+                            Please Login To Proceed 1111
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions sx={{ display: 'flex', justifyContent: 'space-evenly' }}>
@@ -107,23 +110,37 @@ const ProductDetail = () => {
                     </DialogActions>
                 </Dialog>
 
+                <main className='main-content'>
+                    <div className="product-image">
+                        <div className='detail-img-box'  >
+                            <img alt={product.name} src={product.image} className='detail-img' />
+                            <br />
+                        </div>
+                    </div>
+                    <section className='product-details'>
+                        <Typography variant='h4'>{product.name}</Typography>
 
-                <Typography variant='body1'>{product.name}</Typography>
-                <Box className='img-box'  >
-                    <img alt={product.name} src={product.image} className='img' />
-                </Box>
-                <Box>
-                    <Tooltip title='Add To Cart'>
-                        <Button variant='contained' startIcon={<MdAddShoppingCart />} onClick={setProceed ? (() => addToCart(product)) : (handleClickOpen)}>Buy</Button>
-                    </Tooltip>
-                </Box>
-                <Typography>
-                    {product.description}
-                    {data}
-                </Typography>
+                        <Typography >
+                            {product.description}
+                        </Typography>
+                        <Typography >
+                            <div className="chip">
+                                {
+                                    data.map(item => (
+                                        <Chip label={item} variant="outlined" />
+                                    ))
+                                }
+                            </div>
+                        </Typography>
+                        <Rating name="read-only" value={Math.round(product.rating)} readOnly />
+                        <Tooltip title='Add To Cart'>
+                            <Button variant='contained' className='all-btn' startIcon={<MdAddShoppingCart />} onClick={(() => addToCart(product))}>Buy</Button>
+                        </Tooltip>
+                    </section>
+                </main>
                 <Typography sx={{ marginTop: 10, marginBottom: 5 }}>Similar Products</Typography>
                 <Box>
-                    <Box className='similarProduct' sx={{ display: 'flex', overflowX: 'auto' }}>
+                    <Box className='similarProduct' sx={{ display: 'flex', overflowX: 'auto'}}>
                         {
                             similarProduct.map(prod => (
                                 <Link to={`/Detail/type/${prod.type}/${prod._id}`} key={prod._id}>

@@ -58,14 +58,14 @@ const SingleCategory = () => {
         setTitle(e.target.value)
     }
 
+    const getData = async () => {
+        setIsLoading(true)
+        const filter = filterOption.toLowerCase()
+        const { data } = await axios.post(`${process.env.REACT_APP_PRODUCT_TYPE_CATEGORY_}`, { userType: cat, userCategory: filter })
+        setProductData(data)
+        setIsLoading(false)
+    }
     useEffect(() => {
-        const getData = async () => {
-            setIsLoading(true)
-            const filter = filterOption.toLowerCase()
-            const { data } = await axios.post(`${process.env.REACT_APP_PRODUCT_TYPE_CATEGORY_}`, { userType: cat, userCategory: filter })
-            setProductData(data)
-            setIsLoading(false)
-        }
         getData()
     }, [filterOption])
 

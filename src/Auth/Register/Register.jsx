@@ -17,7 +17,7 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
-      if (!credentials.email && !credentials.name && !credentials.password.length) {
+      if (!credentials.email && !credentials.name && !credentials.password) {
         toast.error("Please Fill the all Fields", { autoClose: 500, })
       }
       else if (credentials.name.length <= 3) {

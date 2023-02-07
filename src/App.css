@@ -1,3 +1,13 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  overflow-x: hidden;
+}
+
 .main {
   display: flex;
   justify-content: center;
@@ -5,29 +15,18 @@
   flex-direction: column;
 }
 
-.img-box {
-  height: 300px;
-  width: 200px;
-  display: block;
-  margin: auto;
-}
 
-.img-box .img {
-  height: 100%;
-  width: 100%;
-  object-fit: contain;
-}
 
 a {
   text-decoration: none;
 
 }
 
-*{
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+.all-btn {
+  width: 110px;
 }
-body{
-  overflow-x: hidden;
+
+.active {
+  color: #1976d2;
+  
 }

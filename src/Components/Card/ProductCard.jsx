@@ -3,10 +3,9 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-import { CardActionArea, CardActions } from '@mui/material';
-import Rating from '../Rating';
+import { CardActionArea, CardActions, Rating } from '@mui/material';
 import { Box } from '@mui/system';
-
+import './ProductCard.css'
 
 export default function ProductCard({ prod }) {
     const [isReadMode, SetisReadMode] = useState(true)
@@ -16,13 +15,11 @@ export default function ProductCard({ prod }) {
 
 
     return (
-        <Card sx={{ width: 300, margin: "30px 10px 0px 10px" }}>
+        <Card className='main-card'>
             <CardActionArea>
                 <Box className='img-box'  >
                     <CardMedia
                         component="img"
-                        height="100%"
-                        width="100%"
                         alt={prod.name}
                         src={prod.image}
                         className='img'
@@ -42,12 +39,14 @@ export default function ProductCard({ prod }) {
                     </Typography>
                 </CardContent>
             </CardActionArea>
-            <CardActions style={{ display: "flex", justifyContent: "space-around" }}>
+            <CardActions style={{ display: "flex", justifyContent: "space-between", width: '100%' }}>
                 <Typography variant="h6" color="primary">
                     ₹{prod.price}
                 </Typography>
+                <Typography >
+                    <Rating name="read-only" value={Math.round(prod.rating)} readOnly />
+                </Typography>
 
-                <Rating rating={prod.rating} />
 
             </CardActions>
         </Card >
