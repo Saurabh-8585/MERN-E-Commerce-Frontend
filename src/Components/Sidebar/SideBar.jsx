@@ -113,14 +113,13 @@ const Transition = forwardRef(function Transition(props, ref) {
 });
 
 const SideBar = () => {
-    const { cart,setCart } = useContext(ContextFunction)
+    const { cart, setCart } = useContext(ContextFunction)
     const [open, setOpen] = useState(false);
     const [openAlert, setOpenAlert] = useState(false);
     const navigate = useNavigate()
 
     let authToken = localStorage.getItem('Authorization')
-    let proceed = false
-    let setProceed = authToken !== null ? proceed = true : proceed = false
+    let setProceed = authToken !== null ? true : false
 
 
     useEffect(() => {
@@ -147,7 +146,7 @@ const SideBar = () => {
         setOpenAlert(false);
     };
     const getCart = async () => {
-        if (authToken !== null) {
+        if (authToken) {
             const { data } = await axios.get(`${process.env.REACT_APP_GET_CART}`,
                 {
                     headers: {
@@ -159,15 +158,15 @@ const SideBar = () => {
 
     }
     const handleLogOut = () => {
-        if (authToken === null) {
-            toast.error("User is already logged of", { autoClose: 500, })
-        }
-        else {
+        if (authToken) {
             navigate('/login ')
             localStorage.removeItem('Authorization')
             toast.success("Logout Successfully", { autoClose: 500, })
+            // setOpenAlert(false);
         }
-        setOpenAlert(false);
+        else {
+            toast.error("User is already logged of", { autoClose: 500, })
+        }
     }
 
     return (
@@ -235,7 +234,7 @@ const SideBar = () => {
                             </Tooltip>
                         </NavLink>
 
-                        {proceed ? (
+                        {setProceed ? (
 
                             <Tooltip title="Logout">
                                 <ListItem disablePadding sx={{ display: 'block' }}>
@@ -258,7 +257,7 @@ const SideBar = () => {
                                             <ListItemIcon
                                                 sx={{ minWidth: 0, mr: open ? 3 : 'auto', justifyContent: 'space-between', }}>
                                                 <CgProfile style={{ marginLeft: open ? 0 : 50 }} className='nav-icon' />
-                                                <ListItemText sx={{ opacity: open ? 1 : 0, marginLeft: open ? 3 : 0 }}>Logout</ListItemText>
+                                                <ListItemText sx={{ opacity: open ? 1 : 0, marginLeft: open ? 3 : 0 }}>Login</ListItemText>
                                             </ListItemIcon>
                                         </ListItemButton>
                                     </ListItem>

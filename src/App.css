@@ -19,6 +19,7 @@ body {
 
 a {
   text-decoration: none;
+  color: #353535;
 
 }
 
@@ -31,4 +32,5 @@ a {
   background-color: #1976d2;
   color: white;
   border-radius: 50px;
+  /* width: 60px; */
 }

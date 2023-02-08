@@ -16,7 +16,7 @@ import {
 } from '@mui/material';
 import Slide from '@mui/material/Slide';
 import { MdAddShoppingCart } from 'react-icons/md'
-import { AiFillCloseCircle, AiOutlineLogin } from 'react-icons/ai'
+import { AiFillHeart, AiFillCloseCircle, AiOutlineLogin } from 'react-icons/ai'
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -66,14 +66,14 @@ const ProductDetail = () => {
             setOpenAlert(true);
         }
     }
+    const addToWhishList = async (product) => {
+        console.log(product)
+
+    };
     const getSimilarProducts = async () => {
         const { data } = await axios.post(`${process.env.REACT_APP_PRODUCT_TYPE}`, { userType: cat })
         setSimilarProduct(data)
     }
-
-    const handleClose = () => {
-        setOpenAlert(false);
-    };
     let data = [];
     if (cat === 'shoe') {
         data.push(product.gender, product.brand, product.category)
@@ -95,18 +95,19 @@ const ProductDetail = () => {
                     open={openAlert}
                     TransitionComponent={Transition}
                     keepMounted
-                    onClose={handleClose}
+                    onClose={() => setOpenAlert(false)}
                     aria-describedby="alert-dialog-slide-description"
                 >
                     {/* <DialogTitle>{"Use Google's location service?"}</DialogTitle> */}
                     <DialogContent sx={{ width: { xs: 280, md: 350, xl: 400 } }}>
-                        <DialogContentText id="alert-dialog-slide-description">
-                            Please Login To Proceed 1111
+                        <DialogContentText style={{ textAlign: 'center' }} id="alert-dialog-slide-description">
+                            Please Login To Proceed
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions sx={{ display: 'flex', justifyContent: 'space-evenly' }}>
                         <Link to="/login"> <Button variant='contained' endIcon=<AiOutlineLogin /> color='primary'>Login</Button></Link>
-                        <Button variant='contained' color='error' endIcon=<AiFillCloseCircle /> onClick={handleClose}>Close</Button>
+                        <Button variant='contained' color='error'
+                            onClick={() => setOpenAlert(false)} endIcon=<AiFillCloseCircle />>Close</Button>
                     </DialogActions>
                 </Dialog>
 
@@ -126,21 +127,27 @@ const ProductDetail = () => {
                         <Typography >
                             <div className="chip">
                                 {
-                                    data.map(item => (
-                                        <Chip label={item} variant="outlined" />
+                                    data.map((item, index) => (
+                                        <Chip label={item} key={index} variant="outlined" />
                                     ))
                                 }
                             </div>
                         </Typography>
                         <Rating name="read-only" value={Math.round(product.rating)} readOnly />
-                        <Tooltip title='Add To Cart'>
-                            <Button variant='contained' className='all-btn' startIcon={<MdAddShoppingCart />} onClick={(() => addToCart(product))}>Buy</Button>
-                        </Tooltip>
+                        <div >
+                            <Tooltip title='Add To Cart'>
+                                <Button variant='contained' className='all-btn' startIcon={<MdAddShoppingCart />} onClick={(() => addToCart(product))}>Buy</Button>
+                            </Tooltip>
+                            <Tooltip title='Add To Cart'>
+                                <Button style={{ marginLeft: 20 }} variant='contained' className='all-btn' startIcon={<AiFillHeart />} onClick={(() => addToWhishList(product))}>Wishlist</Button>
+                            </Tooltip>
+
+                        </div>
                     </section>
                 </main>
                 <Typography sx={{ marginTop: 10, marginBottom: 5 }}>Similar Products</Typography>
                 <Box>
-                    <Box className='similarProduct' sx={{ display: 'flex', overflowX: 'auto'}}>
+                    <Box className='similarProduct' sx={{ display: 'flex', overflowX: 'auto' }}>
                         {
                             similarProduct.map(prod => (
                                 <Link to={`/Detail/type/${prod.type}/${prod._id}`} key={prod._id}>
