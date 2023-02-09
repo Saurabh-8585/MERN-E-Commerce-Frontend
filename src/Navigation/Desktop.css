@@ -18,6 +18,7 @@
 nav .logo {
     /* background-color: green; */
     /* width: 50%; */
+    
 }
 
 nav ul {
@@ -36,6 +37,7 @@ nav ul li a {
     padding: 8px 18px;
     border-radius: 10px;
     font-weight: 600;
+    
 }
 
 .nav-icon-span {

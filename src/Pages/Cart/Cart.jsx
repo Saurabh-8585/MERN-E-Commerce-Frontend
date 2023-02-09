@@ -22,6 +22,7 @@ import axios from 'axios'
 import { Link, useNavigate } from 'react-router-dom'
 import { toast, ToastContainer } from 'react-toastify'
 import { AiFillCloseCircle, AiOutlineLogin, AiFillDelete, AiFillInfoCircle } from 'react-icons/ai'
+import CartCard from '../../Components/Card/CartCard';
 
 
 const Transition = forwardRef(function Transition(props, ref) {
@@ -48,11 +49,11 @@ const Cart = () => {
     }, [])
 
     useEffect(() => {
-        setProceed && setTotal(cart.reduce((acc, curr) => acc + (curr.price), 0))
+        setProceed && setTotal(cart.reduce((acc, curr) => acc + (curr.productId?.price), 0))
     }, [cart])
 
     const getCart = async () => {
-        if (authToken !== null) {
+        if (setProceed) {
             const { data } = await axios.get(`${process.env.REACT_APP_GET_CART}`,
                 {
                     headers: {
@@ -74,7 +75,7 @@ const Cart = () => {
 
     const removeFromCart = async (product) => {
         if (setProceed) {
-            const response = await axios.delete(`${process.env.REACT_APP_DELETE_CART}/${product.productId}`, {
+            const response = await axios.delete(`${process.env.REACT_APP_DELETE_CART}/${product.productId._id}`, {
                 headers: {
                     'Authorization': authToken
                 }
@@ -88,44 +89,11 @@ const Cart = () => {
             {setProceed &&
                 <>
                     <Box className='cart-cards'>
-                        {cart.map(prod => <Card key={prod._id} className='main-card' >
+                        {
+                            cart.map(product =>
+                                <CartCard product={product} removeFromCart={removeFromCart} key={product._id} />
 
-                            <Link to={`/Detail/type/${prod.type}/${prod.productId}`}>
-                                <CardActionArea>
-                                    <Box className='img-box'  >
-                                        <CardMedia
-                                            component="img"
-                                            alt={prod.name}
-                                            src={prod.image}
-                                            className='img'
-
-                                        />
-                                    </Box>
-                                    <CardContent>
-                                        <Typography gutterBottom variant="h6" sx={{ textAlign: "center" }}>
-                                            {isReadMode ? prod.name.slice(0, 20) : prod.name}
-                                            {
-                                                prod.name.length > 15 &&
-                                                <span
-                                                    onClick={() => SetisReadMode(!isReadMode)}>
-                                                    {isReadMode ? "..." : ""}
-                                                </span>
-                                            }
-                                        </Typography>
-                                        <Typography gutterBottom variant="h6" sx={{ textAlign: "center" }}>
-                                            ₹{prod.price}
-                                        </Typography>
-                                    </CardContent>
-                                </CardActionArea>
-                            </Link> 
-                            <CardActions style={{ display: "flex", justifyContent: "space-between", width: '100%' }}>
-                                <Tooltip title='Remove From Cart'>
-                                    <Button className='all-btn' variant='contained' color='error' onClick={() => removeFromCart(prod)} endIcon={<AiFillDelete />} >Remove</Button>
-                                </Tooltip>
-                                <Typography> <Rating name="read-only" value={Math.round(prod.rating)} readOnly /></Typography>
-                            </CardActions>
-                            <ToastContainer />
-                        </Card >)}
+                            )}
                     </Box>
                     <Box className='total-card'>
                         <CardActionArea >
@@ -143,7 +111,7 @@ const Cart = () => {
                                 <br />
                                 <span>Bill Amount = ₹ {cart.length == 0 ? 0 : total + shipping}</span>
                             </CardContent>
-                        </CardActionArea> 
+                        </CardActionArea>
                     </Box>
                 </>
             }

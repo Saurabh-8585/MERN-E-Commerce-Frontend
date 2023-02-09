@@ -29,7 +29,7 @@ const Transition = forwardRef(function Transition(props, ref) {
 });
 
 const ProductDetail = () => {
-    const { cart, setCart } = useContext(ContextFunction)
+    const { cart, setCart, wishlistData, setWishlistData } = useContext(ContextFunction)
     const [openAlert, setOpenAlert] = useState(false);
     const { id, cat } = useParams()
     const [product, setProduct] = useState([])
@@ -58,18 +58,40 @@ const ProductDetail = () => {
                 }
             })
             setCart(data)
-            toast.success("Added To Cart", { autoClose: 500, })
             setCart([...cart, product])
-            console.log(cart)
+            toast.success("Added To Cart", { autoClose: 500, })
         }
         else {
             setOpenAlert(true);
         }
     }
     const addToWhishList = async (product) => {
-        console.log(product)
+        if (setProceed) {
+            try {
+                const { data } = await axios.post(`${process.env.REACT_APP_ADD_WISHLIST}`, { _id: product._id }, {
+                    headers: {
+                        'Authorization': authToken
+                    }
+                })
+                setWishlistData(data)
+                setWishlistData([...wishlistData, product])
+                toast.success("Added To Wishlist", { autoClose: 500, })
+            }
+            catch (error) {
+                console.log({ wishlistData })
+                toast.error(error.response.data.msg, { autoClose: 500, })
+            }
+        }
+        else {
+            setOpenAlert(true);
+        }
 
     };
+
+    // function sharePost({ title, text, url }) {
+    //     if
+    // }
+    // console.log(Navigator.)
     const getSimilarProducts = async () => {
         const { data } = await axios.post(`${process.env.REACT_APP_PRODUCT_TYPE}`, { userType: cat })
         setSimilarProduct(data)
@@ -90,7 +112,7 @@ const ProductDetail = () => {
     }
     return (
         <>
-            <Container maxWidth='xl' sx={{ background: "", marginTop: 20 }}>
+            <Container maxWidth='xl' >
                 <Dialog
                     open={openAlert}
                     TransitionComponent={Transition}

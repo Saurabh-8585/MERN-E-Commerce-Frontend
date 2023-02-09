@@ -37,7 +37,7 @@ const HomePage = () => {
 
     return (
         <>
-            <Container maxWidth='xl' style={{ marginTop: 190, paddingRight: 50, display: 'flex', justifyContent: "center", flexDirection: "column" }}>
+            <Container maxWidth='xl' style={{ display: 'flex', justifyContent: "center", flexDirection: "column" }}>
                 <Box sx={{ display: "flex", alignItems: "center", }}>
                     <div id="carouselExampleAutoplaying" className="carousel slide" data-bs-ride="carousel">
                         <div className="carousel-inner">
@@ -72,7 +72,7 @@ const HomePage = () => {
                         </button>
                     </div>
                 </Box>
-                <Container maxWidth='xl' style={{ marginTop: 90, display: "flex", flexWrap: "wrap", paddingLeft: 10, paddingBottom: 20 }}>
+                <Container maxWidth='xl' style={{ marginTop: 90, display: "flex", justifyContent: 'center', flexWrap: "wrap", paddingBottom: 20 }}>
                     {productData.map(prod => (
                         <Link to={`/Detail/type/${prod.type}/${prod._id}`} key={prod._id}>
                             <ProductCard prod={prod} />
