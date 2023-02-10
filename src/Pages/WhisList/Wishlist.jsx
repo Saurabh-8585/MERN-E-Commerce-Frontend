@@ -41,8 +41,8 @@ const Wishlist = () => {
             <ToastContainer />
 
             {wishlistData.map(product => (
-               
-                < CartCard product = { product } removeFromCart = { removeFromWishlist } key = { product._id } />
+
+                < CartCard product={product} removeFromCart={removeFromWishlist} key={product._id} />
             ))}
         </Container>
     )

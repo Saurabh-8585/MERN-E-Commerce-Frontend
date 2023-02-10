@@ -22,6 +22,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { ContextFunction } from '../../Context/Context';
 import ProductCard from '../../Components/Card/ProductCard';
+import ProductReview from '../../Components/Review/ProductReview';
 
 
 const Transition = forwardRef(function Transition(props, ref) {
@@ -34,6 +35,8 @@ const ProductDetail = () => {
     const { id, cat } = useParams()
     const [product, setProduct] = useState([])
     const [similarProduct, setSimilarProduct] = useState([])
+    const [reviews, setReviews] = useState([])
+
 
 
     let authToken = localStorage.getItem('Authorization')
@@ -46,6 +49,7 @@ const ProductDetail = () => {
     useEffect(() => {
         getProduct()
         getSimilarProducts()
+        fetchReviews()
         window.scroll(0, 0)
     }, [id])
 
@@ -87,6 +91,11 @@ const ProductDetail = () => {
         }
 
     };
+    const fetchReviews = async () => {
+        const { data } = await axios.get(`${process.env.REACT_APP_GET_REVIEW}/${id}`)
+        setReviews(data)
+        console.log(data)
+    }
 
     // function sharePost({ title, text, url }) {
     //     if
@@ -160,13 +169,16 @@ const ProductDetail = () => {
                             <Tooltip title='Add To Cart'>
                                 <Button variant='contained' className='all-btn' startIcon={<MdAddShoppingCart />} onClick={(() => addToCart(product))}>Buy</Button>
                             </Tooltip>
-                            <Tooltip title='Add To Cart'>
+                            <Tooltip title='Add To Wishlist'>
                                 <Button style={{ marginLeft: 20 }} variant='contained' className='all-btn' startIcon={<AiFillHeart />} onClick={(() => addToWhishList(product))}>Wishlist</Button>
                             </Tooltip>
 
                         </div>
                     </section>
                 </main>
+
+                <ProductReview setProceed={setProceed} authToken={authToken} id={id} setOpenAlert={setOpenAlert} reviews={reviews} fetchReviews={fetchReviews} />
+
                 <Typography sx={{ marginTop: 10, marginBottom: 5 }}>Similar Products</Typography>
                 <Box>
                     <Box className='similarProduct' sx={{ display: 'flex', overflowX: 'auto' }}>
@@ -179,6 +191,7 @@ const ProductDetail = () => {
                         }
                     </Box>
                 </Box>
+
                 <ToastContainer />
             </Container >
         </>

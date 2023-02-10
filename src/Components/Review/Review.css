@@ -1,0 +1,47 @@
+.form-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* gap: 220px; */
+    flex-wrap: wrap;
+    padding: 50px;
+    /* background-color: red; */
+}
+
+.form {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+    gap: 10px;
+    /* border: 2px solid black; */
+    width: 400px;
+    padding: 20px;
+}
+.form button{
+    align-self: flex-start;
+    margin-left: 30px;
+}
+
+.comment {
+    width: 300px;
+    background-color: transparent;
+}
+
+.form-img-box {
+    height: 450px;
+    width: 550px;
+    border: 2px solid black;
+}
+
+.review-img {
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+}
+.expression-icon{
+    font-size: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

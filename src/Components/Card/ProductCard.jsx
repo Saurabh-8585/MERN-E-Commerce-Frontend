@@ -44,7 +44,7 @@ export default function ProductCard({ prod }) {
                     ₹{prod.price}
                 </Typography>
                 <Typography >
-                    <Rating name="read-only" value={Math.round(prod.rating)} readOnly />
+                    <Rating precision={0.5} name="read-only" value={prod.rating} readOnly />
                 </Typography>
 
 
