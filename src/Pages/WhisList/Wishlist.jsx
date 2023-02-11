@@ -2,9 +2,8 @@ import { Container } from '@mui/system'
 import axios from 'axios'
 import React, { useContext, useEffect } from 'react'
 import { toast, ToastContainer } from 'react-toastify'
-import CartCard from '../../Components/Card/CartCard'
+import CartCard from '../../Components/Card/Cart Card/CartCard'
 import { ContextFunction } from '../../Context/Context'
-
 const Wishlist = () => {
     const { wishlistData, setWishlistData } = useContext(ContextFunction)
     let authToken = localStorage.getItem('Authorization')

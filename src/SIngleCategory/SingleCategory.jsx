@@ -2,7 +2,6 @@ import './singlecategory.css'
 import React, { useState, useEffect } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import axios from 'axios'
-import ProductCard from '../Components/Card/ProductCard'
 import { Container } from '@mui/system'
 import { Box, Button } from '@mui/material'
 import Loading from '../Components/loading/Loading'
@@ -10,6 +9,7 @@ import { BiFilterAlt } from 'react-icons/bi';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import ProductCard from '../Components/Card/Product Card/ProductCard'
 
 
 

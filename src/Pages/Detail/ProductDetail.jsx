@@ -21,8 +21,8 @@ import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { ContextFunction } from '../../Context/Context';
-import ProductCard from '../../Components/Card/ProductCard';
 import ProductReview from '../../Components/Review/ProductReview';
+import ProductCard from '../../Components/Card/Product Card/ProductCard';
 
 
 const Transition = forwardRef(function Transition(props, ref) {
@@ -92,7 +92,11 @@ const ProductDetail = () => {
 
     };
     const fetchReviews = async () => {
-        const { data } = await axios.get(`${process.env.REACT_APP_GET_REVIEW}/${id}`)
+        const { data } = await axios.get(`${process.env.REACT_APP_GET_REVIEW}/${id}`, {
+            headers: {
+                'Authorization': authToken
+            }
+        })
         setReviews(data)
         console.log(data)
     }

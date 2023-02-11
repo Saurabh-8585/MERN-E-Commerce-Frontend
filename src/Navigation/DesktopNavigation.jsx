@@ -72,52 +72,54 @@ const DesktopNavigation = () => {
       <nav className='nav'>
         <ToastContainer />
         <div className="logo">
-          <h1 >Shop It</h1>
+          <span >Shop It</span>
         </div>
-        <ul className="nav-items">
-          <li className="nav-links">
-            <NavLink to='/'>
-              <span className='nav-icon-span'>  Home</span>
-            </NavLink>
-          </li>
-          <li className="nav-links">
-            <NavLink to='/contact'>
-              <span className='nav-icon-span'>  Contact Us</span>
-            </NavLink>
-          </li>
-
-          <li className="nav-links">
-            <Tooltip title='Cart'>
-              <NavLink to='/cart'>
-                <span className='nav-icon-span'>    <Badge badgeContent={setProceed ? cart.length : 0}> <AiOutlineShoppingCart className='nav-icon' /></Badge></span>
+        <div className="nav-items">
+          <ul className="nav-items">
+            <li className="nav-links">
+              <NavLink to='/'>
+                <span className='nav-icon-span'>  Home</span>
               </NavLink>
-            </Tooltip>
-          </li>
-
-          <li className="nav-links">
-            <Tooltip title='Wishlist'>
-              <NavLink to='/wishlist'>
-                <span className='nav-icon-span'>    <Badge badgeContent={wishlistData.length}> <AiOutlineHeart className='nav-icon' /></Badge></span>
+            </li>
+            <li className="nav-links">
+              <NavLink to='/contact'>
+                <span className='nav-icon-span'>  Contact Us</span>
               </NavLink>
-            </Tooltip>
-          </li>
-          {
-            setProceed ?
-              <li className="nav-links" onClick={handleClickOpen}>
-                <Tooltip>
-                  <span className='nav-icon-span'>Logout     <FiLogOut className='nav-icon' /></span>
-                </Tooltip>
-              </li>
-              :
-              <li className="nav-links">
-                <Tooltip title='Login'>
-                  <NavLink to='/login'>
-                    <span className='nav-icon-span'>   <CgProfile style={{ fontSize: 29 }} /></span>
-                  </NavLink>
-                </Tooltip>
-              </li>
-          }
-        </ul>
+            </li>
+
+            <li className="nav-links">
+              <Tooltip title='Cart'>
+                <NavLink to='/cart'>
+                  <span className='nav-icon-span'>    <Badge badgeContent={setProceed ? cart.length : 0}> <AiOutlineShoppingCart className='nav-icon' /></Badge></span>
+                </NavLink>
+              </Tooltip>
+            </li>
+
+            <li className="nav-links">
+              <Tooltip title='Wishlist'>
+                <NavLink to='/wishlist'>
+                  <span className='nav-icon-span'>    <Badge badgeContent={wishlistData.length}> <AiOutlineHeart className='nav-icon' /></Badge></span>
+                </NavLink>
+              </Tooltip>
+            </li>
+            {
+              setProceed ?
+                <li className="nav-links" onClick={handleClickOpen}>
+                  <Tooltip>
+                    <span className='nav-icon-span'>Logout     <FiLogOut className='nav-icon' /></span>
+                  </Tooltip>
+                </li>
+                :
+                <li className="nav-links">
+                  <Tooltip title='Login'>
+                    <NavLink to='/login'>
+                      <span className='nav-icon-span'>   <CgProfile style={{ fontSize: 29 }} /></span>
+                    </NavLink>
+                  </Tooltip>
+                </li>
+            }
+          </ul>
+        </div>
       </nav >
       <Dialog
         open={openAlert}

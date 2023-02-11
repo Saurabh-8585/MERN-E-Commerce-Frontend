@@ -35,16 +35,12 @@ const Login = () => {
           navigate('/')
         }
       }
-
     }
     catch (error) {
       error.response.data.error.length === 1 ?
         toast.error(error.response.data.error[0].msg, { autoClose: 500, })
         : toast.error(error.response.data.error, { autoClose: 500, })
-
-
     }
-
   }
   return (
     <Container className="container">

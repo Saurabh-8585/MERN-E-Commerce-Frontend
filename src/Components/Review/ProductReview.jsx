@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import axios from 'axios';
 import Rating from '@mui/material/Rating';
+
 import {
     MdSentimentSatisfiedAlt,
     MdSentimentDissatisfied,
@@ -38,14 +39,23 @@ function getLabelText(value) {
     return `${value} Star${value !== 1 ? 's' : ''}, ${labels[value]}`;
 }
 const ProductReview = ({ authToken, setProceed, id, setOpenAlert, reviews, fetchReviews }) => {
-    const [value, setValue] = useState('');
-    const [hover, setHover] = useState(-1);
+    const [value, setValue] = useState(0);
+    const [hover, setHover] = useState('');
     const [comment, setComment] = useState('')
     // const [reviews, setReviews] = useState([])
 
     const handleSubmitReview = async (e) => {
         e.preventDefault()
-        if (comment.length >= 4 && value > 0) {
+        if (!comment && !value) {
+            toast.error("Please Fill the all Fields", { autoClose: 500, })
+        }
+        else if (comment.length <= 4) {
+            toast.error("Please add more than 4 characters", { autoClose: 500, })
+        }
+        else if (value <= 0) {
+            toast.error("Please add rating", { autoClose: 500, })
+        }
+        else if (comment.length >= 4 && value > 0) {
             try {
                 if (setProceed) {
                     const { data } = await axios.post(`${process.env.REACT_APP_ADD_REVIEW}`, { _id: id, comment: comment, rating: value }, {
@@ -64,18 +74,11 @@ const ProductReview = ({ authToken, setProceed, id, setOpenAlert, reviews, fetch
             }
             catch (error) {
                 toast.error(error.response.data.msg, { autoClose: 600, })
+                setComment('')
+                setValue('')
             }
         }
-        else {
-            toast.error("Please fill all field and add review more than 4 words", { autoClose: 500, })
-        }
     }
-
-    // const fetchReviews = async () => {
-    //     const { data } = await axios.get(`${process.env.REACT_APP_GET_REVIEW}/${id}`)
-    //     setReviews(data)
-    //     console.log(data)
-    // }
     return (
         <>
             <div className='form-container'>
@@ -119,14 +122,14 @@ const ProductReview = ({ authToken, setProceed, id, setOpenAlert, reviews, fetch
                         variant="outlined"
                     />
                     <Tooltip title='Send Review'>
-                        <Button className='all-btn' style={{ marginTop: 15 }} variant='contained' type='submit' endIcon=<MdSend /> >Send</Button>
+                        <Button className='form-btn'  variant='contained' type='submit' endIcon=<MdSend /> >Send</Button>
                     </Tooltip>
                 </form>
                 <div className="form-img-box">
                     <img src={ReviewImg} alt="Customer Review" className='review-img' />
                 </div>
             </div>
-            <Box sx={{ width: "70%", display: 'flex', justifyContent: "center", flexDirection: 'column', margin: 'auto' }}>       {
+            <Box className='review-box' >       {
                 reviews.map(review =>
                     <CommentCard review={review} key={review._id} />
                 )

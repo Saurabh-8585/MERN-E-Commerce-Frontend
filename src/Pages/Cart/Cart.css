@@ -1,4 +1,4 @@
-.main-cart-container {
+.total-card {
     display: flex;
     justify-content: space-between;
     width: 100%;
@@ -6,42 +6,51 @@
     background-color: green;
 }
 
-.cart-cards {
-    display: flex;
-    flex-wrap: wrap;
-    /* background-color: red; */
-}
+
 
 .total-card {
     width: 30%;
-        background-color: white;
+    background-color: white;
 }
 
 
 
 .main-card {
-    width: 300px;
+    width: 500px;
     margin: 30px 10px 40px 10px;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    flex-wrap: wrap;
     padding: 10px;
     height: 440px;
-    background-color: Red;
+    /* background-color: red; */
+    border: 2px solid black;
 }
 
-.img-box {
-    height: 200px;
-    width: 200px;
-    display: flex;
-    margin: auto;
+.cart-img-box {
+    height: 100px;
+    width: 100px;
+    border: 2px solid black;
+
 }
 
-.img-box .img {
+.cart-img-box .cart-img {
     height: 100%;
     width: 100%;
-    object-fit: contain;
+    object-fit: fill;
+}
+
+/* .cart-img {
+    width: 200px;
+    height: 150px;
+
+} */
+
+.total-card {
+    background-color: red;
+    height: 100%;
 }
 
 @media screen and (max-width: 960px) {
@@ -50,9 +59,29 @@
         height: 350px;
     }
 
-    .img-box {
-        width: 150px;
-        height: 150px;
+    .total-card {
+        background-color: green;
     }
 
+
+    .cart-img {
+        width: 150px;
+        height: 150px;
+        object-fit: contain;
+
+    }
+
+}
+
+@media (min-width: 768px) and (max-width:1023px) {
+    .total-card {
+        background-color: blue;
+    }
+
+    .cart-img {
+        width: 150px;
+        height: 150px;
+        object-fit: contain;
+
+    }
 }

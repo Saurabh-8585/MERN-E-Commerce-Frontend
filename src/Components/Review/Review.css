@@ -3,7 +3,7 @@
     justify-content: space-between;
     align-items: center;
     /* gap: 220px; */
-    flex-wrap: wrap;
+    /* flex-wrap: wrap; */
     padding: 50px;
     /* background-color: red; */
 }
@@ -14,11 +14,11 @@
     align-items: center;
     flex-direction: column;
     gap: 10px;
-    /* border: 2px solid black; */
     width: 400px;
     padding: 20px;
 }
-.form button{
+
+.form button {
     align-self: flex-start;
     margin-left: 30px;
 }
@@ -31,17 +31,89 @@
 .form-img-box {
     height: 450px;
     width: 550px;
-    border: 2px solid black;
+    /* border: 2px solid black; */
 }
 
 .review-img {
     height: 100%;
     width: 100%;
     object-fit: contain;
+    margin-bottom: 20px;
+    animation: floating 5s linear infinite;
 }
-.expression-icon{
+
+.expression-icon {
     font-size: 30px;
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.review-box {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    width: 70%;
+    margin: auto;
+}
+
+@media (min-width: 768px) and (max-width:1023px) {
+    .review-box {
+        width: 100%;
+    }
+
+    .form-img-box {
+        height: 350px;
+        width: 450px;
+    }
+}
+
+@media screen and (max-width: 960px) {
+    .review-box {
+        width: 100%;
+    }
+
+    .form-container {
+        flex-direction: column-reverse;
+    }
+
+    .form-img-box {
+        height: 350px;
+        width: 450px;
+    }
+}
+
+
+
+@media (min-width: 900px) and (max-width:1096px) {
+    .form-container {
+        flex-direction: row;
+    }
+
+    .form-img-box {
+        height: 350px;
+        width: 450px;
+    }
+}
+
+.form-btn {
+    align-self: flex-start;
+}
+
+@media screen and (max-width: 900px) {
+    .form-img-box {
+        height: 350px;
+        width: 350px;
+        overflow: hidden;
+        border: 2px solid black;
+    }
+
+    .form {
+        /* border: 2px solid black; */
+        width: 350px;
+        gap: 20px;
+    }
+
+
+
 }

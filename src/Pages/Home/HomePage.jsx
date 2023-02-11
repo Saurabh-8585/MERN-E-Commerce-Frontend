@@ -2,12 +2,12 @@ import './Home.css'
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
-import ProductCard from '../../Components/Card/ProductCard'
 import { Button, Container } from '@mui/material'
 import { Box } from '@mui/system'
 import BannerData from '../../Helpers/HomePageBanner'
 import { useContext } from 'react'
 import { ContextFunction } from '../../Context/Context'
+import ProductCard from '../../Components/Card/Product Card/ProductCard'
 const HomePage = () => {
     const { setCart } = useContext(ContextFunction)
     const [productData, setProductData] = useState([])

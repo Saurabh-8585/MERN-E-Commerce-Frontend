@@ -17,8 +17,10 @@
 
 nav .logo {
     /* background-color: green; */
-    /* width: 50%; */
-    
+    width: 100px;
+    font-weight: 800;
+    font-size: 25px;
+
 }
 
 nav ul {
@@ -37,14 +39,14 @@ nav ul li a {
     padding: 8px 18px;
     border-radius: 10px;
     font-weight: 600;
-    
+
 }
 
 .nav-icon-span {
     font-size: 20px;
 }
 
-.nav-item {
+.nav-items {
     line-height: 40px;
     /* margin-right: 1rem; */
 }
@@ -63,15 +65,26 @@ ul li:hover:after {
     background: #1976d2;
 }
 
-.nav-icon:not(:last-child){
+.nav-icon:not(:last-child) {
     font-size: 29px;
 }
+
 @media screen and (max-width: 900px) {
+
+
     .nav ul {
         display: none;
     }
 
     .nav {
         display: block;
+    }
+}
+
+
+@media (min-width: 900px) and (max-width:1096px) {
+    .nav {
+        gap: 10px;
+        justify-content: space-around;
     }
 }

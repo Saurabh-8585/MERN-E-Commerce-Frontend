@@ -1,16 +1,17 @@
+// import './Comm'
 import { Button, Card, CardActionArea, CardActions, CardContent, CardMedia, Rating, Tooltip, Typography } from '@mui/material'
 import { Box } from '@mui/system'
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { AiFillDelete } from 'react-icons/ai'
-
+import './CartCard.css'
 const CartCard = ({ product, removeFromCart }) => {
     const [isReadMode, SetisReadMode] = useState(true)
     return (
         <Card className='main-card' >
 
             <Link to={`/Detail/type/${product?.productId?.type}/${product?.productId?._id}`}>
-                <CardActionArea>
+                <CardActionArea >
                     <Box className='img-box'  >
                         <CardMedia
                             component="img"

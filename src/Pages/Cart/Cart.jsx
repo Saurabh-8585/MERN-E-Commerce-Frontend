@@ -3,11 +3,8 @@ import { ContextFunction } from '../../Context/Context';
 import {
     Box,
     Button,
-    Card,
     CardActionArea,
-    CardActions,
     CardContent,
-    CardMedia,
     Tooltip,
     Typography,
     Dialog,
@@ -15,14 +12,20 @@ import {
     DialogContent,
     Slide,
     IconButton,
-    Rating,
+    TableContainer,
+    TableHead,
+    Table,
+    Paper,
+    TableRow,
+    TableCell,
+    TableBody,
 } from '@mui/material'
 import './Cart.css'
 import axios from 'axios'
-import { Link, useNavigate } from 'react-router-dom'
-import { toast, ToastContainer } from 'react-toastify'
-import { AiFillCloseCircle, AiOutlineLogin, AiFillDelete, AiFillInfoCircle } from 'react-icons/ai'
-import CartCard from '../../Components/Card/CartCard';
+import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
+import { AiFillCloseCircle, AiOutlineLogin, AiFillInfoCircle } from 'react-icons/ai'
+import CartTable from './CartTable';
 
 
 const Transition = forwardRef(function Transition(props, ref) {
@@ -32,8 +35,6 @@ const Cart = () => {
     const { cart, setCart } = useContext(ContextFunction)
     const [total, setTotal] = useState(0)
     const [shippingCost, setShippingCoast] = useState(100)
-
-    const [isReadMode, SetisReadMode] = useState(true)
     const [openAlert, setOpenAlert] = useState(false);
 
     const navigate = useNavigate()
@@ -88,13 +89,26 @@ const Cart = () => {
         <div className='main-cart-container'>
             {setProceed &&
                 <>
-                    <Box className='cart-cards'>
-                        {
-                            cart.map(product =>
-                                <CartCard product={product} removeFromCart={removeFromCart} key={product._id} />
 
-                            )}
-                    </Box>
+                    <TableContainer component={Paper} >
+                        <Table aria-label="simple table">
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell sx={{ textAlign: 'center' }}>ITEM</TableCell>
+                                    <TableCell sx={{ textAlign: 'center' }}>PRICE</TableCell>
+                                    <TableCell sx={{ textAlign: 'center' }}>Order Date</TableCell>
+                                    <TableCell sx={{ textAlign: 'center' }}>REMOVE</TableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {
+                                    cart.map(product =>
+                                        <CartTable product={product} removeFromCart={removeFromCart} key={product._id} />
+
+                                    )}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
                     <Box className='total-card'>
                         <CardActionArea >
                             <CardContent>
