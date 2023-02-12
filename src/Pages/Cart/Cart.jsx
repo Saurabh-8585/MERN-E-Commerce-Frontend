@@ -19,12 +19,14 @@ import {
     TableRow,
     TableCell,
     TableBody,
+    Avatar,
 } from '@mui/material'
 import './Cart.css'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { AiFillCloseCircle, AiOutlineLogin, AiFillInfoCircle } from 'react-icons/ai'
+import { IoBagCheckOutline } from 'react-icons/io5'
 import CartTable from './CartTable';
 
 
@@ -40,6 +42,7 @@ const Cart = () => {
     const navigate = useNavigate()
 
     let shipping = total >= 1000 ? 0 : shippingCost
+    let totalCost = cart.length == 0 ? 0 : total + shipping
     let authToken = localStorage.getItem('Authorization')
     let setProceed = authToken ? true : false
 
@@ -62,6 +65,7 @@ const Cart = () => {
                     }
                 })
             setCart(data);
+            console.log(data);
         }
 
     }
@@ -85,6 +89,48 @@ const Cart = () => {
             getCart()
         }
     }
+    const checkoutHandler = async () => {
+
+
+
+        const { data: { key } } = await axios.get('http://localhost:5000/api/getkey')
+
+        const { data: { order } } = await axios.post('http://localhost:5000/api/checkout', {
+            amount: totalCost
+        })
+        console.log(order);
+        const options = {
+            key: key,
+            amount: order.amount,
+            currency: "INR",
+            name: cart?.user?.name,
+            description: "Tutorial of RazorPay",
+            image: <Avatar />,
+            order_id: order.id,
+            callback_url: "http://localhost:5000/api/paymentverification",
+            prefill: {
+                name: "Gaurav Kumar",
+                email: "gaurav.kumar@example.com",
+                contact: "9999999999"
+            },
+            notes: {
+                "address": "Razorpay Corporate Office"
+            },
+            theme: {
+                "color": "#121212"
+            }
+        };
+        const razor = new window.Razorpay(options);
+        razor.open();
+    }
+
+
+
+
+
+
+
+
     return (
         <div className='main-cart-container'>
             {setProceed &&
@@ -123,10 +169,11 @@ const Cart = () => {
                                 </Tooltip>
 
                                 <br />
-                                <span>Bill Amount = ₹ {cart.length == 0 ? 0 : total + shipping}</span>
+                                <span>Bill Amount = ₹ {totalCost}</span>
                             </CardContent>
                         </CardActionArea>
                     </Box>
+                    <Button variant='contained' onClick={checkoutHandler} endIcon=<IoBagCheckOutline />> Proceed To Checkout</Button>
                 </>
             }
             <Dialog
@@ -143,7 +190,7 @@ const Cart = () => {
                     <Button variant='contained' color='error' endIcon=<AiFillCloseCircle /> onClick={handleClose}>Close</Button>
                 </DialogActions>
             </Dialog>
-        </div>
+        </div >
     )
 }
 

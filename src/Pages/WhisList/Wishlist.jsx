@@ -1,9 +1,10 @@
 import { Container } from '@mui/system'
 import axios from 'axios'
+import CartCard from '../../Components/Card/CartCard/CartCard'
 import React, { useContext, useEffect } from 'react'
 import { toast, ToastContainer } from 'react-toastify'
-import CartCard from '../../Components/Card/Cart Card/CartCard'
 import { ContextFunction } from '../../Context/Context'
+
 const Wishlist = () => {
     const { wishlistData, setWishlistData } = useContext(ContextFunction)
     let authToken = localStorage.getItem('Authorization')
@@ -41,7 +42,7 @@ const Wishlist = () => {
 
             {wishlistData.map(product => (
 
-                < CartCard product={product} removeFromCart={removeFromWishlist} key={product._id} />
+                <CartCard product={product} removeFromCart={removeFromWishlist} key={product._id} />
             ))}
         </Container>
     )
