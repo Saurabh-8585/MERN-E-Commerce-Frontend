@@ -28,7 +28,7 @@ import { toast } from 'react-toastify'
 import { AiFillCloseCircle, AiOutlineLogin, AiFillInfoCircle } from 'react-icons/ai'
 import { IoBagCheckOutline } from 'react-icons/io5'
 import CartTable from './CartTable';
-
+import profileImg from '../../Assets/Banner/vecteezy_user-avatar-line-style_.jpg'
 
 const Transition = forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -65,7 +65,6 @@ const Cart = () => {
                     }
                 })
             setCart(data);
-            console.log(data);
         }
 
     }
@@ -89,36 +88,41 @@ const Cart = () => {
             getCart()
         }
     }
+
+
+    
+
     const checkoutHandler = async () => {
 
 
+        const { data: { key } } = await axios.get(`${process.env.REACT_APP_GET_KEY}`)
 
-        const { data: { key } } = await axios.get('http://localhost:5000/api/getkey')
+        const { data: { order } } = await axios.post(`${process.env.REACT_APP_GET_CHECKOUT}`, {
+            amount: 1,
+            userId: cart[0]?.user?._id,
 
-        const { data: { order } } = await axios.post('http://localhost:5000/api/checkout', {
-            amount: totalCost
         })
-        console.log(order);
         const options = {
             key: key,
-            amount: order.amount,
+            amount: 1,
             currency: "INR",
-            name: cart?.user?.name,
-            description: "Tutorial of RazorPay",
-            image: <Avatar />,
+            name: cart[0]?.user?.name,
+            description: "Payment",
+            image: profileImg,
             order_id: order.id,
-            callback_url: "http://localhost:5000/api/paymentverification",
+            callback_url: process.env.REACT_APP_GET_PAYMENTVERIFICATION,
             prefill: {
-                name: "Gaurav Kumar",
-                email: "gaurav.kumar@example.com",
-                contact: "9999999999"
+                name: cart[0]?.user?.name,
+                email: cart[0]?.user?.email,
+                contact: "7020409952"
             },
             notes: {
                 "address": "Razorpay Corporate Office"
             },
             theme: {
-                "color": "#121212"
-            }
+                "color": "#1976d2"
+            },
+
         };
         const razor = new window.Razorpay(options);
         razor.open();

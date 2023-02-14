@@ -11,6 +11,7 @@ import { Link } from 'react-router-dom'
 import { AiFillDelete } from 'react-icons/ai'
 const CartTable = ({ product, removeFromCart }) => {
     let date = new Date(product.createdAt).toLocaleDateString()
+    
     return (
         <TableRow key={product?.productId?.name} >
 

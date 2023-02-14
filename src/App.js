@@ -11,6 +11,7 @@ import DesktopNavigation from './Navigation/DesktopNavigation';
 import Wishlist from './Pages/WhisList/Wishlist';
 import { Box } from '@mui/system';
 import MTable from './Pages/Cart/CartTable';
+import PaymentSuccess from './Pages/Payment/PaymentSuccess';
 
 
 
@@ -28,7 +29,7 @@ function App() {
         {/* <Box sx={{ display: 'flex' }}> */}
         {/* {<SideBar />} */}
         <DesktopNavigation />
-        <Box sx={{marginTop:20}}>
+        <Box sx={{ marginTop: 20 }}>
           <Routes>
             <Route path="/login" element={< Login />} />
             <Route path='/register' element={<Register />} />
@@ -37,7 +38,7 @@ function App() {
             <Route path='product/type/:cat' element={<SingleCategory />} />
             <Route path='/cart' element={<Cart />} />
             <Route path='/wishlist' element={<Wishlist />} />
-            <Route path='/table' element={<MTable />} />
+            <Route path='/paymentsuccess' element={<PaymentSuccess />} />
 
 
           </Routes>
