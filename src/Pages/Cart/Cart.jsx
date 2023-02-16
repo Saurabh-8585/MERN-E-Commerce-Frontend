@@ -19,16 +19,21 @@ import {
     TableRow,
     TableCell,
     TableBody,
-    Avatar,
+    Container,
+    // Card,
+    // CardMedia,
+    // CardActions,
+    // Rating,
 } from '@mui/material'
-import './Cart.css'
+// import './Cart.css'
 import axios from 'axios'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { AiFillCloseCircle, AiOutlineLogin, AiFillInfoCircle } from 'react-icons/ai'
 import { IoBagCheckOutline } from 'react-icons/io5'
 import CartTable from './CartTable';
 import profileImg from '../../Assets/Banner/vecteezy_user-avatar-line-style_.jpg'
+import ProductCard from '../../Components/Card/Product Card/ProductCard';
 
 const Transition = forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -38,7 +43,7 @@ const Cart = () => {
     const [total, setTotal] = useState(0)
     const [shippingCost, setShippingCoast] = useState(100)
     const [openAlert, setOpenAlert] = useState(false);
-
+    const [previousOrder, setPreviousOrder] = useState([]);
     const navigate = useNavigate()
 
     let shipping = total >= 1000 ? 0 : shippingCost
@@ -49,7 +54,9 @@ const Cart = () => {
 
     useEffect(() => {
         setProceed ? getCart() : setOpenAlert(true)
+        getPreviousOrder()
         window.scroll(0, 0)
+
     }, [])
 
     useEffect(() => {
@@ -90,18 +97,15 @@ const Cart = () => {
     }
 
 
-    
 
     const checkoutHandler = async () => {
-
-
         const { data: { key } } = await axios.get(`${process.env.REACT_APP_GET_KEY}`)
-
-        const { data: { order } } = await axios.post(`${process.env.REACT_APP_GET_CHECKOUT}`, {
+        const { data } = await axios.post(`${process.env.REACT_APP_GET_CHECKOUT}`, {
             amount: 1,
+            productDetails: JSON.stringify(cart),
             userId: cart[0]?.user?._id,
-
         })
+
         const options = {
             key: key,
             amount: 1,
@@ -109,7 +113,7 @@ const Cart = () => {
             name: cart[0]?.user?.name,
             description: "Payment",
             image: profileImg,
-            order_id: order.id,
+            order_id: data.order.id,
             callback_url: process.env.REACT_APP_GET_PAYMENTVERIFICATION,
             prefill: {
                 name: cart[0]?.user?.name,
@@ -128,12 +132,16 @@ const Cart = () => {
         razor.open();
     }
 
-
-
-
-
-
-
+    const getPreviousOrder = async () => {
+        const { data } = await axios.get(`${process.env.REACT_APP_GET_PREVIOUS_ORDER}`,
+            {
+                headers: {
+                    'Authorization': authToken
+                }
+            })
+        setPreviousOrder(data)
+    }
+    console.log(previousOrder);
 
     return (
         <div className='main-cart-container'>
@@ -178,6 +186,16 @@ const Cart = () => {
                         </CardActionArea>
                     </Box>
                     <Button variant='contained' onClick={checkoutHandler} endIcon=<IoBagCheckOutline />> Proceed To Checkout</Button>
+                    <Container maxWidth='xl' style={{ marginTop: 90, display: "flex", justifyContent: 'center', flexWrap: "wrap", paddingBottom: 20 }}>
+                        {previousOrder.map(product => (
+                            product.productData.map(prod =>
+                                <Link to={`/Detail/type/${prod.productId.type}/${prod.productId._id}`} key={prod.productId._id}>
+                                    <ProductCard prod={prod.productId} />
+                                    {console.log( 2,prod.productId ) }
+                                </Link>
+                            )
+                        ))}
+                    </Container>
                 </>
             }
             <Dialog
