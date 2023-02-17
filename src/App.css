@@ -22,6 +22,7 @@ a {
 
 .all-btn {
   width: 110px;
+  /* text-align: center; */
 }
 
 .active {
@@ -32,6 +33,10 @@ a {
   /* width: 60px; */
 }
 
+.toastContainerBox {
+  position: fixed;
+  top: 120px;
+}
 
 @media screen and (max-width: 960px) {
   .all-btn {
@@ -39,6 +44,13 @@ a {
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+
+  .toastContainerBox {
+    max-width: 250px;
+    top: 80px;
+    left: 80px;
+
   }
 }
 

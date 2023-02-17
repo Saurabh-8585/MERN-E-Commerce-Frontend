@@ -18,8 +18,7 @@ import Slide from '@mui/material/Slide';
 import { MdAddShoppingCart } from 'react-icons/md'
 import { AiFillHeart, AiFillCloseCircle, AiOutlineLogin } from 'react-icons/ai'
 import axios from 'axios';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import {  toast } from 'react-toastify';
 import { ContextFunction } from '../../Context/Context';
 import ProductReview from '../../Components/Review/ProductReview';
 import ProductCard from '../../Components/Card/Product Card/ProductCard';
@@ -63,7 +62,7 @@ const ProductDetail = () => {
             })
             setCart(data)
             setCart([...cart, product])
-            toast.success("Added To Cart", { autoClose: 500, })
+            toast.success("Added To Cart", { autoClose: 500,theme:'colored' })
         }
         else {
             setOpenAlert(true);
@@ -79,11 +78,11 @@ const ProductDetail = () => {
                 })
                 setWishlistData(data)
                 setWishlistData([...wishlistData, product])
-                toast.success("Added To Wishlist", { autoClose: 500, })
+                toast.success("Added To Wishlist", { autoClose: 500, theme: 'colored' })
             }
             catch (error) {
                 console.log({ wishlistData })
-                toast.error(error.response.data.msg, { autoClose: 500, })
+                toast.error(error.response.data.msg, { autoClose: 500, theme: 'colored' })
             }
         }
         else {
@@ -196,7 +195,6 @@ const ProductDetail = () => {
                     </Box>
                 </Box>
 
-                <ToastContainer />
             </Container >
         </>
     )

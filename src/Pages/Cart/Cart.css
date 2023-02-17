@@ -41,18 +41,18 @@
     object-fit: fill;
 }
 
-/* .cart-img {
+.cart-img {
     width: 200px;
     height: 150px;
 
-} */
+}
 
-/* .total-card {
+.total-card {
     background-color: red;
     height: 100%;
-} */
+}
 
-/* @media screen and (max-width: 960px) {
+@media screen and (max-width: 960px) {
     .main-card {
         width: 220px;
         height: 350px;
@@ -70,9 +70,9 @@
 
     }
 
-} */
+}
 
-/* @media (min-width: 768px) and (max-width:1023px) {
+@media (min-width: 768px) and (max-width:1023px) {
     .total-card {
         background-color: blue;
     }
@@ -83,4 +83,4 @@
         object-fit: contain;
 
     }
-} */
+}

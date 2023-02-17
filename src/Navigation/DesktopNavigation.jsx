@@ -6,8 +6,7 @@ import { FiLogOut } from 'react-icons/fi'
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { Badge, Button, Dialog, DialogActions, DialogContent, Slide, Tooltip, Typography } from '@mui/material';
 import { ContextFunction } from '../Context/Context';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
 import axios from 'axios'
 const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -49,12 +48,12 @@ const DesktopNavigation = () => {
   const handleLogOut = () => {
     if (setProceed) {
       localStorage.removeItem('Authorization')
-      toast.success("Logout Successfully", { autoClose: 500, })
+      toast.success("Logout Successfully", { autoClose: 500, theme: 'colored' })
       navigate('/')
       setOpenAlert(false)
     }
     else {
-      toast.error("User is already logged of", { autoClose: 500, })
+      toast.error("User is already logged of", { autoClose: 500, theme: 'colored' })
     }
   }
 
@@ -70,7 +69,6 @@ const DesktopNavigation = () => {
   return (
     <>
       <nav className='nav'>
-        <ToastContainer />
         <div className="logo">
           <span >Shop It</span>
         </div>
@@ -98,7 +96,7 @@ const DesktopNavigation = () => {
             <li className="nav-links">
               <Tooltip title='Wishlist'>
                 <NavLink to='/wishlist'>
-                  <span className='nav-icon-span'>    <Badge badgeContent={wishlistData.length}> <AiOutlineHeart className='nav-icon' /></Badge></span>
+                  <span className='nav-icon-span'>    <Badge badgeContent={setProceed ? wishlistData.length : 0}> <AiOutlineHeart className='nav-icon' /></Badge></span>
                 </NavLink>
               </Tooltip>
             </li>

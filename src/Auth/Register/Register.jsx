@@ -4,7 +4,7 @@ import axios from 'axios'
 import { Link, useNavigate } from 'react-router-dom'
 import { Button, TextField, Typography } from '@mui/material'
 import { Box, Container } from '@mui/system'
-import { toast, ToastContainer } from 'react-toastify'
+import { toast } from 'react-toastify'
 
 
 const Register = () => {
@@ -33,20 +33,19 @@ const Register = () => {
         const sendAuth = await axios.post(`${process.env.REACT_APP_REGISTER}`, { name: credentials.name, email: credentials.email, password: credentials.password })
         const receive = await sendAuth.data
         if (receive.success === true) {
-          toast.success("Registered Successfully", { autoClose: 500, })
+          toast.success("Registered Successfully", { autoClose: 500, theme: 'colored' })
           localStorage.setItem('Authorization', receive.authToken)
           navigate('/')
         }
       }
 
     } catch (error) {
-      toast.error(error.response.data.error[0].msg, { autoClose: 500, })
+      toast.error(error.response.data.error[0].msg, { autoClose: 500, theme: 'colored' })
     }
 
   }
   return (
     <Container className="container">
-      <ToastContainer />
       <form onSubmit={handleSubmit}>
         <Box className='form-box' >
 

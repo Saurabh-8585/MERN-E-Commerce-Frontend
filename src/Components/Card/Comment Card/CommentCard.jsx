@@ -1,14 +1,11 @@
 import { Avatar, Grid, Paper, Rating } from '@mui/material'
-import React from 'react'
-
-
 const CommentCard = ({ review }) => {
     let date = new Date(review.createdAt).toLocaleDateString('en-us', { weekday: "long", year: "numeric", month: "short", day: "numeric" })
 
 
     return (
-        <Paper style={{ padding: "10px 20px", margin: "15px" }}>
-            <Grid container wrap="nowrap" spacing={2}>
+        // <Paper style={{ padding: "8px 10px", margin: "15px", backgroundColor:'#1976d' }}>
+        <Grid container wrap="nowrap" spacing={2} sx={{ backgroundColor: '#1976d', boxShadow:'0px 8px 13px rgba(0, 0, 0, 0.2)' ,borderRadius:5,marginTop:5 }}>
                 <Grid item>
                     <Avatar alt="Customer Avatar" />
                 </Grid>
@@ -25,7 +22,7 @@ const CommentCard = ({ review }) => {
                     </p>
                 </Grid>
             </Grid>
-        </Paper>
+        // </Paper>
     )
 }
 

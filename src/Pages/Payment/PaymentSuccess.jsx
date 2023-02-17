@@ -1,4 +1,3 @@
-import React from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import { AiOutlineFileDone } from 'react-icons/ai'
 import paymentImg from '../../Assets/Banner/payment.jpg'

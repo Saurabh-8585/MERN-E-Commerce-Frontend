@@ -12,26 +12,14 @@ import {
     DialogContent,
     Slide,
     IconButton,
-    TableContainer,
-    TableHead,
-    Table,
-    Paper,
-    TableRow,
-    TableCell,
-    TableBody,
     Container,
-    // Card,
-    // CardMedia,
-    // CardActions,
-    // Rating,
 } from '@mui/material'
-// import './Cart.css'
 import axios from 'axios'
 import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { AiFillCloseCircle, AiOutlineLogin, AiFillInfoCircle } from 'react-icons/ai'
 import { IoBagCheckOutline } from 'react-icons/io5'
-import CartTable from './CartTable';
+import CartCard from '../../Components/Card/CartCard/CartCard';
 import profileImg from '../../Assets/Banner/vecteezy_user-avatar-line-style_.jpg'
 import ProductCard from '../../Components/Card/Product Card/ProductCard';
 
@@ -91,7 +79,7 @@ const Cart = () => {
                     'Authorization': authToken
                 }
             })
-            toast.error("Removed From Cart", { autoClose: 500, })
+            toast.error("Removed From Cart", { autoClose: 500, theme: 'colored' })
             getCart()
         }
     }
@@ -148,25 +136,13 @@ const Cart = () => {
             {setProceed &&
                 <>
 
-                    <TableContainer component={Paper} >
-                        <Table aria-label="simple table">
-                            <TableHead>
-                                <TableRow>
-                                    <TableCell sx={{ textAlign: 'center' }}>ITEM</TableCell>
-                                    <TableCell sx={{ textAlign: 'center' }}>PRICE</TableCell>
-                                    <TableCell sx={{ textAlign: 'center' }}>Order Date</TableCell>
-                                    <TableCell sx={{ textAlign: 'center' }}>REMOVE</TableCell>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                {
-                                    cart.map(product =>
-                                        <CartTable product={product} removeFromCart={removeFromCart} key={product._id} />
 
-                                    )}
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
+                    {
+                        cart.map(product =>
+                            <CartCard product={product} removeFromCart={removeFromCart} key={product._id} />
+
+                        )}
+
                     <Box className='total-card'>
                         <CardActionArea >
                             <CardContent>
@@ -185,13 +161,12 @@ const Cart = () => {
                             </CardContent>
                         </CardActionArea>
                     </Box>
-                    <Button variant='contained' onClick={checkoutHandler} endIcon=<IoBagCheckOutline />> Proceed To Checkout</Button>
+                    <Button variant='contained' onClick={checkoutHandler} endIcon=<IoBagCheckOutline /> >  Proceed To Checkout</Button>
                     <Container maxWidth='xl' style={{ marginTop: 90, display: "flex", justifyContent: 'center', flexWrap: "wrap", paddingBottom: 20 }}>
                         {previousOrder.map(product => (
                             product.productData.map(prod =>
                                 <Link to={`/Detail/type/${prod.productId.type}/${prod.productId._id}`} key={prod.productId._id}>
                                     <ProductCard prod={prod.productId} />
-                                    {console.log( 2,prod.productId ) }
                                 </Link>
                             )
                         ))}

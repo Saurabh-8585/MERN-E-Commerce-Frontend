@@ -10,24 +10,19 @@ import MobileNavigation from './Navigation/MobileNavigation';
 import DesktopNavigation from './Navigation/DesktopNavigation';
 import Wishlist from './Pages/WhisList/Wishlist';
 import { Box } from '@mui/system';
-import MTable from './Pages/Cart/CartTable';
 import PaymentSuccess from './Pages/Payment/PaymentSuccess';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+
 
 
 
 function App() {
-
-
-
-
-
-
-
   return (
     <>
+      <ToastContainer toastClassName='toastContainerBox' />
       <Router>
-        {/* <Box sx={{ display: 'flex' }}> */}
-        {/* {<SideBar />} */}
         <DesktopNavigation />
         <Box sx={{ marginTop: 20 }}>
           <Routes>
@@ -39,12 +34,9 @@ function App() {
             <Route path='/cart' element={<Cart />} />
             <Route path='/wishlist' element={<Wishlist />} />
             <Route path='/paymentsuccess' element={<PaymentSuccess />} />
-
-
           </Routes>
         </Box>
         <MobileNavigation />
-        {/* </Box> */}
       </Router >
 
 
