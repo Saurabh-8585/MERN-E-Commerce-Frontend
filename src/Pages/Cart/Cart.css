@@ -11,9 +11,14 @@
 .total-card {
     width: 30%;
     background-color: white;
+    border: 2px solid black;
 }
 
-
+.card-container{
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
 
 .main-card {
     width: 500px;
@@ -21,13 +26,18 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-direction: column;
+    /* flex-direction: column; */
     flex-wrap: wrap;
     padding: 10px;
     height: 440px;
     border: 2px solid black;
 }
-
+.main-cart-container{
+    display: flex;      
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
 .cart-img-box {
     height: 100px;
     width: 100px;
@@ -50,6 +60,9 @@
 .total-card {
     background-color: red;
     height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 @media screen and (max-width: 960px) {

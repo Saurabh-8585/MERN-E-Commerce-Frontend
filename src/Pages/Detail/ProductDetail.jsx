@@ -17,8 +17,9 @@ import {
 import Slide from '@mui/material/Slide';
 import { MdAddShoppingCart } from 'react-icons/md'
 import { AiFillHeart, AiFillCloseCircle, AiOutlineLogin } from 'react-icons/ai'
+import { TbDiscount2 } from 'react-icons/tb'
 import axios from 'axios';
-import {  toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import { ContextFunction } from '../../Context/Context';
 import ProductReview from '../../Components/Review/ProductReview';
 import ProductCard from '../../Components/Card/Product Card/ProductCard';
@@ -62,7 +63,7 @@ const ProductDetail = () => {
             })
             setCart(data)
             setCart([...cart, product])
-            toast.success("Added To Cart", { autoClose: 500,theme:'colored' })
+            toast.success("Added To Cart", { autoClose: 500, theme: 'colored' })
         }
         else {
             setOpenAlert(true);
@@ -99,11 +100,6 @@ const ProductDetail = () => {
         setReviews(data)
         console.log(data)
     }
-
-    // function sharePost({ title, text, url }) {
-    //     if
-    // }
-    // console.log(Navigator.)
     const getSimilarProducts = async () => {
         const { data } = await axios.post(`${process.env.REACT_APP_PRODUCT_TYPE}`, { userType: cat })
         setSimilarProduct(data)
@@ -167,6 +163,20 @@ const ProductDetail = () => {
                                 }
                             </div>
                         </Typography>
+                        <Chip
+                            label={product.price > 1000 ? "Upto 9% off" : "Upto 38% off"}
+                            variant="outlined"
+                            sx={{ background: '#1976d2', color: 'white', width: '150px' ,fontWeight:'bold'}}
+                            avatar={<TbDiscount2 color='white' />}
+
+
+                        />
+                        <div style={{ display: 'flex', gap: 20 }}>
+                            <Typography variant="h6" color="red"><s> ₹{product.price > 1000 ? product.price + 1000 : product.price + 300}</s> </Typography>
+                            <Typography variant="h6" color="primary">
+                                ₹{product.price}
+                            </Typography>
+                        </div>
                         <Rating name="read-only" value={Math.round(product.rating)} readOnly />
                         <div >
                             <Tooltip title='Add To Cart'>

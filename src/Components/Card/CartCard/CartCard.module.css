@@ -20,8 +20,8 @@
 }
 
 .img_box {
-    height: 250px;
-    width: 300px;
+    height: 200px;
+    width: 250px;
     /* padding: 5px; */
     display: flex;
     justify-content: center;

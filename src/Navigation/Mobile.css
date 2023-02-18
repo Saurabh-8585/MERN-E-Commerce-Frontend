@@ -5,7 +5,7 @@
 @media screen and (max-width: 900px) {
     .showMobile {
         display: block;
-        border: 2px solid Red;
+        /* border: 2px solid Red; */
         
     }
 

@@ -69,7 +69,7 @@ const MobileNavigation = () => {
 
     return (
         <Box className='showMobile'>
-            <BottomNavigation sx={{ display: 'flex', justifyContent: 'space-between', width: '100%', position: 'fixed', bottom: 0,overflowX:'hidden',border:'2px solid red' }}>
+            <BottomNavigation sx={{ display: 'flex', justifyContent: 'space-between', width: '100%', position: 'fixed', bottom: 0,overflowX:'hidden', }}>
                 <NavLink to='/'>
                     <div className='links'>
                         <AiOutlineHome style={{ fontSize: 23, }} />

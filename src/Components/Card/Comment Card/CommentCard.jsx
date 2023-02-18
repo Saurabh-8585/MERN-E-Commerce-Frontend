@@ -10,7 +10,7 @@ const CommentCard = ({ review }) => {
                     <Avatar alt="Customer Avatar" />
                 </Grid>
                 <Grid justifyContent="left" item xs zeroMinWidth>
-                    <h4 style={{ margin: 0, textAlign: "left" }}>{review?.user?.name}</h4>
+                <h4 style={{ margin: 0, textAlign: "left" }}>{review?.user?.firstName + '' + review?.user?.lastName}</h4>
                     <p style={{ textAlign: "left", marginTop: 10 }}>
                         <Rating name="read-only" value={review.rating} readOnly />
                     </p>
