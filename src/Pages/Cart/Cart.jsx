@@ -5,19 +5,17 @@ import {
     Button,
     CardActionArea,
     CardContent,
-    Tooltip,
     Typography,
     Dialog,
     DialogActions,
     DialogContent,
     Slide,
-    IconButton,
     Container,
 } from '@mui/material'
 import axios from 'axios'
 import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
-import { AiFillCloseCircle, AiOutlineLogin, AiFillInfoCircle } from 'react-icons/ai'
+import { AiFillCloseCircle, AiOutlineLogin } from 'react-icons/ai'
 import { IoBagCheckOutline } from 'react-icons/io5'
 import CartCard from '../../Components/Card/CartCard/CartCard';
 import ProductCard from '../../Components/Card/Product Card/ProductCard';
@@ -53,7 +51,7 @@ const Cart = () => {
 
     useEffect(() => {
         if (setProceed) {
-            setTotal(cart.reduce((acc, curr) => (acc + (curr.productId?.price + shippingCoast)), 0))
+            setTotal(cart.reduce((acc, curr) => (acc + ((curr.productId?.price * curr.quantity) + shippingCoast)), 0))
         }
 
     }, [cart])
@@ -90,13 +88,14 @@ const Cart = () => {
 
     const removeFromCart = async (product) => {
         if (setProceed) {
+            setCart(cart.filter(c => c.productId._id !== product.productId._id))
+            toast.error("Removed From Cart", { autoClose: 500, theme: 'colored' })
             const response = await axios.delete(`${process.env.REACT_APP_DELETE_CART}/${product.productId._id}`, {
                 headers: {
                     'Authorization': authToken
                 }
             })
-            toast.error("Removed From Cart", { autoClose: 500, theme: 'colored' })
-            getCart()
+            console.log({ product });
         }
     }
 
@@ -111,6 +110,7 @@ const Cart = () => {
             navigate('/checkout')
         }
     }
+    console.log({ cart });
 
     return (
         <div className='main-cart-container'>

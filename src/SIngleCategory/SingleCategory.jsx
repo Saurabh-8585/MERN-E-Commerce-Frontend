@@ -16,7 +16,7 @@ const SingleCategory = () => {
     const [isLoading, setIsLoading] = useState(false)
     const [filterOption, setFilterOption] = useState('All')
     const [title, setTitle] = useState('All')
-    const { cat, id } = useParams()
+    const { cat } = useParams()
 
     useEffect(() => {
         getCategoryProduct()

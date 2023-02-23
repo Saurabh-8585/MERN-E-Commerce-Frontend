@@ -17,6 +17,8 @@ const Register = () => {
   }
   const handleSubmit = async (e) => {
     e.preventDefault()
+    let phoneRegex = /^(?:(?:\+|0{0,2})91(\s*[\-]\s*)?|[0]?)?[789]\d{9}$/gm;
+    let emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     try {
       if (!credentials.email && !credentials.firstName && !credentials.password && !credentials.phoneNumber && !credentials.lastName) {
         toast.error("Please Fill the all Fields", { autoClose: 500, theme: 'colored' })
@@ -24,10 +26,10 @@ const Register = () => {
       else if (credentials.firstName.length <= 3 || credentials.lastName.length <= 3) {
         toast.error("Please enter name with more than 3 characters", { autoClose: 500, theme: 'colored' })
       }
-      else if (credentials.email.length <= 3) {
-        toast.error("Please enter email with more than 3 characters", { autoClose: 500, theme: 'colored' })
+      else if (!emailRegex.test(credentials.email)) {
+        toast.error("Please enter valid email", { autoClose: 500, theme: 'colored' })
       }
-      else if (credentials.phoneNumber.length !== 10) {
+      else if (!phoneRegex.test(credentials.phoneNumber)) {
         toast.error("Please enter a valid phone number", { autoClose: 500, theme: 'colored' })
       }
       else if (credentials.password.length < 5) {

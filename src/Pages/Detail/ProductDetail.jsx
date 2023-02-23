@@ -13,6 +13,9 @@ import {
     DialogContentText,
     Chip,
     Rating,
+    ButtonGroup,
+    Select,
+    MenuItem,
 } from '@mui/material';
 import Slide from '@mui/material/Slide';
 import { MdAddShoppingCart } from 'react-icons/md'
@@ -23,6 +26,7 @@ import { toast } from 'react-toastify';
 import { ContextFunction } from '../../Context/Context';
 import ProductReview from '../../Components/Review/ProductReview';
 import ProductCard from '../../Components/Card/Product Card/ProductCard';
+import { BiFilterAlt } from 'react-icons/bi';
 
 
 const Transition = forwardRef(function Transition(props, ref) {
@@ -35,7 +39,9 @@ const ProductDetail = () => {
     const { id, cat } = useParams()
     const [product, setProduct] = useState([])
     const [similarProduct, setSimilarProduct] = useState([])
-    const [reviews, setReviews] = useState([])
+    const [productQuantity, setProductQuantity] = useState(1)
+
+
 
 
 
@@ -49,14 +55,12 @@ const ProductDetail = () => {
     useEffect(() => {
         getProduct()
         getSimilarProducts()
-        fetchReviews()
         window.scroll(0, 0)
     }, [id])
 
-
     const addToCart = async (product) => {
         if (setProceed) {
-            const { data } = await axios.post(`${process.env.REACT_APP_ADD_CART}`, product, {
+            const { data } = await axios.post(`${process.env.REACT_APP_ADD_CART}`, { _id: product._id, quantity: productQuantity }, {
                 headers: {
                     'Authorization': authToken
                 }
@@ -69,6 +73,7 @@ const ProductDetail = () => {
             setOpenAlert(true);
         }
     }
+    // console.log({ product });
     const addToWhishList = async (product) => {
         if (setProceed) {
             try {
@@ -91,15 +96,7 @@ const ProductDetail = () => {
         }
 
     };
-    const fetchReviews = async () => {
-        const { data } = await axios.get(`${process.env.REACT_APP_GET_REVIEW}/${id}`, {
-            headers: {
-                'Authorization': authToken
-            }
-        })
-        setReviews(data)
-        console.log(data)
-    }
+
     const getSimilarProducts = async () => {
         const { data } = await axios.post(`${process.env.REACT_APP_PRODUCT_TYPE}`, { userType: cat })
         setSimilarProduct(data)
@@ -117,6 +114,18 @@ const ProductDetail = () => {
     }
     else if (cat === 'electronics') {
         data.push(product.category)
+    }
+    const increaseQuantity = () => {
+        setProductQuantity((prev) => prev + 1)
+        if (productQuantity >= 5) {
+            setProductQuantity(5)
+        }
+    }
+    const decreaseQuantity = () => {
+        setProductQuantity((prev) => prev - 1)
+        if (productQuantity <= 1) {
+            setProductQuantity(1)
+        }
     }
     return (
         <>
@@ -166,7 +175,7 @@ const ProductDetail = () => {
                         <Chip
                             label={product.price > 1000 ? "Upto 9% off" : "Upto 38% off"}
                             variant="outlined"
-                            sx={{ background: '#1976d2', color: 'white', width: '150px' ,fontWeight:'bold'}}
+                            sx={{ background: '#1976d2', color: 'white', width: '150px', fontWeight: 'bold' }}
                             avatar={<TbDiscount2 color='white' />}
 
 
@@ -177,6 +186,22 @@ const ProductDetail = () => {
                                 ₹{product.price}
                             </Typography>
                         </div>
+                        <Box
+                            sx={{
+                                display: 'flex',
+                                flexDirection: 'column',
+                                // background: 'red',
+                                '& > *': {
+                                    m: 1,
+                                },
+                            }}
+                        >
+                            <ButtonGroup variant="outlined" aria-label="outlined button group">
+                                <Button onClick={increaseQuantity}>+</Button>
+                                <Button>{productQuantity}</Button>
+                                <Button onClick={decreaseQuantity}>-</Button>
+                            </ButtonGroup>
+                        </Box>
                         <Rating name="read-only" value={Math.round(product.rating)} readOnly />
                         <div >
                             <Tooltip title='Add To Cart'>
@@ -189,14 +214,14 @@ const ProductDetail = () => {
                         </div>
                     </section>
                 </main>
+                <ProductReview setProceed={setProceed} authToken={authToken} id={id} setOpenAlert={setOpenAlert} />
 
-                <ProductReview setProceed={setProceed} authToken={authToken} id={id} setOpenAlert={setOpenAlert} reviews={reviews} fetchReviews={fetchReviews} />
 
                 <Typography sx={{ marginTop: 10, marginBottom: 5 }}>Similar Products</Typography>
                 <Box>
                     <Box className='similarProduct' sx={{ display: 'flex', overflowX: 'auto' }}>
                         {
-                            similarProduct.map(prod => (
+                            similarProduct.filter(prod => prod._id !== id).map(prod => (
                                 <Link to={`/Detail/type/${prod.type}/${prod._id}`} key={prod._id}>
                                     <ProductCard prod={prod} />
                                 </Link>

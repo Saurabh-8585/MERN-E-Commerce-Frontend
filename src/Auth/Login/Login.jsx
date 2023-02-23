@@ -20,17 +20,18 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    let emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     try {
       if (!credentials.email && !credentials.password) {
         toast.error("Please Fill the all Fields", { autoClose: 500, })
       }
-      else if (credentials.email.length <= 3) {
-        toast.error("Please enter email with more than 3 characters", { autoClose: 500, })
+      else if (!emailRegex.test(credentials.email)) {
+        toast.error("Please enter a valid email", { autoClose: 500, })
       }
       else if (credentials.password.length < 5) {
         toast.error("Please enter password with more than 5 characters", { autoClose: 500, })
       }
-      else if (credentials.email && credentials.password.length) {
+      else if (credentials.email && credentials.password) {
         const sendAuth = await axios.post(`${process.env.REACT_APP_LOGIN}`, { email: credentials.email, password: credentials.password })
         const receive = await sendAuth.data
         if (receive.success === true) {
@@ -61,18 +62,6 @@ const Login = () => {
   }
 
   return (
-    <>
-      {/* <Container className="container">
-        <form onSubmit={handleSubmit}>
-          <Box className='form-box' >
-            <TextField id="standard-basic" value={credentials.email} name='email' onChange={handleOnChange} label="Email" type='email' variant="standard" sx={{ width: "90%" }} />
-            <TextField id="standard-basic1" value={credentials.password} name='password' onChange={handleOnChange} label="Password" type='password' variant="standard" sx={{ width: "90%" }} />
-            <Button variant='contained' type='submit'>Sign In</Button>
-            <Typography>Not member yet?<Link to='/register'> <span>Sign Up</span></Link></Typography>
-          </Box>
-        </form>
-      </Container> */}
-
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box
@@ -138,7 +127,6 @@ const Login = () => {
         </Box>
         <Copyright sx={{ mt: 8, mb: 4 }} />
       </Container>
-    </>
   )
 }
 

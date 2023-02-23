@@ -4,12 +4,12 @@ import { AiOutlineHome, AiOutlineHeart, AiOutlineShoppingCart, AiFillMail, AiFil
 import { CgProfile } from 'react-icons/cg'
 import { FiLogOut } from 'react-icons/fi'
 import React, { forwardRef, useContext, useEffect, useState } from 'react'
-import {  NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import './Mobile.css'
 import { Badge, Button, Dialog, DialogActions, DialogContent, Slide, Typography } from '@mui/material';
 import { ContextFunction } from '../Context/Context';
 import axios from 'axios';
-import {  toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 
 const Transition = forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -69,46 +69,46 @@ const MobileNavigation = () => {
 
     return (
         <Box className='showMobile'>
-            <BottomNavigation sx={{ display: 'flex', justifyContent: 'space-between', width: '100%', position: 'fixed', bottom: 0,overflowX:'hidden', }}>
-                <NavLink to='/'>
+            <BottomNavigation sx={{ display: 'flex', justifyContent: 'space-between', width: '100%', position: 'fixed', bottom: 0, overflowX: 'hidden', height: 60, background: 'white' }}>
+                <NavLink to='/' style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }} >
                     <div className='links'>
                         <AiOutlineHome style={{ fontSize: 23, }} />
-                        <span style={{ fontSize: 12 }}>Home</span>
+                        {/* <span style={{ fontSize: 12 }}>Home</span> */}
                     </div>
                 </NavLink>
-                <NavLink to='/cart'>
+                <NavLink to='/cart' style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }} >
                     <div className='links'>
                         <Badge badgeContent={setProceed ? cart.length : 0} >
                             <AiOutlineShoppingCart style={{ fontSize: 23 }} />
                         </Badge>
-                        <span style={{ fontSize: 12 }}>Cart</span>
+                        {/* <span style={{ fontSize: 12 }}>Cart</span> */}
                     </div>
                 </NavLink>
-                <NavLink to='/wishlist' >
-                    <div className='links'>
+                <NavLink to='/wishlist' style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}  >
+                    <div className='links' >
                         <Badge badgeContent={setProceed ? wishlistData.length : 0} >
                             <AiOutlineHeart style={{ fontSize: 23, }} />
                         </Badge>
-                        <span style={{ fontSize: 12 }}>Wishlist</span>
+                        {/* <span style={{ fontSize: 12 }}>Wishlist</span> */}
                     </div>
                 </NavLink>
                 {
                     setProceed ?
-                        <div className='links' onClick={handleClickOpen}>
+                        <div className='links' style={{ display: 'flex', alignItems: 'center',justifyContent:'center' }} onClick={handleClickOpen}>
                             <FiLogOut style={{ fontSize: 23, }} />
-                            <span style={{ fontSize: 12 }}>Logout</span>
+                            {/* <span style={{ fontSize: 12 }}>Logout</span> */}
                         </div>
-                        : <NavLink to='/login' >
+                        : <NavLink to='/login' style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }} >
                             <div className='links' onClick={() => navigate('/login')}>
                                 <CgProfile style={{ fontSize: 23, }} />
-                                <span style={{ fontSize: 12 }}>Login</span>
+                                {/* <span style={{ fontSize: 12 }}>Login</span> */}
                             </div>
                         </NavLink>
                 }
-                <NavLink to='/contact' >
-                    <div className='links'>
-                        <AiFillMail style={{ fontSize: 23, }} />
-                        <span style={{ fontSize: 12 }}>Contact  </span>
+                <NavLink to='/update' style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }} >
+                    <div className='links' onClick={() => navigate('/login')}>
+                        <CgProfile style={{ fontSize: 23, }} />
+                        {/* <span style={{ fontSize: 12 }}>Login</span> */}
                     </div>
                 </NavLink>
             </BottomNavigation >

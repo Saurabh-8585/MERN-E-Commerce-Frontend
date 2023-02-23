@@ -51,7 +51,7 @@ nav ul li a {
     /* margin-right: 1rem; */
 }
 
-ul li:after {
+nav ul .nav-links:after {
     content: "";
     display: block;
     height: 3px;
@@ -60,7 +60,7 @@ ul li:after {
     transition: width 0.7s ease, background-color 0.5s ease;
 }
 
-ul li:hover:after {
+nav ul .nav-links:hover:after {
     width: 100%;
     background: #1976d2;
 }

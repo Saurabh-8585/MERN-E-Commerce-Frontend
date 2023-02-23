@@ -4,7 +4,7 @@ import { AiOutlineHeart, AiOutlineShoppingCart, AiFillCloseCircle } from 'react-
 import { CgProfile } from 'react-icons/cg'
 import { FiLogOut } from 'react-icons/fi'
 import { Link, NavLink, useNavigate } from 'react-router-dom';
-import { Badge, Button, Dialog, DialogActions, DialogContent, Slide, Tooltip, Typography } from '@mui/material';
+import { Badge, Button, Dialog, DialogActions, DialogContent, Menu, MenuItem, Slide, Tooltip, Typography } from '@mui/material';
 import { ContextFunction } from '../Context/Context';
 import { toast } from 'react-toastify';
 import axios from 'axios'
@@ -64,7 +64,14 @@ const DesktopNavigation = () => {
   const handleClose = () => {
     setOpenAlert(false);
   };
-
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handlePopUpClose = () => {
+    setAnchorEl(null);
+  };
 
   return (
     <>
@@ -100,11 +107,38 @@ const DesktopNavigation = () => {
                 </NavLink>
               </Tooltip>
             </li>
+            <li className="nav-links" style={{ display: 'flex', alignItems: 'center' }}>
+              <Tooltip title='Profile'>
+                <Button
+                  id="basic-button"
+                  aria-controls={open ? 'basic-menu' : undefined}
+                  aria-haspopup="true"
+                  aria-expanded={open ? 'true' : undefined}
+                  onClick={handleClick}
+                >
+                  <span className='nav-icon-span'>   <CgProfile style={{ fontSize: 29 }} /></span>
+                </Button>
+              </Tooltip>
+              <Menu
+                id="basic-menu"
+                anchorEl={anchorEl}
+                open={open}
+                onClose={handlePopUpClose}
+                MenuListProps={{
+                  'aria-labelledby': 'basic-button',
+                }}
+              >
+                <Link to='/update'>   <MenuItem onClick={handlePopUpClose}>Update Profile</MenuItem></Link>
+                <MenuItem className='fx' onClick={handleClickOpen}>Logout</MenuItem>
+              </Menu>
+            </li>
             {
               setProceed ?
-                <li className="nav-links" onClick={handleClickOpen}>
+                <li style={{ display: 'flex', alignItems: 'center' }} onClick={handleClickOpen}>
                   <Tooltip>
-                    <span className='nav-icon-span'>Logout     <FiLogOut className='nav-icon' /></span>
+                    <Button variant='contained' className='nav-icon-span'>
+                      <Typography variant='body2'>Logout  <FiLogOut style={{ fontSize: 18 }} className='nav-icon' /></Typography>
+                    </Button>
                   </Tooltip>
                 </li>
                 :

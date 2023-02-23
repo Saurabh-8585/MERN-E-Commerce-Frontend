@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import Rating from '@mui/material/Rating';
 
@@ -14,10 +14,12 @@ import {
 } from 'react-icons/md'
 import Box from '@mui/material/Box';
 import ReviewImg from '../../Assets/Banner/Customer_Review.jpg'
-import { Button, TextField, Tooltip } from '@mui/material';
+import { Button, MenuItem, Select, TextField, Tooltip } from '@mui/material';
 import { toast } from 'react-toastify';
 import './Review.css'
 import CommentCard from '../Card/Comment Card/CommentCard';
+import { BiFilterAlt } from 'react-icons/bi';
+
 
 
 const labels = {
@@ -38,11 +40,31 @@ const labels = {
 function getLabelText(value) {
     return `${value} Star${value !== 1 ? 's' : ''}, ${labels[value]}`;
 }
-const ProductReview = ({ authToken, setProceed, id, setOpenAlert, reviews, fetchReviews }) => {
+const ProductReview = ({ authToken, setProceed, setOpenAlert, id }) => {
     const [value, setValue] = useState(0);
     const [hover, setHover] = useState('');
+    const [reviews, setReviews] = useState([])
     const [comment, setComment] = useState('')
-    // const [reviews, setReviews] = useState([])
+    const [filterOption, setFilterOption] = useState('All')
+    const [title, setTitle] = useState('All')
+
+    const commentFilter = ["All", "Most Recent", "Old", "Positive First", "Negative First"]
+    const handleChange = (e) => {
+        setFilterOption(e.target.value.split(" ").join("").toLowerCase())
+        setTitle(e.target.value)
+        fetchReviews()
+    }
+    const fetchReviews = async () => {
+        const filter = filterOption.toLowerCase()
+        console.log(filter);
+        const { data } = await axios.post(`${process.env.REACT_APP_GET_REVIEW}/${id}`, { filterType: filter })
+        setReviews(data)
+        console.log({ data })
+    }
+    useEffect(() => {
+        fetchReviews()
+        setTitle("All")
+    }, [filterOption, id])
 
     const handleSubmitReview = async (e) => {
         e.preventDefault()
@@ -64,6 +86,7 @@ const ProductReview = ({ authToken, setProceed, id, setOpenAlert, reviews, fetch
                         }
                     })
                     toast.success(data.msg, { autoClose: 500, })
+                    console.log(data);
                     fetchReviews()
                 }
                 else {
@@ -102,7 +125,6 @@ const ProductReview = ({ authToken, setProceed, id, setOpenAlert, reviews, fetch
                             }}
                             onChangeActive={(event, newHover) => {
                                 setHover(newHover);
-
                             }}
                             emptyIcon={<MdStarRate style={{ opacity: 0.55 }} fontSize="inherit" />}
                         />
@@ -122,18 +144,34 @@ const ProductReview = ({ authToken, setProceed, id, setOpenAlert, reviews, fetch
                         variant="outlined"
                     />
                     <Tooltip title='Send Review'>
-                        <Button className='form-btn'  variant='contained' type='submit' endIcon=<MdSend /> >Send</Button>
+                        <Button className='form-btn' variant='contained' type='submit' endIcon=<MdSend /> >Send</Button>
                     </Tooltip>
                 </form>
                 <div className="form-img-box">
                     <img src={ReviewImg} alt="Customer Review" className='review-img' />
                 </div>
             </div>
-            <Box className='review-box' >       {
-                reviews.map(review =>
-                    <CommentCard review={review} key={review._id} />
-                )
-            }
+            <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 1, width: "80vw" }}>
+                <Button endIcon={<BiFilterAlt />}>Filters</Button>
+                <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    value={title}
+                    sx={{ width: 200 }}
+                    onChange={(e) => handleChange(e)}
+                >
+                    {commentFilter.map(prod => (
+                        <MenuItem key={prod} value={prod}>{prod}</MenuItem>
+                    ))}
+                </Select>
+
+            </Box>
+            <Box className='review-box' >
+                {
+                    reviews.map(review =>
+                        <CommentCard userReview={review} key={review._id} authToken={authToken} setReviews={setReviews} reviews={reviews} />
+                    )
+                }
             </Box>
 
         </>

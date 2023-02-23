@@ -32,11 +32,16 @@ a {
   color: white;
   border-radius: 50px;
   /* width: 60px; */
+
 }
 
 .toastContainerBox {
   position: fixed;
   top: 120px;
+}
+
+.margin {
+  margin-top: 120px;
 }
 
 @media screen and (max-width: 960px) {
@@ -52,6 +57,15 @@ a {
     top: 80px;
     left: 80px;
 
+  }
+
+  .margin {
+    margin-top: 50px;
+  }
+
+  .active {
+    color: #1976d2;
+    background-color: transparent;
   }
 }
 

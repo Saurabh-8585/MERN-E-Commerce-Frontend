@@ -9,11 +9,11 @@ import SingleCategory from './SingleCategory/SingleCategory';
 import MobileNavigation from './Navigation/MobileNavigation';
 import DesktopNavigation from './Navigation/DesktopNavigation';
 import Wishlist from './Pages/WhisList/Wishlist';
-import { Box } from '@mui/system';
 import PaymentSuccess from './Pages/Payment/PaymentSuccess';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import CheckoutForm from './Components/Checkout/CheckoutForm';
+import UpdateDetails from './Pages/Update_User/UpdateDetails';
 
 
 
@@ -25,7 +25,7 @@ function App() {
       <ToastContainer toastClassName='toastContainerBox' />
       <Router>
         <DesktopNavigation />
-        <Box sx={{ marginTop: 15 }}>
+        <div className='margin'>
           <Routes>
             <Route path="/login" element={< Login />} />
             <Route path='/register' element={<Register />} />
@@ -35,9 +35,10 @@ function App() {
             <Route path='/cart' element={<Cart />} />
             <Route path='/wishlist' element={<Wishlist />} />
             <Route path='/checkout' element={<CheckoutForm />} />
+            <Route path='/update' element={<UpdateDetails />} />
             <Route path='/paymentsuccess' element={<PaymentSuccess />} />
           </Routes>
-        </Box>
+        </div>
         <MobileNavigation />
       </Router >
 
