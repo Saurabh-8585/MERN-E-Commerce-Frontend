@@ -137,7 +137,7 @@ const CheckoutForm = () => {
                     <Button variant='contained' endIcon={<BsFillCartCheckFill />} type='submit'>Checkout</Button>
                     <Link to='/update'> <Button variant='contained' endIcon={<MdUpdate />}>Update</Button></Link>
                 </Container>
-            </form >
+            </form >    
 
         </Container >
     )

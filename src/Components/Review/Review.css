@@ -10,7 +10,7 @@
 
 .form {
     display: flex;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: center;
     flex-direction: column;
     gap: 10px;
@@ -52,16 +52,19 @@
 .review-box {
     display: flex;
     flex-direction: column;
+    justify-content: center;
     width: 70%;
     margin: 50px auto;
+    /* border: 2px solid black;/ */
+    font-size: 1rem;
 }
 
 @media (min-width: 768px) and (max-width:1023px) {
     .review-box {
         width: 100%;
-        border: 2px solid black;
+        /* border: 2px solid black; */
     }
-    
+
     .form-img-box {
         height: 350px;
         width: 450px;
@@ -71,8 +74,11 @@
 @media screen and (max-width: 960px) {
     .review-box {
         width: 100%;
-        /* border: 2px solid black; */
-       
+
+    }
+
+    .form button {
+        margin-left: 30px;
     }
 
     .form-container {
@@ -80,42 +86,19 @@
     }
 
     .form-img-box {
-        height: 350px;
-        width: 450px;
+        height: 250px;
+        width: 350px;
     }
 }
-
-
 
 @media (min-width: 900px) and (max-width:1096px) {
     .form-container {
         flex-direction: row;
     }
 
+
     .form-img-box {
         height: 350px;
         width: 450px;
     }
-}
-
-.form-btn {
-    align-self: flex-start;
-}
-
-@media screen and (max-width: 900px) {
-    .form-img-box {
-        height: 350px;
-        width: 350px;
-        overflow: hidden;
-        border: 2px solid black;
-    }
-
-    .form {
-        /* border: 2px solid black; */
-        width: 350px;
-        gap: 20px;
-    }
-
-
-
 }

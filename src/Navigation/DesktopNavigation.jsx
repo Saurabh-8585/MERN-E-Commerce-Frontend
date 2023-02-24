@@ -107,45 +107,50 @@ const DesktopNavigation = () => {
                 </NavLink>
               </Tooltip>
             </li>
-            <li className="nav-links" style={{ display: 'flex', alignItems: 'center' }}>
-              <Tooltip title='Profile'>
-                <Button
-                  id="basic-button"
-                  aria-controls={open ? 'basic-menu' : undefined}
-                  aria-haspopup="true"
-                  aria-expanded={open ? 'true' : undefined}
-                  onClick={handleClick}
-                >
-                  <span className='nav-icon-span'>   <CgProfile style={{ fontSize: 29 }} /></span>
-                </Button>
-              </Tooltip>
-              <Menu
-                id="basic-menu"
-                anchorEl={anchorEl}
-                open={open}
-                onClose={handlePopUpClose}
-                MenuListProps={{
-                  'aria-labelledby': 'basic-button',
-                }}
-              >
-                <Link to='/update'>   <MenuItem onClick={handlePopUpClose}>Update Profile</MenuItem></Link>
-                <MenuItem className='fx' onClick={handleClickOpen}>Logout</MenuItem>
-              </Menu>
-            </li>
+
+            { }
             {
               setProceed ?
-                <li style={{ display: 'flex', alignItems: 'center' }} onClick={handleClickOpen}>
-                  <Tooltip>
-                    <Button variant='contained' className='nav-icon-span'>
-                      <Typography variant='body2'>Logout  <FiLogOut style={{ fontSize: 18 }} className='nav-icon' /></Typography>
-                    </Button>
-                  </Tooltip>
-                </li>
+                <>
+                  <li className="nav-links" style={{ display: 'flex', alignItems: 'center' }}>
+                    <Tooltip title='Profile'>
+                      <Button
+                        id="basic-button"
+                        aria-controls={open ? 'basic-menu' : undefined}
+                        aria-haspopup="true"
+                        aria-expanded={open ? 'true' : undefined}
+                        onClick={handleClick}
+                      >
+                        <span className='nav-icon-span'>   <CgProfile style={{ fontSize: 29, color: 'black', marginTop: 7 }} /></span>
+                      </Button>
+                    </Tooltip>
+                    <Menu
+                      id="basic-menu"
+                      anchorEl={anchorEl}
+                      open={open}
+                      onClose={handlePopUpClose}
+                      MenuListProps={{
+                        'aria-labelledby': 'basic-button',
+                      }}
+                    >
+                      <Link to='/update'>   <MenuItem onClick={handlePopUpClose}>Update Profile</MenuItem></Link>
+                      <MenuItem className='fx' onClick={handleClickOpen}>Logout</MenuItem>
+                    </Menu>
+                  </li>
+
+                  <li style={{ display: 'flex', alignItems: 'center' }} onClick={handleClickOpen}>
+                    <Tooltip>
+                      <Button variant='contained' className='nav-icon-span'>
+                        <Typography variant='body2'>Logout  <FiLogOut style={{ fontSize: 18 }} className='nav-icon' /></Typography>
+                      </Button>
+                    </Tooltip>
+                  </li>
+                </>
                 :
                 <li className="nav-links">
                   <Tooltip title='Login'>
                     <NavLink to='/login'>
-                      <span className='nav-icon-span'>   <CgProfile style={{ fontSize: 29 }} /></span>
+                      <span className='nav-icon-span'>   <CgProfile style={{ fontSize: 29,marginTop:7 }} /></span>
                     </NavLink>
                   </Tooltip>
                 </li>

@@ -7,6 +7,10 @@
     .checkout_form {
         width: 100%;
     }
+    .checkout_form button{
+        /* background-color: red; */
+        /* width: 150px; */
+    }
 }
 
 @media (min-width: 768px) and (max-width:1023px) {

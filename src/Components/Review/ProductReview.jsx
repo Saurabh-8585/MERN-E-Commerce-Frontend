@@ -10,15 +10,15 @@ import {
     MdSentimentVerySatisfied,
     MdStarRate,
     MdOutlineSentimentVeryDissatisfied,
-    MdSend
+    MdSend,
+    MdOutlineFilterAlt
 } from 'react-icons/md'
 import Box from '@mui/material/Box';
 import ReviewImg from '../../Assets/Banner/Customer_Review.jpg'
-import { Button, MenuItem, Select, TextField, Tooltip } from '@mui/material';
+import { Button, MenuItem, Select, TextField, Tooltip, Typography } from '@mui/material';
 import { toast } from 'react-toastify';
 import './Review.css'
 import CommentCard from '../Card/Comment Card/CommentCard';
-import { BiFilterAlt } from 'react-icons/bi';
 
 
 
@@ -80,7 +80,7 @@ const ProductReview = ({ authToken, setProceed, setOpenAlert, id }) => {
         else if (comment.length >= 4 && value > 0) {
             try {
                 if (setProceed) {
-                    const { data } = await axios.post(`${process.env.REACT_APP_ADD_REVIEW}`, { _id: id, comment: comment, rating: value }, {
+                    const { data } = await axios.post(`${process.env.REACT_APP_ADD_REVIEW}`, { id: id, comment: comment, rating: value }, {
                         headers: {
                             'Authorization': authToken
                         }
@@ -138,21 +138,23 @@ const ProductReview = ({ authToken, setProceed, setOpenAlert, id }) => {
                             setComment(e.target.value)
                         }}
                         label="Add Review"
-                        placeholder="Write review here"
+                        placeholder="What did you like or dislike?"
                         multiline
                         className='comment'
                         variant="outlined"
                     />
+
                     <Tooltip title='Send Review'>
                         <Button className='form-btn' variant='contained' type='submit' endIcon=<MdSend /> >Send</Button>
                     </Tooltip>
+
                 </form>
                 <div className="form-img-box">
                     <img src={ReviewImg} alt="Customer Review" className='review-img' />
                 </div>
             </div>
-            <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 1, width: "80vw" }}>
-                <Button endIcon={<BiFilterAlt />}>Filters</Button>
+            {reviews.length >= 1 ? <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 1, width: "80vw" }}>
+                <Button endIcon={<MdOutlineFilterAlt />}>Filters</Button>
                 <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
@@ -166,10 +168,13 @@ const ProductReview = ({ authToken, setProceed, setOpenAlert, id }) => {
                 </Select>
 
             </Box>
+                :
+                <Typography sx={{ textAlign: 'center' }}>Be the First will review This Product</Typography>
+            }
             <Box className='review-box' >
                 {
                     reviews.map(review =>
-                        <CommentCard userReview={review} key={review._id} authToken={authToken} setReviews={setReviews} reviews={reviews} />
+                        <CommentCard userReview={review} key={review._id} authToken={authToken} setReviews={setReviews} reviews={reviews} fetchReviews={fetchReviews} />
                     )
                 }
             </Box>

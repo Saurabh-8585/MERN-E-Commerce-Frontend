@@ -3,8 +3,8 @@
   padding: 0;
   box-sizing: border-box;
   /* outline: 3px solid red !important; */
+font-family: 'Poppins', sans-serif;
 }
-
 
 .main {
   display: flex;
@@ -27,11 +27,11 @@ a {
 }
 
 .active {
-  /* color: #1976d2; */
-  background-color: #1976d2;
-  color: white;
-  border-radius: 50px;
-  /* width: 60px; */
+
+
+  color: #1976d2;
+  background-color: transparent;
+
 
 }
 
@@ -54,33 +54,16 @@ a {
 
   .toastContainerBox {
     max-width: 250px;
-    top: 80px;
-    left: 80px;
+    top: 50px;
+    left: 140px;
 
   }
 
   .margin {
-    margin-top: 50px;
+    margin-top: 70px;
   }
 
-  .active {
-    color: #1976d2;
-    background-color: transparent;
-  }
+
 }
 
 @media (min-width: 768px) and (max-width:1023px) {}
-
-@keyframes floating {
-
-  0%,
-  100% {
-    transform: translateY(0rem);
-
-  }
-
-  50% {
-    transform: translateY(-1rem);
-
-  }
-}

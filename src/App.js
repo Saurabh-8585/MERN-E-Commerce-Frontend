@@ -27,9 +27,9 @@ function App() {
         <DesktopNavigation />
         <div className='margin'>
           <Routes>
+            <Route path='/' index  element={<HomePage />} />
             <Route path="/login" element={< Login />} />
             <Route path='/register' element={<Register />} />
-            <Route path='/' element={<HomePage />} />
             <Route path='/Detail/type/:cat/:id' element={<ProductDetail />} />
             <Route path='product/type/:cat' element={<SingleCategory />} />
             <Route path='/cart' element={<Cart />} />

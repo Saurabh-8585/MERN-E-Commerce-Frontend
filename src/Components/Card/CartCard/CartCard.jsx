@@ -21,12 +21,13 @@ const CartCard = ({ product, removeFromCart }) => {
                         sx={{
                             display: 'flex',
                             // background: 'red',
+                            justifyContent:'center',
                             '& > *': {
                                 m: 1,
                             },
                         }}
                     >
-                        <Button>  <Typography variant='body2' color='black'>  Quantity {' ' + product.quantity} </Typography></Button>
+                        {product.quantity && <Button>  <Typography variant='body2' color='black'>  Quantity {' ' + product.quantity} </Typography></Button>}
                         <Typography gutterBottom variant="h6" sx={{ textAlign: "center" }}>
                             ₹{product?.productId?.price}
                         </Typography>

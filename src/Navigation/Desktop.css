@@ -11,8 +11,9 @@
     width: 100%;
     z-index: 1000;
     background: white;
+    
     /* background-color: red; */
-    border-radius: 10px;
+    /* border-radius: 10px; */
 }
 
 nav .logo {

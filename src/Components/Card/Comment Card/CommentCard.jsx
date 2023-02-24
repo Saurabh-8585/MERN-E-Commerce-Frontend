@@ -1,12 +1,15 @@
-import { Avatar, Box, Grid, Rating, SpeedDial, SpeedDialAction, SpeedDialIcon } from '@mui/material'
+import { Avatar, Box, Button, Grid, Rating, SpeedDial, SpeedDialAction, SpeedDialIcon, TextField } from '@mui/material'
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { AiFillEdit, AiFillDelete } from 'react-icons/ai'
-import { TbH1 } from 'react-icons/tb';
+import { AiFillEdit, AiFillDelete, AiOutlineSend } from 'react-icons/ai'
+import { GiCancel } from 'react-icons/gi'
 import { toast } from 'react-toastify';
-const CommentCard = ({ userReview, setReviews, reviews, authToken }) => {
+const CommentCard = ({ userReview, setReviews, reviews, authToken, setOpenAlert, fetchReviews }) => {
     let date = new Date(userReview.updatedAt).toLocaleDateString('en-us', { weekday: "long", year: "numeric", month: "short", day: "numeric" })
     const [authUser, setAuthUser] = useState()
+    const [editComment, setEditComment] = useState(userReview.comment)
+    const [edit, setEdit] = useState(false)
+    const [value, setValue] = useState(userReview.rating);
 
     useEffect(() => {
         getUser()
@@ -32,58 +35,126 @@ const CommentCard = ({ userReview, setReviews, reviews, authToken }) => {
                 toast.success("Review Deleted", { autoClose: 500, theme: 'colored' })
             }
         } catch (error) {
-            console.log(error);
+            toast.success(error, { autoClose: 500, theme: 'colored' })
         }
 
     }
-    const handleEditComment = async () => {
-        console.log(2);
+    // console.log({ value }, { editComment });
+    const sendEditResponse = async () => {
+        if (!editComment && !value) {
+            toast.error("Please Fill the all Fields", { autoClose: 500, })
+        }
+        else if (editComment.length <= 4) {
+            toast.error("Please add more than 4 characters", { autoClose: 500, })
+        }
+        else if (value <= 0) {
+            toast.error("Please add rating", { autoClose: 500, })
+        }
+        else if (editComment.length >= 4 && value > 0) {
+            try {
+                if (authToken) {
+                    const response = await axios.put(`${process.env.REACT_APP_EDIT_REVIEW}`,
+                        { id: userReview._id, comment: editComment, rating: value },
+                        {
+                            headers: {
+                                'Authorization': authToken
+                            }
+                        })
+                    if (response.data.success === true) {
+                        toast.success(response.data.msg, { autoClose: 500, })
+                        fetchReviews()
+                        setEdit(false)
+                    }
 
+                }
+                else {
+                    toast.error("Something went wrong", { autoClose: 600, })
+                }
+
+            }
+            catch (error) {
+                toast.error("Something went wrong2", { autoClose: 600, })
+                console.log(error);
+            }
+        }
     }
     return (
         // <Paper style={{ padding: "8px 10px", margin: "15px", backgroundColor:'#1976d' }}>
-        
-            <Grid container wrap="nowrap" spacing={2} sx={{ backgroundColor: '#1976d', boxShadow: '0px 8px 13px rgba(0, 0, 0, 0.2)', borderRadius: 5, margin: '20px auto' }
-            }>
-                <Grid item>
-                    <Avatar alt="Customer Avatar" />
-                </Grid>
-                <Grid justifyContent="left" item xs zeroMinWidth >
-                    <h4 style={{ margin: 0, textAlign: "left" }}>{userReview?.user?.firstName + '' + userReview?.user?.lastName}</h4>
-                    <p style={{ textAlign: "left", marginTop: 10 }}>
-                        <Rating name="read-only" value={userReview.rating} readOnly />
-                    </p>
-                    <p style={{ textAlign: "left", wordBreak: 'break-word', paddingRight: 10 }}>
-                        {userReview.comment}
-                    </p>
-                    <p style={{ textAlign: "left", color: "gray" }}>
-                        {date}
-                    </p>
-                    {authUser === userReview?.user?._id &&
-                        <Box sx={{ height: 20, transform: 'translateZ(0px)', flexGrow: 1 }}>
-                            <SpeedDial
-                                ariaLabel="SpeedDial basic example"
-                                sx={{ position: 'absolute', bottom: 16, right: 16 }}
-                                icon={<SpeedDialIcon />}
-                            >
-                                {/* {actions.map((action) => ( */}
-                                <SpeedDialAction
-                                    icon={<AiFillEdit />}
-                                    tooltipTitle={"Edit"}
-                                    onClick={handleEditComment}
-                                />
-                                <SpeedDialAction
-                                    icon={<AiFillDelete />}
-                                    tooltipTitle={"Delete"}
-                                    onClick={handleDeleteComment}
-                                />
 
-                                {/* ))} */}
-                            </SpeedDial>
-                        </Box>
-                    }
-                </Grid>
+        <Grid container wrap="nowrap" spacing={2} sx={{ backgroundColor: '#1976d', boxShadow: '0px 8px 13px rgba(0, 0, 0, 0.2)', borderRadius: 5, margin: '20px auto', width: '100%', height: 'auto' }
+        }>
+            <Grid item>
+                <Avatar alt="Customer Avatar" />
             </Grid>
+            <Grid justifyContent="left" item xs zeroMinWidth >
+                <h4 style={{ margin: 0, textAlign: "left" }}>{userReview?.user?.firstName + '' + userReview?.user?.lastName}</h4>
+                <p style={{ textAlign: "left", marginTop: 10 }}>
+                    {!edit && <Rating name="read-only" value={userReview.rating} readOnly />}
+                    {edit &&
+                        <Rating
+                            name="simple-controlled"
+                            value={value}
+                            precision={0.5}
+                            onChange={(event, newValue) => {
+                                setValue(newValue);
+                            }}
+                        />}
+                </p>
+                <p style={{ textAlign: "left", wordBreak: 'break-word', paddingRight: 10,margin:'10px 0' }}>
+                    {!edit && userReview.comment.trim()
+                    }
+                    {edit && <TextField
+                        id="standard-basic"
+                        value={editComment.trim()} onChange={(e) => {
+                            setEditComment(e.target.value)
+                        }}
+                        label="Edit Review"
+                        multiline
+                        className='comment'
+                        variant="standard"
+                        sx={{ width: '90%', }}
+                    />
+
+
+                    }
+                </p>
+
+                {edit && <div style={{
+                    display: 'flex', gap: 5, margin: 10
+                }}>   <Button sx={{ width: 10, borderRadius: '30px' }} variant='contained' onClick={sendEditResponse}> {<AiOutlineSend />} </Button>
+                    <Button sx={{ width: 10, borderRadius: '30px' }} variant='contained' color='error' onClick={() => setEdit(false)}>
+                        {<GiCancel style={{ fontSize: 15, color: 'white' }} />} </Button>
+                </div>
+                }
+
+                <p style={{ textAlign: "left", color: "gray", margin:"20px 0" }}>
+                    {date}
+                </p>
+
+                {authUser === userReview?.user?._id &&
+                    <Box sx={{ height: 20, transform: 'translateZ(0px)', flexGrow: 1 }}>
+                        <SpeedDial
+                            ariaLabel="SpeedDial basic example"
+                            sx={{ position: 'absolute', bottom: 16, right: 16 }}
+                            icon={<SpeedDialIcon />}
+                        >
+                            {/* {actions.map((action) => ( */}
+                            <SpeedDialAction
+                                icon={<AiFillEdit />}
+                                tooltipTitle={"Edit"}
+                                onClick={() => setEdit(true)}
+                            />
+                            <SpeedDialAction
+                                icon={<AiFillDelete />}
+                                tooltipTitle={"Delete"}
+                                onClick={handleDeleteComment}
+                            />
+
+                        </SpeedDial>
+                    </Box>
+                }
+            </Grid>
+        </Grid>
 
 
     )
