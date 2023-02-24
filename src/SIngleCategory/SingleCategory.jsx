@@ -68,7 +68,7 @@ const SingleCategory = () => {
 
     const loading = isLoading ?
         (
-            <Container maxWidth='xl' style={{ marginTop: 10, display: "flex", flexWrap: "wrap", paddingLeft: 10, paddingBottom: 20 }}><Loading /><Loading /><Loading /><Loading /></Container >
+            <Container maxWidth='xl' style={{ marginTop: 10, display: "flex", justifyContent: "center", flexWrap: "wrap", paddingLeft: 10, paddingBottom: 20 }}><Loading /><Loading /><Loading /><Loading /></Container >
         )
         : ""
     return (
@@ -92,7 +92,7 @@ const SingleCategory = () => {
                 </FormControl>
             </Box>
             {loading}
-            <Container maxWidth='xl' style={{ marginTop: 10, display: "flex", flexWrap: "wrap", paddingLeft: 10, paddingBottom: 20 }}>
+            <Container maxWidth='xl' style={{ marginTop: 10, display: "flex",justifyContent:'center', flexWrap: "wrap", paddingLeft: 10, paddingBottom: 20 ,width:'100%'}}>
                 {productData.map(prod => (
                     <Link to={`/Detail/type/${cat}/${prod._id}`} key={prod._id}>
                         <ProductCard prod={prod} />

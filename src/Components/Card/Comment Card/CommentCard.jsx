@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { AiFillEdit, AiFillDelete, AiOutlineSend } from 'react-icons/ai'
 import { GiCancel } from 'react-icons/gi'
 import { toast } from 'react-toastify';
-const CommentCard = ({ userReview, setReviews, reviews, authToken, setOpenAlert, fetchReviews }) => {
+const CommentCard = ({ userReview, setReviews, reviews, authToken, fetchReviews }) => {
     let date = new Date(userReview.updatedAt).toLocaleDateString('en-us', { weekday: "long", year: "numeric", month: "short", day: "numeric" })
     const [authUser, setAuthUser] = useState()
     const [editComment, setEditComment] = useState(userReview.comment)
@@ -39,7 +39,6 @@ const CommentCard = ({ userReview, setReviews, reviews, authToken, setOpenAlert,
         }
 
     }
-    // console.log({ value }, { editComment });
     const sendEditResponse = async () => {
         if (!editComment && !value) {
             toast.error("Please Fill the all Fields", { autoClose: 500, })
@@ -79,7 +78,6 @@ const CommentCard = ({ userReview, setReviews, reviews, authToken, setOpenAlert,
         }
     }
     return (
-        // <Paper style={{ padding: "8px 10px", margin: "15px", backgroundColor:'#1976d' }}>
 
         <Grid container wrap="nowrap" spacing={2} sx={{ backgroundColor: '#1976d', boxShadow: '0px 8px 13px rgba(0, 0, 0, 0.2)', borderRadius: 5, margin: '20px auto', width: '100%', height: 'auto' }
         }>
@@ -135,8 +133,8 @@ const CommentCard = ({ userReview, setReviews, reviews, authToken, setOpenAlert,
                     <Box sx={{ height: 20, transform: 'translateZ(0px)', flexGrow: 1 }}>
                         <SpeedDial
                             ariaLabel="SpeedDial basic example"
-                            sx={{ position: 'absolute', bottom: 16, right: 16 }}
-                            icon={<SpeedDialIcon />}
+                            sx={{ position: 'absolute', bottom: 16, right: 16, }}
+                            icon={<SpeedDialIcon  />}
                         >
                             {/* {actions.map((action) => ( */}
                             <SpeedDialAction

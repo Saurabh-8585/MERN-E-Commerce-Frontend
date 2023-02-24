@@ -37,14 +37,14 @@
 
 @media screen and (max-width: 960px) {
     .main_cart {
-        width: 240px;
+        width: 250px;
         height: 390px;
 
     }
 
-    .img_box .img {
+    .img_box  {
         padding: 15px 0;
-        height: 250px;
+        height: 200px;
         width: 250px;
         margin-top: 15px;
 
