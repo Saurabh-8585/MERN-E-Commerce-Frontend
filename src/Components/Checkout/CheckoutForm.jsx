@@ -44,6 +44,7 @@ const CheckoutForm = () => {
                     'Authorization': authToken
                 }
             })
+
             setUserData(data);
             userDetails.firstName = data.firstName
             userDetails.lastName = data.lastName
@@ -59,22 +60,23 @@ const CheckoutForm = () => {
 
     }
 
-
     const checkOutHandler = async (e) => {
         e.preventDefault()
         let zipRegex = /^[1-9]{1}[0-9]{2}\\s{0, 1}[0-9]{3}$/;
 
         const { data: { key } } = await axios.get(`${process.env.REACT_APP_GET_KEY}`)
         const { data } = await axios.post(`${process.env.REACT_APP_GET_CHECKOUT}`, {
-            amount: totalAmount,
+            amount: 1,
             productDetails: JSON.stringify(cart),
             userId: userData._id,
-            userDetails: JSON.stringify(userDetails)
+            userDetails: JSON.stringify(userDetails),
+            email: userDetails.userEmail
+
         })
 
         const options = {
             key: key,
-            amount: totalAmount,
+            amount: 1,
             currency: "INR",
             name: userData.firstName + ' ' + userData.lastName,
             description: "Payment",
@@ -109,35 +111,35 @@ const CheckoutForm = () => {
             <form noValidate autoComplete="off" className={styles.checkout_form} onSubmit={checkOutHandler} >
                 <Grid container spacing={2}>
                     <Grid item xs={12} sm={6}>
-                        <TextField inputProps={{ readOnly: true}}  label="First Name" name='firstName' value={userDetails.firstName || ''} onChange={handleOnchange} variant="outlined" fullWidth />
+                        <TextField inputProps={{ readOnly: true }} label="First Name" name='firstName' value={userDetails.firstName || ''} onChange={handleOnchange} variant="outlined" fullWidth />
                     </Grid>
                     <Grid item xs={12} sm={6}>
-                        <TextField  inputProps={{ readOnly: true }} label="Last Name" name='lastName' value={userDetails.lastName || ''} onChange={handleOnchange} variant="outlined" fullWidth />
+                        <TextField inputProps={{ readOnly: true }} label="Last Name" name='lastName' value={userDetails.lastName || ''} onChange={handleOnchange} variant="outlined" fullWidth />
                     </Grid>
                     <Grid item xs={12} sm={6}>
-                        <TextField  inputProps={{ readOnly: true }} label="Contact Number" type='tel' name='phoneNumber' value={userDetails.phoneNumber || ''} onChange={handleOnchange} variant="outlined" fullWidth />
+                        <TextField inputProps={{ readOnly: true }} label="Contact Number" type='tel' name='phoneNumber' value={userDetails.phoneNumber || ''} onChange={handleOnchange} variant="outlined" fullWidth />
                     </Grid>
                     <Grid item xs={12} sm={6}>
-                        <TextField  inputProps={{ readOnly: true }} label="Email" name='userEmail' value={userDetails.userEmail || ''} onChange={handleOnchange} variant="outlined" fullWidth />
+                        <TextField inputProps={{ readOnly: true }} label="Email" name='userEmail' value={userDetails.userEmail || ''} onChange={handleOnchange} variant="outlined" fullWidth />
                     </Grid>
                     <Grid item xs={12}>
-                        <TextField   label="Address" name='address' value={userDetails.address || ''} onChange={handleOnchange} variant="outlined" fullWidth />
+                        <TextField label="Address" name='address' value={userDetails.address || ''} onChange={handleOnchange} variant="outlined" fullWidth />
                     </Grid>
                     <Grid item xs={12} sm={6}>
-                        <TextField   label="City" name='city' value={userDetails.city || ''} onChange={handleOnchange} variant="outlined" fullWidth />
+                        <TextField label="City" name='city' value={userDetails.city || ''} onChange={handleOnchange} variant="outlined" fullWidth />
                     </Grid>
                     <Grid item xs={12} sm={6}>
-                        <TextField   type='tel' label="Postal/Zip Code" name='zipCode' value={userDetails.zipCode || ''} onChange={handleOnchange} variant="outlined" fullWidth />
+                        <TextField type='tel' label="Postal/Zip Code" name='zipCode' value={userDetails.zipCode || ''} onChange={handleOnchange} variant="outlined" fullWidth />
                     </Grid>
                     <Grid item xs={12} >
-                        <TextField   label="Province/State" name='userState' value={userDetails.userState || ''} onChange={handleOnchange} variant="outlined" fullWidth />
+                        <TextField label="Province/State" name='userState' value={userDetails.userState || ''} onChange={handleOnchange} variant="outlined" fullWidth />
                     </Grid>
                 </Grid>
                 <Container sx={{ display: 'flex', gap: 10, justifyContent: 'center', marginTop: 5 }}>
                     <Button variant='contained' endIcon={<BsFillCartCheckFill />} type='submit'>Checkout</Button>
                     <Link to='/update'> <Button variant='contained' endIcon={<MdUpdate />}>Update</Button></Link>
                 </Container>
-            </form >    
+            </form >
 
         </Container >
     )

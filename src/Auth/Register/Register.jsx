@@ -6,6 +6,7 @@ import { Avatar, Button, Checkbox, CssBaseline, FormControlLabel, Grid, TextFiel
 import { MdLockOutline } from 'react-icons/md'
 import { Box, Container } from '@mui/system'
 import { toast } from 'react-toastify'
+import CopyRight from '../../Components/CopyRight/CopyRight'
 
 
 const Register = () => {
@@ -59,18 +60,6 @@ const Register = () => {
   }
 
 
-  function Copyright(props) {
-    return (
-      <Typography variant="body2" color="text.secondary" align="center" {...props}>
-        {'Copyright © '}
-        <Link to='/'>
-          Shop It
-        </Link>{' '}
-        {new Date().getFullYear()}
-        {'.'}
-      </Typography>
-    );
-  }
   return (
     <>
       <Container component="main" maxWidth="xs" sx={{ marginBottom: 10 }}>
@@ -178,7 +167,7 @@ const Register = () => {
             </Grid>
           </Box>
         </Box>
-        <Copyright sx={{ mt: 5 }} />
+        <CopyRight sx={{ mt: 5 }} />
       </Container>
     </>
   )

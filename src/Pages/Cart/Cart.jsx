@@ -143,13 +143,14 @@ const Cart = () => {
                     }
                     <Typography variant='h6' sx={{ textAlign: 'center' }}>Previous Orders</Typography>
                     <Container maxWidth='xl' style={{ marginTop: 10, display: "flex", justifyContent: 'center', flexWrap: "wrap", paddingBottom: 20 }}>
-                        {previousOrder.map(product => (
-                            product.productData.map(prod =>
-                                <Link to={`/Detail/type/${prod.productId.type}/${prod.productId._id}`} key={prod.productId._id}>
+                        {
+                            previousOrder.map(product => (
+                                product.productData.map(prod => <Link to={`/Detail/type/${prod.productId.type}/${prod.productId._id}`} key={prod._id}>
                                     <ProductCard prod={prod.productId} />
                                 </Link>
+                                )
                             )
-                        ))}
+                            )}
                     </Container>
                 </>
             }

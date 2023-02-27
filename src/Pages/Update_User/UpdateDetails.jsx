@@ -41,12 +41,14 @@ const UpdateDetails = () => {
             userDetails.zipCode = data.zipCode
             userDetails.city = data.city
             userDetails.userState = data.userState
+            console.log(1);
             setUserData(data);
-
+            
         } catch (error) {
             console.log(error);
         }
     }
+    console.log(userData);
     const handleOnchange = (e) => {
         setUserDetails({ ...userDetails, [e.target.name]: e.target.value })
     }
@@ -106,7 +108,6 @@ const UpdateDetails = () => {
             console.log(error);
         }
     }
-    console.log(userDetails);
     return (
         <Container sx={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column', marginBottom: 10 }}>
             <Typography variant='h6' sx={{ margin: '30px 0' }}>Update Information</Typography>

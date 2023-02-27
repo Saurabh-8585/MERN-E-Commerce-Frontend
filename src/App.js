@@ -14,6 +14,8 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import CheckoutForm from './Components/Checkout/CheckoutForm';
 import UpdateDetails from './Pages/Update_User/UpdateDetails';
+import ForgotPasswordForm from './Auth/ForgotPassword/ForgotPasswordForm';
+import AddNewPassword from './Auth/ForgotPassword/AddNewPassword';
 
 
 
@@ -27,7 +29,7 @@ function App() {
         <DesktopNavigation />
         <div className='margin'>
           <Routes>
-            <Route path='/' index  element={<HomePage />} />
+            <Route path='/' index element={<HomePage />} />
             <Route path="/login" element={< Login />} />
             <Route path='/register' element={<Register />} />
             <Route path='/Detail/type/:cat/:id' element={<ProductDetail />} />
@@ -37,6 +39,8 @@ function App() {
             <Route path='/checkout' element={<CheckoutForm />} />
             <Route path='/update' element={<UpdateDetails />} />
             <Route path='/paymentsuccess' element={<PaymentSuccess />} />
+            <Route path='/forgotpassword' element={<ForgotPasswordForm />} />
+            <Route path='/user/reset/:id/:token' element={<AddNewPassword />} />
           </Routes>
         </div>
         <MobileNavigation />
