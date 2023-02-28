@@ -44,7 +44,6 @@ const CheckoutForm = () => {
                     'Authorization': authToken
                 }
             })
-
             setUserData(data);
             userDetails.firstName = data.firstName
             userDetails.lastName = data.lastName
@@ -62,42 +61,42 @@ const CheckoutForm = () => {
 
     const checkOutHandler = async (e) => {
         e.preventDefault()
-        let zipRegex = /^[1-9]{1}[0-9]{2}\\s{0, 1}[0-9]{3}$/;
+        try {
+            const { data: { key } } = await axios.get(`${process.env.REACT_APP_GET_KEY}`)
+            const { data } = await axios.post(`${process.env.REACT_APP_GET_CHECKOUT}`, {
+                amount: totalAmount,
+                productDetails: JSON.stringify(cart),
+                userId: userData._id,
+                userDetails: JSON.stringify(userDetails),
+            })
 
-        const { data: { key } } = await axios.get(`${process.env.REACT_APP_GET_KEY}`)
-        const { data } = await axios.post(`${process.env.REACT_APP_GET_CHECKOUT}`, {
-            amount: totalAmount,
-            productDetails: JSON.stringify(cart),
-            userId: userData._id,
-            userDetails: JSON.stringify(userDetails),
-            email: userDetails.userEmail
-
-        })
-
-        const options = {
-            key: key,
-            amount: totalAmount,
-            currency: "INR",
-            name: userData.firstName + ' ' + userData.lastName,
-            description: "Payment",
-            image: profileImg,
-            order_id: data.order.id,
-            callback_url: process.env.REACT_APP_GET_PAYMENTVERIFICATION,
-            prefill: {
+            const options = {
+                key: key,
+                amount: totalAmount,
+                currency: "INR",
                 name: userData.firstName + ' ' + userData.lastName,
-                email: userData.email,
-                contact: userData.phoneNumber
-            },
-            notes: {
-                "address": `${userData.address} ${userData.city} ${userData.zipCode} ${userData.userState}`
-            },
-            theme: {
-                "color": "#1976d2"
-            },
+                description: "Payment",
+                image: profileImg,
+                order_id: data.order.id,
+                callback_url: process.env.REACT_APP_GET_PAYMENTVERIFICATION,
+                prefill: {
+                    name: userData.firstName + ' ' + userData.lastName,
+                    email: userData.email,
+                    contact: userData.phoneNumber
+                },
+                notes: {
+                    "address": `${userData.address} ${userData.city} ${userData.zipCode} ${userData.userState}`
+                },
+                theme: {
+                    "color": "#1976d2"
+                },
 
-        };
-        const razor = new window.Razorpay(options);
-        razor.open();
+            };
+            const razor = new window.Razorpay(options);
+            razor.open();
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     const handleOnchange = (e) => {

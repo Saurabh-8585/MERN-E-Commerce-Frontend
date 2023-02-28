@@ -52,8 +52,8 @@ const UpdateDetails = () => {
     const handleOnchange = (e) => {
         setUserDetails({ ...userDetails, [e.target.name]: e.target.value })
     }
-    // let phoneRegex = /^(?:(?:\+|0{0,2})91(\s*[\-]\s*)?|[0]?)?[789]\d{9}$/gm;
-    // let emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    let phoneRegex = /^(?:(?:\+|0{0,2})91(\s*[\-]\s*)?|[0]?)?[789]\d{9}$/gm;
+    let emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     // let zipRegex = /^[1-9]{1}[0-9]{2}\\s{0, 1}[0-9]{3}$/;
 
     const handleSubmit = async (e) => {
@@ -65,10 +65,10 @@ const UpdateDetails = () => {
             else if (userDetails.firstName.length < 3 || userDetails.lastName.length < 3) {
                 toast.error("Please enter name with more than 3 characters", { autoClose: 500, theme: 'colored' })
             }
-            else if (userDetails.email.length <= 3) {
+            else if (!emailRegex.test(userDetails.email)) {
                 toast.error("Please enter valid email", { autoClose: 500, theme: 'colored' })
             }
-            else if (userDetails.phoneNumber.length < 10) {
+            else if (!phoneRegex.test(userDetails.phoneNumber)) {
                 toast.error("Please enter a valid phone number", { autoClose: 500, theme: 'colored' })
             }
             else if (userDetails.zipCode.length !== 6) {
@@ -83,7 +83,6 @@ const UpdateDetails = () => {
             else if (userDetails.city.length <= 3) {
                 toast.error("Please enter address,more than 3 characters", { autoClose: 500, theme: 'colored' })
             }
-
             else {
                 const { data } = await axios.put(`${process.env.REACT_APP_UPDATE_USER_DETAILS}`, {
                     userDetails: JSON.stringify(userDetails)
@@ -106,6 +105,7 @@ const UpdateDetails = () => {
         }
         catch (error) {
             console.log(error);
+            toast.error(error.response.data.error, { autoClose: 500, theme: 'colored' })
         }
     }
     return (
