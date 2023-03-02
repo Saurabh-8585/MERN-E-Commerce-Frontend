@@ -11,6 +11,10 @@ import {
     DialogContent,
     Slide,
     Container,
+    Card,
+    Grid,
+    CardActions,
+    CssBaseline,
 } from '@mui/material'
 import axios from 'axios'
 import { Link, useNavigate } from 'react-router-dom'
@@ -20,6 +24,7 @@ import { IoBagCheckOutline } from 'react-icons/io5'
 import CartCard from '../../Components/Card/CartCard/CartCard';
 import ProductCard from '../../Components/Card/Product Card/ProductCard';
 import './Cart.css'
+import OrderSummary from './OrderSummary';
 
 const Transition = forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -98,9 +103,6 @@ const Cart = () => {
             console.log({ product });
         }
     }
-
-
-
     const proceedToCheckout = async () => {
         if (cart.length <= 0) {
             toast.error("Please add items in cart to proceed", { autoClose: 500, theme: 'colored' })
@@ -113,47 +115,41 @@ const Cart = () => {
     console.log({ cart });
 
     return (
-        <div className='main-cart-container'>
-            {setProceed &&
-                <>
+        <>
+            <CssBaseline />
+            <Container fixed maxWidth>
+                <Grid container spacing={3}>
+                    <Grid item xs={12} sm={6} md={7} lg={7}>
+                        <Grid container>
+                            <Grid item xs={12} sm={12} md={12} lg={12} sx={{ display: 'flex', flexWrap: 'wrap',justifyContent:'center',}}>
+                                {
+                                    cart.map(product =>
+                                        <CartCard product={product} removeFromCart={removeFromCart} key={product._id} />
 
-                    <div className="card-container">
-                        {
-                            cart.map(product =>
-                                <CartCard product={product} removeFromCart={removeFromCart} key={product._id} />
-
-                            )}
-                    </div>
+                                    )}
+                            </Grid>
+                        </Grid>
+                    </Grid>
                     {
                         cart.length > 0 &&
-                        <>
-                            <Box className='total-card'>
-                                <CardActionArea >
-                                    <CardContent>
-                                        <span> Total Amount =  ₹{total - shippingCoast} </span>
-                                        <br />
-                                        <span> Shipping Cost = ₹{shippingCoast}   </span>
-                                        <br />
-                                        <span>Bill Amount = ₹ {total}</span>
-                                    </CardContent>
-                                </CardActionArea>
-                            </Box>
-                            <Button variant='contained' onClick={proceedToCheckout} endIcon=<IoBagCheckOutline /> >  Proceed To Checkout</Button>
-                        </>
+                        <Grid item xs={12} sm={6} md={5} lg={5}  >
+                            <OrderSummary proceedToCheckout={proceedToCheckout} total={total} shippingCoast={shippingCoast} />
+                        </Grid>
                     }
-                    <Typography variant='h6' sx={{ textAlign: 'center' }}>Previous Orders</Typography>
-                    <Container maxWidth='xl' style={{ marginTop: 10, display: "flex", justifyContent: 'center', flexWrap: "wrap", paddingBottom: 20 }}>
-                        {
-                            previousOrder.map(product => (
-                                product.productData.map(prod => <Link to={`/Detail/type/${prod.productId.type}/${prod.productId._id}`} key={prod._id}>
-                                    <ProductCard prod={prod.productId} />
-                                </Link>
-                                )
-                            )
-                            )}
-                    </Container>
-                </>
-            }
+                </Grid>
+
+            </Container>
+            <Typography variant='h6' sx={{ textAlign: 'center',marginTop:5 }}>Previous Orders</Typography>
+            <Container maxWidth='xl' style={{ marginTop: 10, display: "flex", justifyContent: 'center', flexWrap: "wrap", paddingBottom: 20 }}>
+                {
+                    previousOrder.map(product => (
+                        product.productData.map(prod => <Link to={`/Detail/type/${prod.productId.type}/${prod.productId._id}`} key={prod._id}>
+                            <ProductCard prod={prod.productId} />
+                        </Link>
+                        )
+                    )
+                    )}
+            </Container>
 
             <Dialog
                 open={openAlert}
@@ -169,7 +165,8 @@ const Cart = () => {
                     <Button variant='contained' color='error' endIcon=<AiFillCloseCircle /> onClick={handleClose}>Close</Button>
                 </DialogActions>
             </Dialog>
-        </div >
+
+        </>
     )
 }
 
