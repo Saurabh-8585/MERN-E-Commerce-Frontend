@@ -10,14 +10,19 @@ import CopyRight from '../../Components/CopyRight/CopyRight'
 
 const ForgotPasswordForm = () => {
     const [email, setEmail] = useState('')
-    console.log(email);
     const handleSubmit = async (e) => {
         try {
             e.preventDefault()
             const sendEmail = await axios.post(`${process.env.REACT_APP_FORGOT_PASSWORD}`, { email: email })
-            toast.success(sendEmail.data.msg, { autoClose: 500, theme: 'colored' })
+            if (sendEmail.data.success === true) {
+                toast.success(sendEmail.data.msg, { autoClose: 500, theme: 'colored' })
+
+            }
+            else { toast.error(sendEmail.data.msg, { autoClose: 500, theme: 'colored' }) }
+
         } catch (error) {
-            toast.error(error)
+            // toast.error(error)
+
         }
 
     }

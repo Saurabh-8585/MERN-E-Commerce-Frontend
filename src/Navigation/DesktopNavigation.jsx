@@ -138,10 +138,10 @@ const DesktopNavigation = () => {
                     </Menu>
                   </li>
 
-                  <li style={{ display: 'flex', alignItems: 'center' }} onClick={handleClickOpen}>
+                  <li style={{ display: 'flex', alignItems: 'center' ,justifyItems:'center'}} onClick={handleClickOpen}>
                     <Tooltip>
-                      <Button variant='contained' className='nav-icon-span'>
-                        <Typography variant='body2'>Logout  <FiLogOut style={{ fontSize: 18 }} className='nav-icon' /></Typography>
+                      <Button variant='contained' className='nav-icon-span' sx={{marginBottom:1 }} endIcon ={<FiLogOut/>}>
+                        <Typography variant='button'> Logout</Typography>
                       </Button>
                     </Tooltip>
                   </li>

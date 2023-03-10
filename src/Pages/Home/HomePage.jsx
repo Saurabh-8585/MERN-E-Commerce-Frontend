@@ -1,21 +1,18 @@
 import './Home.css'
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
-import { Link } from 'react-router-dom'
-import { Container } from '@mui/material'
+import { Container, Typography } from '@mui/material'
 import { Box } from '@mui/system'
 import { useContext } from 'react'
 import { ContextFunction } from '../../Context/Context'
-import ProductCard from '../../Components/Card/Product Card/ProductCard'
+import CategoryCard from '../../Components/Category_Card/CategoryCard';
+import BannerData from '../../Helpers/HomePageBanner';
 import Carousel from '../../Components/Carousel/Carousel'
 const HomePage = () => {
     const { setCart } = useContext(ContextFunction)
-    const [productData, setProductData] = useState([])
-
     let authToken = localStorage.getItem('Authorization')
     useEffect(() => {
-        getData()
-        getCart()
+        // getCart()
         window.scroll(0, 0)
     }, [])
     const getCart = async () => {
@@ -30,23 +27,20 @@ const HomePage = () => {
         }
 
     }
-    const getData = async () => {
-        const { data } = await axios.get(process.env.REACT_APP_FETCH_PRODUCT)
-        setProductData(data);
-    }
 
     return (
         <>
-            <Container maxWidth='xl' style={{ display: 'flex', justifyContent: "center", padding: 0, flexDirection: "column", }}>
+            <Container maxWidth='xl' style={{ display: 'flex', justifyContent: "center", padding: 0, flexDirection: "column",marginBottom:70 }}>
                 <Box padding={1}>
                     <Carousel />
                 </Box>
-                <Container maxWidth='xl' style={{ marginTop: 90, display: "flex", justifyContent: 'center', flexWrap: "wrap", paddingBottom: 20 }}>
-                    {productData.map(prod => (
-                        <Link to={`/Detail/type/${prod.type}/${prod._id}`} key={prod._id}>
-                            <ProductCard prod={prod} />
-                        </Link>
-                    ))}
+                <Typography variant='h3' sx={{textAlign:'center',marginTop:10,color:'#1976d2'}}>Categories</Typography>
+                <Container maxWidth='xl' style={{ marginTop: 90, display: "flex", justifyContent: 'center', flexGrow: 1, flexWrap: 'wrap',  gap: 20, }}>
+                    {
+                        BannerData.map(data => (
+                            <CategoryCard data={data} key={data.img} />
+                        ))
+                    }
                 </Container>
             </Container>
         </ >

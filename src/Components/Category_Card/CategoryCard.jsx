@@ -1,12 +1,15 @@
 import React from 'react'
 import styles from './Category.module.css'
-import { GroupCloth } from '../../Assets/Images/Image'
-const CategoryCard = () => {
+import { Link } from 'react-router-dom'
+
+const CategoryCard = ({ data }) => {
     return (
-        <div className={styles.mainCard}>
-            <img src={GroupCloth} alt="" className={styles.mainImg} loading='lazy' />
-            <span className={styles.imgTitle}>Cloths</span>
-        </div>
+        <Link to={`product/type/${data.name.toLowerCase()}`}>
+            <div className={styles.mainCard}>
+                <img src={data.img} alt="" className={styles.mainImg} loading='lazy' />
+                <span className={styles.imgTitle}>{data.name}</span>
+            </div>
+        </Link>
     )
 }
 

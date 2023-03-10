@@ -2,12 +2,12 @@ import { Button, Container, Grid, TextField, Typography } from '@mui/material'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { AiOutlineFileDone } from 'react-icons/ai'
-import { useNavigate, useParams } from 'react-router-dom'
+import { TiArrowBack } from 'react-icons/ti'
+import { useNavigate} from 'react-router-dom'
 import styles from './Update.module.css'
 import { toast } from 'react-toastify'
 
 const UpdateDetails = () => {
-    const { id } = useParams()
     const [userData, setUserData] = useState([])
 
     let authToken = localStorage.getItem('Authorization')
@@ -138,7 +138,8 @@ const UpdateDetails = () => {
                         <TextField label="Province/State" name='userState' value={userDetails.userState || ''} onChange={handleOnchange} variant="outlined" fullWidth />
                     </Grid>
                 </Grid>
-                <Container sx={{ display: 'flex', justifyContent: 'center', marginTop: 5 }}>
+                <Container sx={{ display: 'flex', justifyContent: 'space-around', marginTop: 5 }}>
+                    <Button variant='contained' endIcon={<TiArrowBack />} onClick={()=>navigate(-1)}>Go back</Button>
                     <Button variant='contained' endIcon={<AiOutlineFileDone />} type='submit'>Update</Button>
                 </Container>
             </form >
