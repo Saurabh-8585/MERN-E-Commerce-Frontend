@@ -17,7 +17,7 @@ import {
 } from '@mui/material';
 import Slide from '@mui/material/Slide';
 import { MdAddShoppingCart } from 'react-icons/md'
-import { AiFillHeart, AiFillCloseCircle, AiOutlineLogin } from 'react-icons/ai'
+import { AiFillHeart, AiFillCloseCircle, AiOutlineLogin, AiOutlineShareAlt } from 'react-icons/ai'
 import { TbDiscount2 } from 'react-icons/tb'
 import axios from 'axios';
 import { toast } from 'react-toastify';
@@ -52,7 +52,7 @@ const ProductDetail = () => {
         getSimilarProducts()
         window.scroll(0, 0)
     }, [id])
-
+    console.log({ id }, { cat });
     const addToCart = async (product) => {
         if (setProceed) {
             try {
@@ -95,7 +95,17 @@ const ProductDetail = () => {
         }
 
     };
+    const shareProduct = (product) => {
 
+        const data = { text: product.name, url: `https://e-shopit.vercel.app/Detail/type/${cat}/${id}` }
+        if (navigator.canShare && navigator.canShare(data)) {
+            navigator.share(data);
+        }
+        else {
+            toast.error("browser not support", { autoClose: 500, theme: 'colored' })
+        }
+
+    }
     const getSimilarProducts = async () => {
         const { data } = await axios.post(`${process.env.REACT_APP_PRODUCT_TYPE}`, { userType: cat })
         setSimilarProduct(data)
@@ -208,6 +218,9 @@ const ProductDetail = () => {
                             </Tooltip>
                             <Tooltip title='Add To Wishlist'>
                                 <Button style={{ marginLeft: 20 }} variant='contained' className='all-btn' startIcon={<AiFillHeart />} onClick={(() => addToWhishList(product))}>Wishlist</Button>
+                            </Tooltip>
+                            <Tooltip title='Share'>
+                                <Button style={{ marginLeft: 20 }} variant='contained' className='all-btn' startIcon={<AiOutlineShareAlt />} onClick={() => shareProduct(product)}>Share</Button>
                             </Tooltip>
 
                         </div>
