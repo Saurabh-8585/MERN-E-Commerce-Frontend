@@ -1,4 +1,4 @@
-import { Box, Button, Card, CardActions, CardContent, Container, Grid, Typography } from '@mui/material'
+import { Box, Button, Card, CardActions, CardContent, Grid, Typography } from '@mui/material'
 import React from 'react'
 
 const OrderSummary = ({ proceedToCheckout, total, shippingCoast }) => {

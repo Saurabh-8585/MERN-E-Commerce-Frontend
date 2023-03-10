@@ -1,0 +1,9 @@
+export let payment = 'https://res.cloudinary.com/dxguqzge7/image/upload/v1678166588/payment_w5zps7.jpg';
+export let profile = 'https://res.cloudinary.com/dxguqzge7/image/upload/v1678166564/vecteezy_user-avatar-line-style__kdiooy.jpg';
+export let MaleCloth = 'https://res.cloudinary.com/dxguqzge7/image/upload/v1678166600/Male-Cloth_fowgph.jpg';
+export let FemaleCloth = 'https://res.cloudinary.com/dxguqzge7/image/upload/v1678166569/Cloths_whg46r.jpg';
+export let GroupCloth = 'https://res.cloudinary.com/dxguqzge7/image/upload/v1678166553/Cloth-banner_ivkfc6.jpg';
+export let Electronics = 'https://res.cloudinary.com/dxguqzge7/image/upload/v1678168952/Electronics2_somf6o.jpg';
+export let Jewelry = 'https://res.cloudinary.com/dxguqzge7/image/upload/v1678168306/model-jwellery_nzbp7j.jpg';
+export let Shoes = 'https://res.cloudinary.com/dxguqzge7/image/upload/v1678165390/cld-sample-5.jpg';
+export let Books = 'https://res.cloudinary.com/dxguqzge7/image/upload/v1678166574/Book_mnfy62.jpg';

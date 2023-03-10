@@ -1,14 +1,7 @@
-import Book from '../Assets/Banner/Book.jpg'
-import Electronics from '../Assets/Banner/Mobile-Laptop-Banner.jpg'
-import Shoes from '../Assets/Banner/Nike-Shoe.jpg'
-import Cloths from '../Assets/Banner/Male-Cloth.jpg'
-import Jewelry from '../Assets/Banner/jwelery.jpg'
-import groupImage from '../Assets/Banner/Cloth-banner.jpeg'
-import femaleCloth from '../Assets/Banner/Female-Cloth.jpg'
-
+import { GroupCloth, Shoes, Electronics, FemaleCloth, MaleCloth, Books, Jewelry } from '../Assets/Images/Image';
 const data = [
     {
-        img: groupImage,
+        img: GroupCloth,
         name: "Cloths"
     },
     {
@@ -16,7 +9,7 @@ const data = [
         name: "Shoe"
     },
     {
-        img: femaleCloth,
+        img: FemaleCloth,
         name: "Cloths"
     },
     {
@@ -24,11 +17,11 @@ const data = [
         name: "Electronics"
     },
     {
-        img: Cloths,
+        img: MaleCloth,
         name: "Cloths"
     },
     {
-        img: Book,
+        img: Books,
         name: "Book"
     },
     {

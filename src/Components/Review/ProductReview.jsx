@@ -14,7 +14,6 @@ import {
     MdOutlineFilterAlt
 } from 'react-icons/md'
 import Box from '@mui/material/Box';
-import ReviewImg from '../../Assets/Banner/Customer_Review.jpg'
 import { Button, MenuItem, Select, TextField, Tooltip, Typography } from '@mui/material';
 import { toast } from 'react-toastify';
 import './Review.css'
@@ -150,7 +149,7 @@ const ProductReview = ({ authToken, setProceed, setOpenAlert, id }) => {
 
                 </form>
                 <div className="form-img-box">
-                    <img src={ReviewImg} alt="Customer Review" className='review-img' />
+                    <img src='https://res.cloudinary.com/dxguqzge7/image/upload/v1678166555/Customer_Review_nubqcq.jpg' loading='lazy' alt="Customer Review" className='review-img' />
                 </div>
             </div>
             {reviews.length >= 1 ? <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 1, width: "80vw" }}>

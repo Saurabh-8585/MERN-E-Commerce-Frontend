@@ -5,8 +5,8 @@ import { BsFillCartCheckFill } from 'react-icons/bs'
 import { MdUpdate } from 'react-icons/md'
 import axios from 'axios'
 import { ContextFunction } from '../../Context/Context'
-import profileImg from '../../Assets/Banner/vecteezy_user-avatar-line-style_.jpg'
 import { Link, useNavigate } from 'react-router-dom'
+import { profile } from '../../Assets/Images/Image'
 
 const CheckoutForm = () => {
     const { cart } = useContext(ContextFunction)
@@ -76,7 +76,7 @@ const CheckoutForm = () => {
                 currency: "INR",
                 name: userData.firstName + ' ' + userData.lastName,
                 description: "Payment",
-                image: profileImg,
+                image: profile,
                 order_id: data.order.id,
                 callback_url: process.env.REACT_APP_GET_PAYMENTVERIFICATION,
                 prefill: {

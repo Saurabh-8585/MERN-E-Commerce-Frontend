@@ -16,6 +16,7 @@ import CheckoutForm from './Components/Checkout/CheckoutForm';
 import UpdateDetails from './Pages/Update_User/UpdateDetails';
 import ForgotPasswordForm from './Auth/ForgotPassword/ForgotPasswordForm';
 import AddNewPassword from './Auth/ForgotPassword/AddNewPassword';
+import CategoryCard from './Components/Category_Card/CategoryCard';
 
 
 
@@ -41,6 +42,7 @@ function App() {
             <Route path='/paymentsuccess' element={<PaymentSuccess />} />
             <Route path='/forgotpassword' element={<ForgotPasswordForm />} />
             <Route path='/user/reset/:id/:token' element={<AddNewPassword />} />
+            <Route path='/card' element={<CategoryCard />} />
           </Routes>
         </div>
         <MobileNavigation />

@@ -1,26 +1,20 @@
 import React, { forwardRef, useContext, useEffect, useState } from 'react'
 import { ContextFunction } from '../../Context/Context';
 import {
-    Box,
     Button,
-    CardActionArea,
-    CardContent,
     Typography,
     Dialog,
     DialogActions,
     DialogContent,
     Slide,
     Container,
-    Card,
     Grid,
-    CardActions,
     CssBaseline,
 } from '@mui/material'
 import axios from 'axios'
 import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { AiFillCloseCircle, AiOutlineLogin } from 'react-icons/ai'
-import { IoBagCheckOutline } from 'react-icons/io5'
 import CartCard from '../../Components/Card/CartCard/CartCard';
 import ProductCard from '../../Components/Card/Product Card/ProductCard';
 import './Cart.css'
