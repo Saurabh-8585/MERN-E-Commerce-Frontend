@@ -212,18 +212,18 @@ const ProductDetail = () => {
                             </ButtonGroup>
                         </Box>
                         <Rating name="read-only" value={Math.round(product.rating)} readOnly precision={0.5} />
-                        <div >
+                        <dix style={{display:'flex'}} >
                             <Tooltip title='Add To Cart'>
                                 <Button variant='contained' className='all-btn' startIcon={<MdAddShoppingCart />} onClick={(() => addToCart(product))}>Buy</Button>
                             </Tooltip>
                             <Tooltip title='Add To Wishlist'>
-                                <Button style={{ marginLeft: 20 }} variant='contained' className='all-btn' startIcon={<AiFillHeart />} onClick={(() => addToWhishList(product))}>Wishlist</Button>
+                                <Button style={{ marginLeft: 10 }} variant='contained' className='all-btn' startIcon={<AiFillHeart />} onClick={(() => addToWhishList(product))}>Wishlist</Button>
                             </Tooltip>
                             <Tooltip title='Share'>
-                                <Button style={{ marginLeft: 20 }} variant='contained' className='all-btn' startIcon={<AiOutlineShareAlt />} onClick={() => shareProduct(product)}>Share</Button>
+                                <Button style={{ marginLeft: 10 }} variant='contained' className='all-btn' startIcon={<AiOutlineShareAlt />} onClick={() => shareProduct(product)}>Share</Button>
                             </Tooltip>
 
-                        </div>
+                        </dix>
                     </section>
                 </main>
                 <ProductReview setProceed={setProceed} authToken={authToken} id={id} setOpenAlert={setOpenAlert} />
