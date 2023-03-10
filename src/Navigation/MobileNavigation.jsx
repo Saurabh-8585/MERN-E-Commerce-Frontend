@@ -92,19 +92,22 @@ const MobileNavigation = () => {
                         {/* <span style={{ fontSize: 12 }}>Wishlist</span> */}
                     </div>
                 </NavLink>
-                <NavLink to='/update' style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }} >
-                    <div className='links' onClick={() => navigate('/login')}>
-                        <CgProfile style={{ fontSize: 23, }} />
-                        {/* <span style={{ fontSize: 12 }}>Login</span> */}
-                    </div>
-                </NavLink>
-                
+
+
                 {
                     setProceed ?
-                        <div className='links' style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }} onClick={handleClickOpen}>
-                            <FiLogOut style={{ fontSize: 23, }} />
-                            {/* <span style={{ fontSize: 12 }}>Logout</span> */}
-                        </div>
+                        <>
+                            <NavLink to='/update' style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }} >
+                                <div className='links' onClick={() => navigate('/login')}>
+                                    <CgProfile style={{ fontSize: 23, }} />
+                                    {/* <span style={{ fontSize: 12 }}>Login</span> */}
+                                </div>
+                            </NavLink>
+                            <div className='links' style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }} onClick={handleClickOpen}>
+                                <FiLogOut style={{ fontSize: 23, }} />
+
+                            </div>
+                        </>
                         : <NavLink to='/login' style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }} >
                             <div className='links' onClick={() => navigate('/login')}>
                                 <CgProfile style={{ fontSize: 23, }} />

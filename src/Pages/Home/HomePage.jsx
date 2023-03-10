@@ -12,7 +12,7 @@ const HomePage = () => {
     const { setCart } = useContext(ContextFunction)
     let authToken = localStorage.getItem('Authorization')
     useEffect(() => {
-        // getCart()
+        getCart()
         window.scroll(0, 0)
     }, [])
     const getCart = async () => {
@@ -34,7 +34,7 @@ const HomePage = () => {
                 <Box padding={1}>
                     <Carousel />
                 </Box>
-                <Typography variant='h3' sx={{textAlign:'center',marginTop:10,color:'#1976d2'}}>Categories</Typography>
+                <Typography variant='h3' sx={{textAlign:'center',marginTop:10,color:'#1976d2',fontWeight:'bold'}}>Categories</Typography>
                 <Container maxWidth='xl' style={{ marginTop: 90, display: "flex", justifyContent: 'center', flexGrow: 1, flexWrap: 'wrap',  gap: 20, }}>
                     {
                         BannerData.map(data => (

@@ -64,15 +64,7 @@ const DesktopNavigation = () => {
   const handleClose = () => {
     setOpenAlert(false);
   };
-  const [anchorEl, setAnchorEl] = useState(null);
-  const open = Boolean(anchorEl);
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handlePopUpClose = () => {
-    setAnchorEl(null);
-  };
-
+ 
   return (
     <>
       <nav className='nav'>
@@ -112,45 +104,23 @@ const DesktopNavigation = () => {
             {
               setProceed ?
                 <>
-                  <li className="nav-links" style={{ display: 'flex', alignItems: 'center' }}>
+                  <li className="nav-links" style={{ display: 'flex', alignItems: 'center',margin:'0 15px' }}>
                     <Tooltip title='Profile'>
-                      <Button
-                        id="basic-button"
-                        aria-controls={open ? 'basic-menu' : undefined}
-                        aria-haspopup="true"
-                        aria-expanded={open ? 'true' : undefined}
-                        onClick={handleClick}
-                      >
-                        <span className='nav-icon-span'>   <CgProfile style={{ fontSize: 29, color: 'black', marginTop: 7 }} /></span>
-                      </Button>
+                      <span className='nav-icon-span'>   <CgProfile style={{ fontSize: 29, color: 'black', marginTop: 7 }} /></span>
                     </Tooltip>
-                    <Menu
-                      id="basic-menu"
-                      anchorEl={anchorEl}
-                      open={open}
-                      onClose={handlePopUpClose}
-                      MenuListProps={{
-                        'aria-labelledby': 'basic-button',
-                      }}
-                    >
-                      <Link to='/update'>   <MenuItem onClick={handlePopUpClose}>Update Profile</MenuItem></Link>
-                      <MenuItem className='fx' onClick={handleClickOpen}>Logout</MenuItem>
-                    </Menu>
                   </li>
 
-                  <li style={{ display: 'flex', alignItems: 'center' ,justifyItems:'center'}} onClick={handleClickOpen}>
-                    <Tooltip>
-                      <Button variant='contained' className='nav-icon-span' sx={{marginBottom:1 }} endIcon ={<FiLogOut/>}>
+                  <li style={{ display: 'flex', alignItems: 'center', justifyItems: 'center' }} onClick={handleClickOpen}>
+                      <Button variant='contained' className='nav-icon-span' sx={{ marginBottom: 1 }} endIcon={<FiLogOut />}>
                         <Typography variant='button'> Logout</Typography>
                       </Button>
-                    </Tooltip>
                   </li>
                 </>
                 :
                 <li className="nav-links">
                   <Tooltip title='Login'>
                     <NavLink to='/login'>
-                      <span className='nav-icon-span'>   <CgProfile style={{ fontSize: 29,marginTop:7 }} /></span>
+                      <span className='nav-icon-span'>   <CgProfile style={{ fontSize: 29, marginTop: 7 }} /></span>
                     </NavLink>
                   </Tooltip>
                 </li>
@@ -170,8 +140,8 @@ const DesktopNavigation = () => {
         </DialogContent>
         <DialogActions sx={{ display: 'flex', justifyContent: 'space-evenly' }}>
           <Link to="/">
-            <Button variant='contained' endIcon=<FiLogOut /> color='primary' onClick={handleLogOut}>Logout</Button></Link>
-          <Button variant='contained' color='error' endIcon=<AiFillCloseCircle /> onClick={handleClose}>Close</Button>
+            <Button variant='contained' endIcon={<FiLogOut />} color='primary' onClick={handleLogOut}>Logout</Button></Link>
+          <Button variant='contained' color='error' endIcon={<AiFillCloseCircle />} onClick={handleClose}>Close</Button>
         </DialogActions>
       </Dialog>
     </>

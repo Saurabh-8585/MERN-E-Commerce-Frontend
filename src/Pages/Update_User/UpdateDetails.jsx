@@ -104,13 +104,12 @@ const UpdateDetails = () => {
 
         }
         catch (error) {
-            console.log(error);
             toast.error(error.response.data.error, { autoClose: 500, theme: 'colored' })
         }
     }
     return (
         <Container sx={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column', marginBottom: 10 }}>
-            <Typography variant='h6' sx={{ margin: '30px 0' }}>Update Information</Typography>
+            <Typography variant='h6' sx={{ margin: '30px 0',fontWeight:'bold' }}>Personal Information</Typography>
             <form noValidate autoComplete="off" className={styles.checkout_form} onSubmit={handleSubmit} >
                 <Grid container spacing={2}>
                     <Grid item xs={12} sm={6}>
