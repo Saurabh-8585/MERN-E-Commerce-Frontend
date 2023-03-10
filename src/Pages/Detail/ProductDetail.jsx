@@ -97,7 +97,11 @@ const ProductDetail = () => {
     };
     const shareProduct = (product) => {
 
-        const data = { text: product.name, url: `https://e-shopit.vercel.app/Detail/type/${cat}/${id}` }
+        const data = {
+            text: product.name,
+            title:"e-shopit",
+            url: `https://e-shopit.vercel.app/Detail/type/${cat}/${id}`
+        }
         if (navigator.canShare && navigator.canShare(data)) {
             navigator.share(data);
         }
@@ -212,7 +216,7 @@ const ProductDetail = () => {
                             </ButtonGroup>
                         </Box>
                         <Rating name="read-only" value={Math.round(product.rating)} readOnly precision={0.5} />
-                        <dix style={{display:'flex'}} >
+                        <dix style={{ display: 'flex' }} >
                             <Tooltip title='Add To Cart'>
                                 <Button variant='contained' className='all-btn' startIcon={<MdAddShoppingCart />} onClick={(() => addToCart(product))}>Buy</Button>
                             </Tooltip>
