@@ -42,7 +42,7 @@ const CartCard = ({ product, removeFromCart }) => {
                         <AiFillDelete style={{ fontSize: 15 }} />
                     </Button>
                 </Tooltip>
-                <Typography> <Rating name="read-only" value={Math.round(product?.productId?.rating)} readOnly /></Typography>
+                <Typography> <Rating name="read-only" value={Math.round(product?.productId?.rating)} readOnly  precision={0.5}/></Typography>
             </CardActions>
         </Card >
     )

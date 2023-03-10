@@ -73,7 +73,6 @@ const MobileNavigation = () => {
                 <NavLink to='/' style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }} >
                     <div className='links'>
                         <AiOutlineHome style={{ fontSize: 23, }} />
-                        {/* <span style={{ fontSize: 12 }}>Home</span> */}
                     </div>
                 </NavLink>
                 <NavLink to='/cart' style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }} >
@@ -81,7 +80,6 @@ const MobileNavigation = () => {
                         <Badge badgeContent={setProceed ? cart.length : 0} >
                             <AiOutlineShoppingCart style={{ fontSize: 23 }} />
                         </Badge>
-                        {/* <span style={{ fontSize: 12 }}>Cart</span> */}
                     </div>
                 </NavLink>
                 <NavLink to='/wishlist' style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}  >
@@ -89,7 +87,6 @@ const MobileNavigation = () => {
                         <Badge badgeContent={setProceed ? wishlistData.length : 0} >
                             <AiOutlineHeart style={{ fontSize: 23, }} />
                         </Badge>
-                        {/* <span style={{ fontSize: 12 }}>Wishlist</span> */}
                     </div>
                 </NavLink>
 
@@ -100,7 +97,7 @@ const MobileNavigation = () => {
                             <NavLink to='/update' style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }} >
                                 <div className='links' onClick={() => navigate('/login')}>
                                     <CgProfile style={{ fontSize: 23, }} />
-                                    {/* <span style={{ fontSize: 12 }}>Login</span> */}
+                                   
                                 </div>
                             </NavLink>
                             <div className='links' style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }} onClick={handleClickOpen}>

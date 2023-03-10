@@ -85,7 +85,6 @@ const ProductReview = ({ authToken, setProceed, setOpenAlert, id }) => {
                         }
                     })
                     toast.success(data.msg, { autoClose: 500, })
-                    console.log(data);
                     fetchReviews()
                 }
                 else {

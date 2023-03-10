@@ -17,16 +17,11 @@ const AddNewPassword = () => {
             e.preventDefault()
             const sendPassword = await axios.post(`${process.env.REACT_APP_FORGOT_PASSWORD}/${id}/${token}`, { newPassword: password })
             console.log(sendPassword);
-            if (sendPassword.data.msg.name === "TokenExpiredError") {
-                toast.error("Token has been expired ,Please try again", { autoClose: 500, theme: 'colored' })
+            toast.success(sendPassword.data.msg, { autoClose: 500, theme: 'colored' })
+            navigate('/login')
 
-            }
-            else {
-                toast.success(sendPassword.data.msg, { autoClose: 500, theme: 'colored' })
-                navigate('/login')
-            }
         } catch (error) {
-            toast.error(error)
+            toast.error(error.response.data.msg, { autoClose: 500, theme: 'colored' })
         }
     }
 

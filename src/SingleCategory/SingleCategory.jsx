@@ -68,11 +68,14 @@ const SingleCategory = () => {
 
     const loading = isLoading ?
         (
-            <Container maxWidth='xl' style={{ marginTop: 10, display: "flex", justifyContent: "center", flexWrap: "wrap", paddingLeft: 10, paddingBottom: 20 }}><Loading /><Loading /><Loading /><Loading /></Container >
+            <Container maxWidth='xl' style={{ marginTop: 10, display: "flex", justifyContent: "center", flexWrap: "wrap", paddingLeft: 10, paddingBottom: 20 }}>
+                <Loading /><Loading /><Loading /><Loading />
+                <Loading /><Loading /><Loading /><Loading />
+            </Container >
         )
         : ""
     return (
-        <Container maxWidth='xl' style={{ marginTop: 90, paddingRight: 50, display: 'flex', justifyContent: "center", flexDirection: "column" }}>
+        <Container maxWidth='xl' style={{ marginTop: 90, display: 'flex', justifyContent: "center", flexDirection: "column" }}>
             < Box sx={{ minWidth: 120 }}>
                 <FormControl sx={{ width: 140 }}>
                     <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 1, width: "80vw" }}>
@@ -92,7 +95,7 @@ const SingleCategory = () => {
                 </FormControl>
             </Box>
             {loading}
-            <Container maxWidth='xl' style={{ marginTop: 10, display: "flex",justifyContent:'center', flexWrap: "wrap", paddingLeft: 10, paddingBottom: 20 ,width:'100%'}}>
+            <Container maxWidth='xl' style={{ marginTop: 10, display: "flex", justifyContent: 'center', flexWrap: "wrap", paddingBottom: 20, marginBottom:30,width: '100%' }}>
                 {productData.map(prod => (
                     <Link to={`/Detail/type/${cat}/${prod._id}`} key={prod._id}>
                         <ProductCard prod={prod} />

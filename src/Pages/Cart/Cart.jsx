@@ -1,4 +1,4 @@
-import React, { forwardRef, useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { ContextFunction } from '../../Context/Context';
 import {
     Button,
@@ -6,10 +6,10 @@ import {
     Dialog,
     DialogActions,
     DialogContent,
-    Slide,
     Container,
     Grid,
     CssBaseline,
+    Box,
 } from '@mui/material'
 import axios from 'axios'
 import { Link, useNavigate } from 'react-router-dom'
@@ -19,10 +19,10 @@ import CartCard from '../../Components/Card/CartCard/CartCard';
 import ProductCard from '../../Components/Card/Product Card/ProductCard';
 import './Cart.css'
 import OrderSummary from './OrderSummary';
+import { EmptyCart } from '../../Assets/Images/Image';
 
-const Transition = forwardRef(function Transition(props, ref) {
-    return <Slide direction="up" ref={ref} {...props} />;
-});
+
+
 const Cart = () => {
     const { cart, setCart } = useContext(ContextFunction)
     const [total, setTotal] = useState(0)
@@ -57,7 +57,6 @@ const Cart = () => {
 
     const getCart = async () => {
         if (setProceed) {
-
             const { data } = await axios.get(`${process.env.REACT_APP_GET_CART}`,
                 {
                     headers: {
@@ -94,7 +93,6 @@ const Cart = () => {
                     'Authorization': authToken
                 }
             })
-            console.log({ product });
         }
     }
     const proceedToCheckout = async () => {
@@ -106,17 +104,26 @@ const Cart = () => {
             navigate('/checkout')
         }
     }
-    console.log({ cart });
 
     return (
         <>
             <CssBaseline />
             <Container fixed maxWidth>
+
+                {cart.length <= 0 &&
+                    <Box sx={{width:'100%',display: 'flex',  justifyContent: 'center',alignItems:'center'}}>
+                        <div className="main-card">
+                            <img src={EmptyCart} alt="Empty_cart" className="empty-cart-img" />
+                            <Typography variant='h6' sx={{ textAlign: 'center', color: '#1976d2', fontWeight: 'bold' }}>Your Cart is Empty</Typography>
+                        </div>
+                    </Box>
+                }
                 <Grid container spacing={3}>
                     <Grid item xs={12} sm={6} md={7} lg={7}>
                         <Grid container>
-                            <Grid item xs={12} sm={12} md={12} lg={12} sx={{ display: 'flex', flexWrap: 'wrap',justifyContent:'center',}}>
+                            <Grid item xs={12} sm={12} md={12} lg={12} sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', }}>
                                 {
+                                    cart.length > 0 &&
                                     cart.map(product =>
                                         <CartCard product={product} removeFromCart={removeFromCart} key={product._id} />
 
@@ -129,11 +136,13 @@ const Cart = () => {
                         <Grid item xs={12} sm={6} md={5} lg={5}  >
                             <OrderSummary proceedToCheckout={proceedToCheckout} total={total} shippingCoast={shippingCoast} />
                         </Grid>
+
+
                     }
                 </Grid>
 
             </Container>
-            <Typography variant='h6' sx={{ textAlign: 'center',marginTop:5 }}>Previous Orders</Typography>
+            <Typography variant='h6' sx={{ textAlign: 'center', marginTop: 5 }}>Previous Orders</Typography>
             <Container maxWidth='xl' style={{ marginTop: 10, display: "flex", justifyContent: 'center', flexWrap: "wrap", paddingBottom: 20 }}>
                 {
                     previousOrder.map(product => (
@@ -155,8 +164,8 @@ const Cart = () => {
                     <Typography variant='h5'> Please Login To Proceed</Typography>
                 </DialogContent>
                 <DialogActions sx={{ display: 'flex', justifyContent: 'space-evenly' }}>
-                    <Button variant='contained' onClick={handleToLogin} endIcon=<AiOutlineLogin /> color='primary'>Login</Button>
-                    <Button variant='contained' color='error' endIcon=<AiFillCloseCircle /> onClick={handleClose}>Close</Button>
+                    <Button variant='contained' onClick={handleToLogin} endIcon={<AiOutlineLogin />} color='primary'>Login</Button>
+                    <Button variant='contained' color='error' endIcon={<AiFillCloseCircle />} onClick={handleClose}>Close</Button>
                 </DialogActions>
             </Dialog>
 

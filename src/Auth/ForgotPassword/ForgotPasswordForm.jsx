@@ -14,14 +14,9 @@ const ForgotPasswordForm = () => {
         try {
             e.preventDefault()
             const sendEmail = await axios.post(`${process.env.REACT_APP_FORGOT_PASSWORD}`, { email: email })
-            if (sendEmail.data.success === true) {
-                toast.success(sendEmail.data.msg, { autoClose: 500, theme: 'colored' })
-
-            }
-            else { toast.error(sendEmail.data.msg, { autoClose: 500, theme: 'colored' }) }
-
+            toast.success(sendEmail.data.msg, { autoClose: 500, theme: 'colored' })
         } catch (error) {
-            // toast.error(error)
+            toast.error(error.response.data.msg, { autoClose: 500, theme: 'colored' })
 
         }
 

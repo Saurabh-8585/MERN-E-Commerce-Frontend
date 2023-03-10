@@ -9,31 +9,35 @@
     padding: 15px;
     height: 400px;
     /* border: 2px solid red; */
+    /* border: 2px solid blue; */
 }
 
 .card_action {
     display: flex;
     justify-content: center;
     align-items: center;
-    /* border: 2px solid black; */
+    /* border: 2px solid red; */
     flex-direction: column;
 }
 
 .cart_box {
     height: 250px;
-    width: 300px;
-    padding: 5px;
+    width: 250px;
+    /* padding: 5px; */
+    /* border: 2px solid black; */
+    margin: auto;
 }
 
 .cart_img {
     height: 100%;
     width: 100%;
     object-fit: contain;
+    object-position: center;
 }
 
 @media screen and (max-width: 960px) {
     .main_card {
-        width: 220px;
+        width: 250px;
         height: 350px;
         padding: 10px;
     }

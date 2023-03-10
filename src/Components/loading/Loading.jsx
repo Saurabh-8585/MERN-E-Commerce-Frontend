@@ -1,11 +1,8 @@
 import {  Skeleton } from '@mui/material'
 import { Stack } from '@mui/system'
-import React from 'react'
-
 const Loading = () => {
     return (
-
-        <Stack className='loading' spacing={1}>
+        <Stack className='loading' spacing={1} sx={{margin:2}}>
             <Skeleton variant="rounded" width={180} height={200} />
             <Skeleton className='prod-name' variant="text" width={140} height={15} />
             <div className="divider">

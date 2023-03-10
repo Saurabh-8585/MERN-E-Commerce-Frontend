@@ -14,8 +14,6 @@ import {
     Chip,
     Rating,
     ButtonGroup,
-    Select,
-    MenuItem,
 } from '@mui/material';
 import Slide from '@mui/material/Slide';
 import { MdAddShoppingCart } from 'react-icons/md'
@@ -26,7 +24,6 @@ import { toast } from 'react-toastify';
 import { ContextFunction } from '../../Context/Context';
 import ProductReview from '../../Components/Review/ProductReview';
 import ProductCard from '../../Components/Card/Product Card/ProductCard';
-import { BiFilterAlt } from 'react-icons/bi';
 
 
 const Transition = forwardRef(function Transition(props, ref) {
@@ -40,8 +37,6 @@ const ProductDetail = () => {
     const [product, setProduct] = useState([])
     const [similarProduct, setSimilarProduct] = useState([])
     const [productQuantity, setProductQuantity] = useState(1)
-
-
 
 
 
@@ -60,20 +55,25 @@ const ProductDetail = () => {
 
     const addToCart = async (product) => {
         if (setProceed) {
-            const { data } = await axios.post(`${process.env.REACT_APP_ADD_CART}`, { _id: product._id, quantity: productQuantity }, {
-                headers: {
-                    'Authorization': authToken
-                }
-            })
-            setCart(data)
-            setCart([...cart, product])
-            toast.success("Added To Cart", { autoClose: 500, theme: 'colored' })
+            try {
+
+
+                const { data } = await axios.post(`${process.env.REACT_APP_ADD_CART}`, { _id: product._id, quantity: productQuantity }, {
+                    headers: {
+                        'Authorization': authToken
+                    }
+                })
+                setCart(data)
+                setCart([...cart, product])
+                toast.success("Added To Cart", { autoClose: 500, theme: 'colored' })
+            } catch (error) {
+                toast.error(error.response.data.msg, { autoClose: 500, theme: 'colored' })
+            }
         }
         else {
             setOpenAlert(true);
         }
     }
-    // console.log({ product });
     const addToWhishList = async (product) => {
         if (setProceed) {
             try {
@@ -87,7 +87,6 @@ const ProductDetail = () => {
                 toast.success("Added To Wishlist", { autoClose: 500, theme: 'colored' })
             }
             catch (error) {
-                console.log({ wishlistData })
                 toast.error(error.response.data.msg, { autoClose: 500, theme: 'colored' })
             }
         }
@@ -144,9 +143,9 @@ const ProductDetail = () => {
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions sx={{ display: 'flex', justifyContent: 'space-evenly' }}>
-                        <Link to="/login"> <Button variant='contained' endIcon=<AiOutlineLogin /> color='primary'>Login</Button></Link>
+                        <Link to="/login"> <Button variant='contained' endIcon={<AiOutlineLogin />} color='primary'>Login</Button></Link>
                         <Button variant='contained' color='error'
-                            onClick={() => setOpenAlert(false)} endIcon=<AiFillCloseCircle />>Close</Button>
+                            onClick={() => setOpenAlert(false)} endIcon={<AiFillCloseCircle />}>Close</Button>
                     </DialogActions>
                 </Dialog>
 
@@ -202,7 +201,7 @@ const ProductDetail = () => {
                                 <Button onClick={decreaseQuantity}>-</Button>
                             </ButtonGroup>
                         </Box>
-                        <Rating name="read-only" value={Math.round(product.rating)} readOnly />
+                        <Rating name="read-only" value={Math.round(product.rating)} readOnly precision={0.5} />
                         <div >
                             <Tooltip title='Add To Cart'>
                                 <Button variant='contained' className='all-btn' startIcon={<MdAddShoppingCart />} onClick={(() => addToCart(product))}>Buy</Button>
@@ -217,9 +216,9 @@ const ProductDetail = () => {
                 <ProductReview setProceed={setProceed} authToken={authToken} id={id} setOpenAlert={setOpenAlert} />
 
 
-                <Typography sx={{ marginTop: 10, marginBottom: 5 }}>Similar Products</Typography>
+                <Typography sx={{ marginTop: 10, marginBottom: 5, fontWeight: 'bold', textAlign: 'center' }}>Similar Products</Typography>
                 <Box>
-                    <Box className='similarProduct' sx={{ display: 'flex', overflowX: 'auto' }}>
+                    <Box className='similarProduct' sx={{ display: 'flex', overflowX: 'auto', marginBottom: 10 }}>
                         {
                             similarProduct.filter(prod => prod._id !== id).map(prod => (
                                 <Link to={`/Detail/type/${prod.type}/${prod._id}`} key={prod._id}>

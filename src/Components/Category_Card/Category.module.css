@@ -5,6 +5,10 @@
     position: relative;
     cursor: pointer;
 }
+.mainCard:hover{
+    transform: scale(1.05);
+    transition:ease-in 0.1s;
+}
 
 .mainImg {
     height: 100%;
@@ -18,7 +22,8 @@
 .imgTitle {
     font-weight: bold;
     position: absolute;
-    bottom: 0;
+    /* bottom: ; */
+    top: 85%;
     color: white;
     right: 0;
     padding-right: 10px;
