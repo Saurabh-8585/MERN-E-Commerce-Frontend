@@ -52,7 +52,6 @@ const ProductDetail = () => {
         getSimilarProducts()
         window.scroll(0, 0)
     }, [id])
-    console.log({ id }, { cat });
     const addToCart = async (product) => {
         if (setProceed) {
             try {
@@ -100,7 +99,6 @@ const ProductDetail = () => {
         const data = {
             text: product.name,
             title:"e-shopit",
-            url: `https://e-shopit.vercel.app/Detail/type/${cat}/${id}`
         }
         if (navigator.canShare && navigator.canShare(data)) {
             navigator.share(data);
@@ -116,7 +114,6 @@ const ProductDetail = () => {
     }
     let data = [];
     if (cat === 'shoe') {
-        data.push(product.gender, product.brand, product.category)
 
     }
     else if (cat === 'book') {
@@ -216,7 +213,7 @@ const ProductDetail = () => {
                             </ButtonGroup>
                         </Box>
                         <Rating name="read-only" value={Math.round(product.rating)} readOnly precision={0.5} />
-                        <dix style={{ display: 'flex' }} >
+                        <div style={{ display: 'flex' }} >
                             <Tooltip title='Add To Cart'>
                                 <Button variant='contained' className='all-btn' startIcon={<MdAddShoppingCart />} onClick={(() => addToCart(product))}>Buy</Button>
                             </Tooltip>
@@ -227,7 +224,7 @@ const ProductDetail = () => {
                                 <Button style={{ marginLeft: 10 }} variant='contained' className='all-btn' startIcon={<AiOutlineShareAlt />} onClick={() => shareProduct(product)}>Share</Button>
                             </Tooltip>
 
-                        </dix>
+                        </div>
                     </section>
                 </main>
                 <ProductReview setProceed={setProceed} authToken={authToken} id={id} setOpenAlert={setOpenAlert} />

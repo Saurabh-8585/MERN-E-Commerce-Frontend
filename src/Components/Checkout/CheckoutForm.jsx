@@ -135,8 +135,8 @@ const CheckoutForm = () => {
                     </Grid>
                 </Grid>
                 <Container sx={{ display: 'flex', gap: 10, justifyContent: 'center', marginTop: 5 }}>
-                    <Button variant='contained' endIcon={<BsFillCartCheckFill />} type='submit'>Checkout</Button>
                     <Link to='/update'> <Button variant='contained' endIcon={<MdUpdate />}>Update</Button></Link>
+                    <Button variant='contained' endIcon={<BsFillCartCheckFill />} type='submit'>Checkout</Button>
                 </Container>
             </form >
 

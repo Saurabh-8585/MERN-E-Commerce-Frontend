@@ -3,7 +3,7 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { AiOutlineFileDone } from 'react-icons/ai'
 import { TiArrowBack } from 'react-icons/ti'
-import { useNavigate} from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import styles from './Update.module.css'
 import { toast } from 'react-toastify'
 
@@ -43,7 +43,7 @@ const UpdateDetails = () => {
             userDetails.userState = data.userState
             console.log(1);
             setUserData(data);
-            
+
         } catch (error) {
             console.log(error);
         }
@@ -52,8 +52,8 @@ const UpdateDetails = () => {
     const handleOnchange = (e) => {
         setUserDetails({ ...userDetails, [e.target.name]: e.target.value })
     }
-    let phoneRegex = /^(?:(?:\+|0{0,2})91(\s*[\-]\s*)?|[0]?)?[789]\d{9}$/gm;
-    let emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    let phoneRegex = /^(?:(?:\+|0{0,2})91(\s*[\-]\s*)?|[0]?)?[789]\d{9}$/;
+    let emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     // let zipRegex = /^[1-9]{1}[0-9]{2}\\s{0, 1}[0-9]{3}$/;
 
     const handleSubmit = async (e) => {
@@ -101,15 +101,14 @@ const UpdateDetails = () => {
                     toast.error("Something went wrong", { autoClose: 500, theme: 'colored' })
                 }
             }
-
         }
         catch (error) {
-            toast.error(error.response.data.error, { autoClose: 500, theme: 'colored' })
+            toast.error(error, { autoClose: 500, theme: 'colored' })
         }
     }
     return (
         <Container sx={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column', marginBottom: 10 }}>
-            <Typography variant='h6' sx={{ margin: '30px 0',fontWeight:'bold' }}>Personal Information</Typography>
+            <Typography variant='h6' sx={{ margin: '30px 0', fontWeight: 'bold' }}>Personal Information</Typography>
             <form noValidate autoComplete="off" className={styles.checkout_form} onSubmit={handleSubmit} >
                 <Grid container spacing={2}>
                     <Grid item xs={12} sm={6}>
@@ -122,7 +121,7 @@ const UpdateDetails = () => {
                         <TextField label="Contact Number" type='tel' name='phoneNumber' value={userDetails.phoneNumber || ''} onChange={handleOnchange} variant="outlined" fullWidth />
                     </Grid>
                     <Grid item xs={12} sm={6}>
-                        <TextField label="Email" name='userEmail' value={userDetails.email || ''} onChange={handleOnchange} variant="outlined" fullWidth />
+                        <TextField label="Email" name='email' value={userDetails.email || ''} onChange={handleOnchange} variant="outlined" fullWidth />
                     </Grid>
                     <Grid item xs={12}>
                         <TextField label="Address" name='address' value={userDetails.address || ''} onChange={handleOnchange} variant="outlined" fullWidth />
@@ -138,8 +137,8 @@ const UpdateDetails = () => {
                     </Grid>
                 </Grid>
                 <Container sx={{ display: 'flex', justifyContent: 'space-around', marginTop: 5 }}>
-                    <Button variant='contained' endIcon={<TiArrowBack />} onClick={()=>navigate(-1)}>Go back</Button>
-                    <Button variant='contained' endIcon={<AiOutlineFileDone />} type='submit'>Update</Button>
+                    <Button variant='contained' endIcon={<TiArrowBack />} onClick={() => navigate(-1)}>Go back</Button>
+                    <Button variant='contained' endIcon={<AiOutlineFileDone />} type='submit'>Save</Button>
                 </Container>
             </form >
 
@@ -148,3 +147,5 @@ const UpdateDetails = () => {
 }
 
 export default UpdateDetails
+
+// .matches(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, 'Must be a valid email')

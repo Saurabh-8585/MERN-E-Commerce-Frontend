@@ -4,13 +4,14 @@ import { useEffect, useState } from 'react';
 import { AiFillEdit, AiFillDelete, AiOutlineSend } from 'react-icons/ai'
 import { GiCancel } from 'react-icons/gi'
 import { toast } from 'react-toastify';
-const CommentCard = ({ userReview, setReviews, reviews, authToken, fetchReviews }) => {
+const CommentCard = ({ userReview, setReviews, reviews, fetchReviews }) => {
     let date = new Date(userReview.updatedAt).toLocaleDateString('en-us', { weekday: "long", year: "numeric", month: "short", day: "numeric" })
     const [authUser, setAuthUser] = useState()
     const [editComment, setEditComment] = useState(userReview.comment)
     const [edit, setEdit] = useState(false)
     const [value, setValue] = useState(userReview.rating);
-
+    console.log(userReview);
+    let authToken = localStorage.getItem('Authorization')
     useEffect(() => {
         getUser()
     }, [])
@@ -23,17 +24,14 @@ const CommentCard = ({ userReview, setReviews, reviews, authToken, fetchReviews 
         setAuthUser(data._id);
     }
     const handleDeleteComment = async () => {
-        setReviews(reviews.filter(r => r._id !== userReview._id))
         try {
-            const deleteReview = await axios.delete(`${process.env.REACT_APP_DELETE_REVIEW}/${userReview._id}`, {
+            const { data } = await axios.delete(`${process.env.REACT_APP_DELETE_REVIEW}/${userReview._id}`,{
                 headers: {
                     'Authorization': authToken
                 }
             })
-
-            if (deleteReview.data.msg === 'Successful') {
-                toast.success("Review Deleted", { autoClose: 500, theme: 'colored' })
-            }
+            toast.success(data.msg, { autoClose: 500, theme: 'colored' })
+            setReviews(reviews.filter(r => r._id !== userReview._id))
         } catch (error) {
             toast.success(error, { autoClose: 500, theme: 'colored' })
         }
@@ -59,21 +57,13 @@ const CommentCard = ({ userReview, setReviews, reviews, authToken, fetchReviews 
                                 'Authorization': authToken
                             }
                         })
-                    if (response.data.success === true) {
-                        toast.success(response.data.msg, { autoClose: 500, })
-                        fetchReviews()
-                        setEdit(false)
-                    }
-
+                    toast.success(response.data.msg, { autoClose: 500, })
+                    fetchReviews()
+                    setEdit(false)
                 }
-                else {
-                    toast.error("Something went wrong", { autoClose: 600, })
-                }
-
             }
             catch (error) {
-                toast.error("Something went wrong2", { autoClose: 600, })
-                console.log(error);
+                toast.error("Something went wrong", { autoClose: 600, })
             }
         }
     }
@@ -85,9 +75,9 @@ const CommentCard = ({ userReview, setReviews, reviews, authToken, fetchReviews 
                 <Avatar alt="Customer Avatar" />
             </Grid>
             <Grid justifyContent="left" item xs zeroMinWidth >
-                <h4 style={{ margin: 0, textAlign: "left" }}>{userReview?.user?.firstName + '' + userReview?.user?.lastName}</h4>
+                <h4 style={{ margin: 0, textAlign: "left" }}>{userReview?.user?.firstName + ' ' + userReview?.user?.lastName}</h4>
                 <p style={{ textAlign: "left", marginTop: 10 }}>
-                    {!edit && <Rating name="read-only" value={userReview.rating} readOnly />}
+                    {!edit && <Rating name="read-only" value={userReview.rating} readOnly  precision={0.5}/>}
                     {edit &&
                         <Rating
                             name="simple-controlled"
@@ -98,7 +88,7 @@ const CommentCard = ({ userReview, setReviews, reviews, authToken, fetchReviews 
                             }}
                         />}
                 </p>
-                <p style={{ textAlign: "left", wordBreak: 'break-word', paddingRight: 10,margin:'10px 0' }}>
+                <p style={{ textAlign: "left", wordBreak: 'break-word', paddingRight: 10, margin: '10px 0' }}>
                     {!edit && userReview.comment.trim()
                     }
                     {edit && <TextField
@@ -125,7 +115,7 @@ const CommentCard = ({ userReview, setReviews, reviews, authToken, fetchReviews 
                 </div>
                 }
 
-                <p style={{ textAlign: "left", color: "gray", margin:"20px 0" }}>
+                <p style={{ textAlign: "left", color: "gray", margin: "20px 0" }}>
                     {date}
                 </p>
 
@@ -134,7 +124,7 @@ const CommentCard = ({ userReview, setReviews, reviews, authToken, fetchReviews 
                         <SpeedDial
                             ariaLabel="SpeedDial basic example"
                             sx={{ position: 'absolute', bottom: 16, right: 16, }}
-                            icon={<SpeedDialIcon  />}
+                            icon={<SpeedDialIcon />}
                         >
                             {/* {actions.map((action) => ( */}
                             <SpeedDialAction

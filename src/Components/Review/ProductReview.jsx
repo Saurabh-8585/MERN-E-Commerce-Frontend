@@ -55,15 +55,13 @@ const ProductReview = ({ authToken, setProceed, setOpenAlert, id }) => {
     }
     const fetchReviews = async () => {
         const filter = filterOption.toLowerCase()
-        console.log(filter);
         const { data } = await axios.post(`${process.env.REACT_APP_GET_REVIEW}/${id}`, { filterType: filter })
         setReviews(data)
-        console.log({ data })
     }
     useEffect(() => {
         fetchReviews()
-        setTitle("All")
-    }, [filterOption, id])
+        console.log(1);
+    }, [title])
 
     const handleSubmitReview = async (e) => {
         e.preventDefault()
@@ -158,7 +156,7 @@ const ProductReview = ({ authToken, setProceed, setOpenAlert, id }) => {
                     id="demo-simple-select"
                     value={title}
                     sx={{ width: 200 }}
-                    onChange={(e) => handleChange(e)}
+                    onChange={handleChange}
                 >
                     {commentFilter.map(prod => (
                         <MenuItem key={prod} value={prod}>{prod}</MenuItem>

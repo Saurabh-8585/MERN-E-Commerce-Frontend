@@ -64,13 +64,13 @@ const DesktopNavigation = () => {
   const handleClose = () => {
     setOpenAlert(false);
   };
- 
+
   return (
     <>
       <nav className='nav'>
         <div className="logo">
-        <Link to='/'>
-          <span >Shop It</span>
+          <Link to='/'>
+            <span >Shop It</span>
           </Link>
         </div>
         <div className="nav-items">
@@ -106,16 +106,17 @@ const DesktopNavigation = () => {
             {
               setProceed ?
                 <>
-                  <li className="nav-links" style={{ display: 'flex', alignItems: 'center',margin:'0 15px' }}>
-                    <Tooltip title='Profile'>
-                      <span className='nav-icon-span'>   <CgProfile style={{ fontSize: 29, color: 'black', marginTop: 7 }} /></span>
-                    </Tooltip>
-                  </li>
-
+                  <Link to='/update'>
+                    <li className="nav-links" style={{ display: 'flex', alignItems: 'center',justifyContent:'center',margin:'8px 25px 0 10px' }}>
+                      <Tooltip title='Profile'>
+                        <span className='nav-icon-span'>   <CgProfile style={{ fontSize: 29, color: 'black', marginTop: 7 }} /></span>
+                      </Tooltip>
+                    </li>
+                  </Link>
                   <li style={{ display: 'flex', alignItems: 'center', justifyItems: 'center' }} onClick={handleClickOpen}>
-                      <Button variant='contained' className='nav-icon-span' sx={{ marginBottom: 1 }} endIcon={<FiLogOut />}>
-                        <Typography variant='button'> Logout</Typography>
-                      </Button>
+                    <Button variant='contained' className='nav-icon-span' sx={{ marginBottom: 1 }} endIcon={<FiLogOut />}>
+                      <Typography variant='button'> Logout</Typography>
+                    </Button>
                   </li>
                 </>
                 :
