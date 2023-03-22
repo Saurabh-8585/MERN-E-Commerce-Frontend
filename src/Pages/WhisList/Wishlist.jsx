@@ -58,6 +58,7 @@ const Wishlist = () => {
 
     return (
         <>
+        <Typography variant='h3' sx={{ textAlign: 'center', margin: "10px 0 ", color: '#1976d2', fontWeight: 'bold' }}>Wishlist</Typography>
             {setProceed &&
 
                 wishlistData.length <= 0 ?

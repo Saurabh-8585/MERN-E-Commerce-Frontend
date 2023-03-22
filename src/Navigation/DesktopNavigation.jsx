@@ -7,7 +7,7 @@ import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { Badge, Button, Dialog, DialogActions, DialogContent, Menu, MenuItem, Slide, Tooltip, Typography } from '@mui/material';
 import { ContextFunction } from '../Context/Context';
 import { toast } from 'react-toastify';
-import axios from 'axios'
+import { getCart, getWishList, handleLogOut, handleClickOpen, handleClose } from '../Constants/Constant'
 const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
@@ -19,52 +19,11 @@ const DesktopNavigation = () => {
   let authToken = localStorage.getItem('Authorization')
   let setProceed = authToken !== null ? true : false
   useEffect(() => {
-    getCart()
-    getWishList()
+    getCart(setProceed, setCart, authToken)
+    getWishList(setProceed, setWishlistData, authToken)
   }, [])
 
-  const getCart = async () => {
-    if (setProceed) {
-      const { data } = await axios.get(`${process.env.REACT_APP_GET_CART}`,
-        {
-          headers: {
-            'Authorization': authToken
-          }
-        })
-      setCart(data);
-    }
-  }
-  const getWishList = async () => {
-    if (setProceed) {
-      const { data } = await axios.get(`${process.env.REACT_APP_GET_WISHLIST}`,
-        {
-          headers: {
-            'Authorization': authToken
-          }
-        })
-      setWishlistData(data)
-    }
-  }
-  const handleLogOut = () => {
-    if (setProceed) {
-      localStorage.removeItem('Authorization')
-      toast.success("Logout Successfully", { autoClose: 500, theme: 'colored' })
-      navigate('/')
-      setOpenAlert(false)
-    }
-    else {
-      toast.error("User is already logged of", { autoClose: 500, theme: 'colored' })
-    }
-  }
-
-  const handleClickOpen = () => {
-    setOpenAlert(true);
-  };
-
-  const handleClose = () => {
-    setOpenAlert(false);
-  };
-
+  
   return (
     <>
       <nav className='nav'>
@@ -88,32 +47,30 @@ const DesktopNavigation = () => {
 
             <li className="nav-links">
               <Tooltip title='Cart'>
-                <NavLink to='/cart'>
+                <Link to={setProceed ? "/cart" : "/"}>
                   <span className='nav-icon-span'>    <Badge badgeContent={setProceed ? cart.length : 0}> <AiOutlineShoppingCart className='nav-icon' /></Badge></span>
-                </NavLink>
+                </Link>
               </Tooltip>
             </li>
-
             <li className="nav-links">
               <Tooltip title='Wishlist'>
-                <NavLink to='/wishlist'>
+                <Link to={setProceed ? "/wishlist" : "/"}>
                   <span className='nav-icon-span'>    <Badge badgeContent={setProceed ? wishlistData.length : 0}> <AiOutlineHeart className='nav-icon' /></Badge></span>
-                </NavLink>
+                </Link>
               </Tooltip>
             </li>
 
-            { }
             {
               setProceed ?
                 <>
                   <Link to='/update'>
-                    <li className="nav-links" style={{ display: 'flex', alignItems: 'center',justifyContent:'center',margin:'8px 25px 0 10px' }}>
+                    <li className="nav-links" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '8px 25px 0 10px' }}>
                       <Tooltip title='Profile'>
                         <span className='nav-icon-span'>   <CgProfile style={{ fontSize: 29, color: 'black', marginTop: 7 }} /></span>
                       </Tooltip>
                     </li>
                   </Link>
-                  <li style={{ display: 'flex', alignItems: 'center', justifyItems: 'center' }} onClick={handleClickOpen}>
+                  <li style={{ display: 'flex', alignItems: 'center', justifyItems: 'center' }} onClick={() => handleClickOpen(setOpenAlert)}>
                     <Button variant='contained' className='nav-icon-span' sx={{ marginBottom: 1 }} endIcon={<FiLogOut />}>
                       <Typography variant='button'> Logout</Typography>
                     </Button>
@@ -143,8 +100,8 @@ const DesktopNavigation = () => {
         </DialogContent>
         <DialogActions sx={{ display: 'flex', justifyContent: 'space-evenly' }}>
           <Link to="/">
-            <Button variant='contained' endIcon={<FiLogOut />} color='primary' onClick={handleLogOut}>Logout</Button></Link>
-          <Button variant='contained' color='error' endIcon={<AiFillCloseCircle />} onClick={handleClose}>Close</Button>
+            <Button variant='contained' endIcon={<FiLogOut />} color='primary' onClick={() => handleLogOut(setProceed, toast, navigate, setOpenAlert)}>Logout</Button></Link>
+          <Button variant='contained' color='error' endIcon={<AiFillCloseCircle />} onClick={() => handleClose(setOpenAlert)}>Close</Button>
         </DialogActions>
       </Dialog>
     </>

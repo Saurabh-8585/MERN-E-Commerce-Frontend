@@ -13,7 +13,7 @@ const CommentCard = ({ userReview, setReviews, reviews, fetchReviews }) => {
     console.log(userReview);
     let authToken = localStorage.getItem('Authorization')
     useEffect(() => {
-        getUser()
+        authToken && getUser()
     }, [])
     const getUser = async () => {
         const { data } = await axios.get(`${process.env.REACT_APP_GET_USER_DETAILS}`, {
@@ -25,7 +25,7 @@ const CommentCard = ({ userReview, setReviews, reviews, fetchReviews }) => {
     }
     const handleDeleteComment = async () => {
         try {
-            const { data } = await axios.delete(`${process.env.REACT_APP_DELETE_REVIEW}/${userReview._id}`,{
+            const { data } = await axios.delete(`${process.env.REACT_APP_DELETE_REVIEW}/${userReview._id}`, {
                 headers: {
                     'Authorization': authToken
                 }
@@ -77,7 +77,7 @@ const CommentCard = ({ userReview, setReviews, reviews, fetchReviews }) => {
             <Grid justifyContent="left" item xs zeroMinWidth >
                 <h4 style={{ margin: 0, textAlign: "left" }}>{userReview?.user?.firstName + ' ' + userReview?.user?.lastName}</h4>
                 <p style={{ textAlign: "left", marginTop: 10 }}>
-                    {!edit && <Rating name="read-only" value={userReview.rating} readOnly  precision={0.5}/>}
+                    {!edit && <Rating name="read-only" value={userReview.rating} readOnly precision={0.5} />}
                     {edit &&
                         <Rating
                             name="simple-controlled"

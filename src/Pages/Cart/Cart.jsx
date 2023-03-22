@@ -108,10 +108,11 @@ const Cart = () => {
     return (
         <>
             <CssBaseline />
-            <Container fixed maxWidth>
+            <Container fixed maxWidth >
 
+                <Typography variant='h3' sx={{ textAlign: 'center', marginTop: 10, color: '#1976d2', fontWeight: 'bold' }}>Cart</Typography>
                 {cart.length <= 0 &&
-                    <Box sx={{width:'100%',display: 'flex',  justifyContent: 'center',alignItems:'center'}}>
+                    <Box sx={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                         <div className="main-card">
                             <img src={EmptyCart} alt="Empty_cart" className="empty-cart-img" />
                             <Typography variant='h6' sx={{ textAlign: 'center', color: '#1976d2', fontWeight: 'bold' }}>Your Cart is Empty</Typography>
@@ -136,13 +137,11 @@ const Cart = () => {
                         <Grid item xs={12} sm={6} md={5} lg={5}  >
                             <OrderSummary proceedToCheckout={proceedToCheckout} total={total} shippingCoast={shippingCoast} />
                         </Grid>
-
-
                     }
                 </Grid>
 
             </Container>
-            <Typography variant='h6' sx={{ textAlign: 'center', marginTop: 5 }}>Previous Orders</Typography>
+            <Typography variant='h6' sx={{ textAlign: 'center', margin: "5px 0" }}>Previous Orders</Typography>
             <Container maxWidth='xl' style={{ marginTop: 10, display: "flex", justifyContent: 'center', flexWrap: "wrap", paddingBottom: 20 }}>
                 {
                     previousOrder.map(product => (

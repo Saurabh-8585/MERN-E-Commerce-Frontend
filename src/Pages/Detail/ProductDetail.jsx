@@ -98,7 +98,8 @@ const ProductDetail = () => {
 
         const data = {
             text: product.name,
-            title:"e-shopit",
+            title: "e-shopit",
+            url: `https://e-shopit.vercel.app/Detail/type/${cat}/${id}`
         }
         if (navigator.canShare && navigator.canShare(data)) {
             navigator.share(data);

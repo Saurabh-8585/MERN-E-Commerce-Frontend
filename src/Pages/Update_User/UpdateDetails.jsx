@@ -1,15 +1,19 @@
-import { Button, Container, Grid, TextField, Typography } from '@mui/material'
+import { Box, Button, Container, Dialog, DialogActions, DialogContent, DialogContentText, Grid, Paper, Slide, Stack, TextField, Typography } from '@mui/material'
 import axios from 'axios'
-import React, { useEffect, useState } from 'react'
-import { AiOutlineFileDone } from 'react-icons/ai'
+import React, { forwardRef, useEffect, useState } from 'react'
+import { AiFillCloseCircle, AiFillDelete, AiOutlineFileDone } from 'react-icons/ai'
 import { TiArrowBack } from 'react-icons/ti'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import styles from './Update.module.css'
 import { toast } from 'react-toastify'
+import styled from '@emotion/styled'
+const Transition = forwardRef(function Transition(props, ref) {
+    return <Slide direction="up" ref={ref} {...props} />;
+});
 
 const UpdateDetails = () => {
     const [userData, setUserData] = useState([])
-
+    const [openAlert, setOpenAlert] = useState(false);
     let authToken = localStorage.getItem('Authorization')
     let setProceed = authToken ? true : false
     const [userDetails, setUserDetails] = useState({
@@ -41,14 +45,13 @@ const UpdateDetails = () => {
             userDetails.zipCode = data.zipCode
             userDetails.city = data.city
             userDetails.userState = data.userState
-            console.log(1);
             setUserData(data);
 
         } catch (error) {
-            console.log(error);
+            toast.error("Something went wrong", { autoClose: 500, theme: 'colored' })
+
         }
     }
-    console.log(userData);
     const handleOnchange = (e) => {
         setUserDetails({ ...userDetails, [e.target.name]: e.target.value })
     }
@@ -92,7 +95,6 @@ const UpdateDetails = () => {
                             'Authorization': authToken
                         }
                     })
-                console.log(data.success);
                 if (data.success === true) {
                     toast.success("Updated Successfully", { autoClose: 500, theme: 'colored' })
                     getUserData()
@@ -106,6 +108,19 @@ const UpdateDetails = () => {
             toast.error(error, { autoClose: 500, theme: 'colored' })
         }
     }
+    const deleteAccount = async () => {
+        try {
+            const deleteUser = await axios.delete(`${process.env.REACT_APP_DELETE_USER_DETAILS}/${userData._id}`);
+            toast.success("Account deleted successfully", { autoClose: 500, theme: 'colored' })
+            localStorage.removeItem('Authorization', 'totalAmount')
+            navigate("/login")
+        } catch (error) {
+            console.log(error);
+            toast.error("Something went wrong", { autoClose: 500, theme: 'colored' })
+
+        }
+    }
+
     return (
         <Container sx={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column', marginBottom: 10 }}>
             <Typography variant='h6' sx={{ margin: '30px 0', fontWeight: 'bold' }}>Personal Information</Typography>
@@ -137,11 +152,33 @@ const UpdateDetails = () => {
                     </Grid>
                 </Grid>
                 <Container sx={{ display: 'flex', justifyContent: 'space-around', marginTop: 5 }}>
-                    <Button variant='contained' endIcon={<TiArrowBack />} onClick={() => navigate(-1)}>Go back</Button>
+                    <Button variant='contained' endIcon={<TiArrowBack />} onClick={() => navigate(-1)}>back</Button>
                     <Button variant='contained' endIcon={<AiOutlineFileDone />} type='submit'>Save</Button>
                 </Container>
             </form >
-
+            <Box sx={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center', margin: "25px 0", width: '100%' }}>
+                <Typography variant='h6'>Delete Your Account?</Typography>
+                <Button variant='contained' color='error' endIcon={<AiFillDelete />} onClick={() => setOpenAlert(true)}>Delete</Button>
+            </Box>
+            <Dialog
+                open={openAlert}
+                TransitionComponent={Transition}
+                keepMounted
+                onClose={() => setOpenAlert(false)}
+                aria-describedby="alert-dialog-slide-description"
+            >
+                {/* <DialogTitle>{"Use Google's location service?"}</DialogTitle> */}
+                <DialogContent sx={{ width: { xs: 280, md: 350, xl: 400 } }}>
+                    <DialogContentText style={{ textAlign: 'center' }} id="alert-dialog-slide-description">
+                        <Typography variant='body1'>Do you want to delete your account?</Typography>
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions sx={{ display: 'flex', justifyContent: 'space-evenly' }}>
+                    <Button variant='contained' endIcon={<AiFillDelete />} color='error' onClick={deleteAccount}>Delete</Button>
+                    <Button variant='contained' color='primary'
+                        onClick={() => setOpenAlert(false)} endIcon={<AiFillCloseCircle />}>Close</Button>
+                </DialogActions>
+            </Dialog>
         </Container >
     )
 }
