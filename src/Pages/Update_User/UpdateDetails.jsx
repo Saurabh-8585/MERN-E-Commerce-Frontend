@@ -1,12 +1,12 @@
-import { Box, Button, Container, Dialog, DialogActions, DialogContent, DialogContentText, Grid, Paper, Slide, Stack, TextField, Typography } from '@mui/material'
+import { Box, Button, Container, Dialog, DialogActions, DialogContent, DialogContentText, Grid, Slide, TextField, Typography } from '@mui/material'
 import axios from 'axios'
 import React, { forwardRef, useEffect, useState } from 'react'
 import { AiFillCloseCircle, AiFillDelete, AiOutlineFileDone } from 'react-icons/ai'
+import { RiLockPasswordLine } from 'react-icons/ri'
 import { TiArrowBack } from 'react-icons/ti'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import styles from './Update.module.css'
 import { toast } from 'react-toastify'
-import styled from '@emotion/styled'
 const Transition = forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
@@ -25,6 +25,10 @@ const UpdateDetails = () => {
         zipCode: '',
         city: '',
         userState: '',
+    })
+    const [password, setPassword] = useState({
+        currentPassword: "",
+        newPassword: ""
     })
     let navigate = useNavigate()
     useEffect(() => {
@@ -55,6 +59,7 @@ const UpdateDetails = () => {
     const handleOnchange = (e) => {
         setUserDetails({ ...userDetails, [e.target.name]: e.target.value })
     }
+
     let phoneRegex = /^(?:(?:\+|0{0,2})91(\s*[\-]\s*)?|[0]?)?[789]\d{9}$/;
     let emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     // let zipRegex = /^[1-9]{1}[0-9]{2}\\s{0, 1}[0-9]{3}$/;
@@ -105,25 +110,60 @@ const UpdateDetails = () => {
             }
         }
         catch (error) {
-            toast.error(error, { autoClose: 500, theme: 'colored' })
+            toast.error(error.response.data, { autoClose: 500, theme: 'colored' })
+
         }
+    }
+    const handleResetPassword = async (e) => {
+        e.preventDefault()
+        console.log(1);
+        try {
+            if (!password.currentPassword && !password.newPassword) {
+                toast.error("Please Fill the all Fields", { autoClose: 500, theme: 'colored' })
+            }
+            else if (password.currentPassword.length < 5) {
+                toast.error("Please enter valid password", { autoClose: 500, theme: 'colored' })
+            }
+            else if (password.newPassword.length < 5) {
+                toast.error("Please enter password with more than 5 characters", { autoClose: 500, theme: 'colored' })
+            }
+            else {
+                const { data } = await axios.post(`${process.env.REACT_APP_RESET_PASSWORD}`, {
+                    id: userData._id,
+                    currentPassword: password.currentPassword,
+                    newPassword: password.newPassword,
+                }, {
+                    headers: {
+                        'Authorization': authToken
+                    }
+                })
+                toast.success(data, { autoClose: 500, theme: 'colored' })
+                setPassword(password.currentPassword = "", password.newPassword = "")
+            }
+        } catch (error) {
+            toast.error(error.response.data, { autoClose: 500, theme: 'colored' })
+            console.log(error);
+        }
+
     }
     const deleteAccount = async () => {
         try {
-            const deleteUser = await axios.delete(`${process.env.REACT_APP_DELETE_USER_DETAILS}/${userData._id}`);
+            const deleteUser = await axios.delete(`${process.env.REACT_APP_DELETE_USER_DETAILS}/${userData._id}`, {
+                headers: {
+                    'Authorization': authToken
+                }
+            });
             toast.success("Account deleted successfully", { autoClose: 500, theme: 'colored' })
             localStorage.removeItem('Authorization', 'totalAmount')
             navigate("/login")
         } catch (error) {
-            console.log(error);
-            toast.error("Something went wrong", { autoClose: 500, theme: 'colored' })
+            toast.error(error.response.data, { autoClose: 500, theme: 'colored' })
 
         }
     }
-
     return (
         <Container sx={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column', marginBottom: 10 }}>
-            <Typography variant='h6' sx={{ margin: '30px 0', fontWeight: 'bold' }}>Personal Information</Typography>
+            <Typography variant='h6' sx={{ margin: '30px 0', fontWeight: 'bold', color: '#1976d2' }}>Personal Information</Typography>
             <form noValidate autoComplete="off" className={styles.checkout_form} onSubmit={handleSubmit} >
                 <Grid container spacing={2}>
                     <Grid item xs={12} sm={6}>
@@ -152,10 +192,46 @@ const UpdateDetails = () => {
                     </Grid>
                 </Grid>
                 <Container sx={{ display: 'flex', justifyContent: 'space-around', marginTop: 5 }}>
-                    <Button variant='contained' endIcon={<TiArrowBack />} onClick={() => navigate(-1)}>back</Button>
                     <Button variant='contained' endIcon={<AiOutlineFileDone />} type='submit'>Save</Button>
                 </Container>
             </form >
+
+            <Typography variant='h6' sx={{ margin: '20px 0', fontWeight: 'bold', color: '#1976d2' }}>Reset Password</Typography>
+            <form onSubmit={handleResetPassword}>
+                <Grid container spacing={2}>
+                    <Grid item xs={12} >
+                        <TextField
+                            label="Current Password"
+                            name='currentPassword'
+                            type='password'
+                            value={password.currentPassword || ''}
+                            onChange={
+                                (e) => setPassword({
+                                    ...password, [e.target.name]: e.target.value
+                                })
+                            }
+                            variant="outlined"
+                            fullWidth />
+                    </Grid>
+                    <Grid item xs={12} >
+                        <TextField
+                            label="New Password"
+                            name='newPassword'
+                            type='password'
+                            value={password.newPassword || ''}
+                            onChange={
+                                (e) => setPassword({
+                                    ...password, [e.target.name]: e.target.value
+                                })
+                            }
+                            variant="outlined"
+                            fullWidth />
+                    </Grid>
+                </Grid>
+                <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', margin: "25px 0", width: '100%' }}>
+                    <Button variant='contained' color='primary' endIcon={<RiLockPasswordLine />} type='submit'>Reset</Button>
+                </Box>
+            </form>
             <Box sx={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center', margin: "25px 0", width: '100%' }}>
                 <Typography variant='h6'>Delete Your Account?</Typography>
                 <Button variant='contained' color='error' endIcon={<AiFillDelete />} onClick={() => setOpenAlert(true)}>Delete</Button>
@@ -170,7 +246,7 @@ const UpdateDetails = () => {
                 {/* <DialogTitle>{"Use Google's location service?"}</DialogTitle> */}
                 <DialogContent sx={{ width: { xs: 280, md: 350, xl: 400 } }}>
                     <DialogContentText style={{ textAlign: 'center' }} id="alert-dialog-slide-description">
-                        <Typography variant='body1'>Do you want to delete your account?</Typography>
+                        <Typography variant='body1'>Your all data will be erased</Typography>
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions sx={{ display: 'flex', justifyContent: 'space-evenly' }}>
@@ -184,5 +260,3 @@ const UpdateDetails = () => {
 }
 
 export default UpdateDetails
-
-// .matches(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, 'Must be a valid email')

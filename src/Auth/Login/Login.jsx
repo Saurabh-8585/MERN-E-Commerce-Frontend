@@ -30,7 +30,7 @@ const Login = () => {
         toast.error("Please enter a valid email", { autoClose: 500, theme: 'colored' })
       }
       else if (credentials.password.length < 5) {
-        toast.error("Please enter password with more than 5 characters", { autoClose: 500, theme: 'colored' })
+        toast.error("Please enter valid password", { autoClose: 500, theme: 'colored' })
       }
       else if (credentials.email && credentials.password) {
         const sendAuth = await axios.post(`${process.env.REACT_APP_LOGIN}`, { email: credentials.email, password: credentials.password })

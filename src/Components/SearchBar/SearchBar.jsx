@@ -19,7 +19,7 @@ const SearchBar = () => {
 
     const handleChange = (event) => {
         setInputValue(event.target.value);
-        delayedSearch(event.target.value);
+        delayedSearch(event.target.value.toLowerCase());
     };
     const sendQuery = async (query) => {
         if (query.length > 0) {
