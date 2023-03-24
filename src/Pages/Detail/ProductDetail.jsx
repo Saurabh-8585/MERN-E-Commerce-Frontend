@@ -115,16 +115,19 @@ const ProductDetail = () => {
     }
     let data = [];
     if (cat === 'shoe') {
-
+        data.push(product?.brand, product?.gender, product?.category)
     }
     else if (cat === 'book') {
         data.push(product.author, product.category)
     }
     else if (cat === 'cloths') {
-        data.push(product.category)
+        data.push(product.category,cat)
     }
     else if (cat === 'electronics') {
-        data.push(product.category)
+        data.push(product.category, cat)
+    }
+    else if (cat === 'jewelry') {
+        data.push(cat)
     }
     const increaseQuantity = () => {
         setProductQuantity((prev) => prev + 1)
@@ -176,6 +179,7 @@ const ProductDetail = () => {
                         </Typography>
                         <Typography >
                             <div className="chip">
+                                {/* product?.brand, product?.gender, product?.category */}
                                 {
                                     data.map((item, index) => (
                                         <Chip label={item} key={index} variant="outlined" />
@@ -219,7 +223,7 @@ const ProductDetail = () => {
                                 <Button variant='contained' className='all-btn' startIcon={<MdAddShoppingCart />} onClick={(() => addToCart(product))}>Buy</Button>
                             </Tooltip>
                             <Tooltip title='Add To Wishlist'>
-                                <Button style={{ marginLeft: 10 }} variant='contained' className='all-btn' startIcon={<AiFillHeart />} onClick={(() => addToWhishList(product))}>Wishlist</Button>
+                                <Button style={{ marginLeft: 10,paddingLeft:18 }} variant='contained' className='all-btn' startIcon={<AiFillHeart />} onClick={(() => addToWhishList(product))}>Wishlist</Button>
                             </Tooltip>
                             <Tooltip title='Share'>
                                 <Button style={{ marginLeft: 10 }} variant='contained' className='all-btn' startIcon={<AiOutlineShareAlt />} onClick={() => shareProduct(product)}>Share</Button>

@@ -1,8 +1,7 @@
 import { Container, InputAdornment, TextField, Typography } from "@mui/material";
 import axios from "axios";
-import { useCallback, useState } from "react";
+import {  useState } from "react";
 import { AiOutlineSearch } from 'react-icons/ai';
-import { debounce } from 'lodash'
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
@@ -11,27 +10,25 @@ import { Link } from "react-router-dom";
 const SearchBar = () => {
     const [inputValue, setInputValue] = useState("");
     const [results, setResults] = useState([])
+    const [customTimeOut, setCustomTimeOut] = useState("");
     const [productNotFound, setProductNotFound] = useState(false)
 
-    const delayedSearch = useCallback(
-        debounce((q) => sendQuery(q), 600),
-        []);
-
-    const handleChange = (event) => {
-        setInputValue(event.target.value);
-        delayedSearch(event.target.value.toLowerCase());
-    };
     const sendQuery = async (query) => {
         if (query.length > 0) {
             try {
                 const { data } = await axios.get(`${process.env.REACT_APP_SEARCH_PRODUCT}/${query}`)
                 data.length > 0 ? setResults(data) : setProductNotFound(true)
-
             } catch (error) {
-                console.log(error.response.data);
+                // console.log(error.response.data);
                 setProductNotFound(true)
             }
         }
+    };
+    const handleChange = (e) => {
+        clearTimeout(customTimeOut)
+        setInputValue(e.target.value)
+        const timeOut = setTimeout(() => sendQuery(inputValue), 500)
+        setCustomTimeOut(timeOut);
     };
     const Item = styled(Paper)(({ theme }) => ({
         backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -46,7 +43,6 @@ const SearchBar = () => {
                 id="search"
                 type="search"
                 label="Search"
-                value={inputValue}
                 onChange={handleChange}
                 sx={{ width: { xs: 350, sm: 500, md: 800 }, }}
                 InputProps={{
@@ -64,7 +60,7 @@ const SearchBar = () => {
 
                         {
                             results.map(products => (
-                                <Link to={`/Detail/type/${products.name.toLowerCase()}/${products._id}`} key={products._id}>
+                                <Link to={`/Detail/type/${products.type}/${products._id}`} key={products._id}>
                                     <Item sx={{ borderRadius: 0, display: 'flex', justifyContent: 'space-between', padding: "2px 15px", alignItems: 'center' }}>
                                         <Typography variant="body2"> {products.name.slice(0, 35)}</Typography>
                                         <img src={products.image} alt={products.name} style={{ width: 55, height: 65 }} />

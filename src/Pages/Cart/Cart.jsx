@@ -111,13 +111,16 @@ const Cart = () => {
             <Container fixed maxWidth >
 
                 <Typography variant='h3' sx={{ textAlign: 'center', marginTop: 10, color: '#1976d2', fontWeight: 'bold' }}>Cart</Typography>
-                {cart.length <= 0 &&
+                {
+                    setProceed &&
+                    cart.length <= 0 &&
                     <Box sx={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                         <div className="main-card">
                             <img src={EmptyCart} alt="Empty_cart" className="empty-cart-img" />
                             <Typography variant='h6' sx={{ textAlign: 'center', color: '#1976d2', fontWeight: 'bold' }}>Your Cart is Empty</Typography>
                         </div>
                     </Box>
+
                 }
                 <Grid container spacing={3}>
                     <Grid item xs={12} sm={6} md={7} lg={7}>
@@ -141,7 +144,7 @@ const Cart = () => {
                 </Grid>
 
             </Container>
-            <Typography variant='h6' sx={{ textAlign: 'center', margin: "5px 0" }}>Previous Orders</Typography>
+            {setProceed && <Typography variant='h6' sx={{ textAlign: 'center', margin: "5px 0" }}>Previous Orders</Typography>}
             <Container maxWidth='xl' style={{ marginTop: 10, display: "flex", justifyContent: 'center', flexWrap: "wrap", paddingBottom: 20 }}>
                 {
                     previousOrder.map(product => (

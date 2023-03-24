@@ -23,7 +23,7 @@ const DesktopNavigation = () => {
     getWishList(setProceed, setWishlistData, authToken)
   }, [])
 
-  
+
   return (
     <>
       <nav className='nav'>
@@ -47,14 +47,14 @@ const DesktopNavigation = () => {
 
             <li className="nav-links">
               <Tooltip title='Cart'>
-                <Link to={setProceed ? "/cart" : "/"}>
+                <Link to="/cart">
                   <span className='nav-icon-span'>    <Badge badgeContent={setProceed ? cart.length : 0}> <AiOutlineShoppingCart className='nav-icon' /></Badge></span>
                 </Link>
               </Tooltip>
             </li>
             <li className="nav-links">
               <Tooltip title='Wishlist'>
-                <Link to={setProceed ? "/wishlist" : "/"}>
+                <Link to="/wishlist">
                   <span className='nav-icon-span'>    <Badge badgeContent={setProceed ? wishlistData.length : 0}> <AiOutlineHeart className='nav-icon' /></Badge></span>
                 </Link>
               </Tooltip>
