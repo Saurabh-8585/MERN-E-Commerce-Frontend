@@ -17,6 +17,8 @@ import UpdateDetails from './Pages/Update_User/UpdateDetails';
 import ForgotPasswordForm from './Auth/ForgotPassword/ForgotPasswordForm';
 import AddNewPassword from './Auth/ForgotPassword/AddNewPassword';
 import CategoryCard from './Components/Category_Card/CategoryCard';
+import AdminLogin from './Admin/Auth/Login/AdminLogin';
+import AdminRegister from './Admin/Auth/Register/AdminRegister';
 
 
 
@@ -33,6 +35,8 @@ function App() {
             <Route path='/' index element={<HomePage />} />
             <Route path="/login" element={< Login />} />
             <Route path='/register' element={<Register />} />
+            <Route path="/admin/login" element={< AdminLogin />} />
+            <Route path='/admin/register' element={<AdminRegister />} />
             <Route path='/Detail/type/:cat/:id' element={<ProductDetail />} />
             <Route path='product/type/:cat' element={<SingleCategory />} />
             <Route path='/cart' element={<Cart />} />

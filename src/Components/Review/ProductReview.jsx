@@ -18,6 +18,7 @@ import { Button, MenuItem, Select, TextField, Tooltip, Typography } from '@mui/m
 import { toast } from 'react-toastify';
 import './Review.css'
 import CommentCard from '../Card/Comment Card/CommentCard';
+import { customerReview } from '../../Assets/Images/Image';
 
 
 
@@ -60,7 +61,7 @@ const ProductReview = ({ authToken, setProceed, setOpenAlert, id }) => {
     }
     useEffect(() => {
         fetchReviews()
-    }, [title])
+    }, [title,id])
 
     const handleSubmitReview = async (e) => {
         e.preventDefault()
@@ -140,12 +141,12 @@ const ProductReview = ({ authToken, setProceed, setOpenAlert, id }) => {
                     />
 
                     <Tooltip title='Send Review'>
-                        <Button className='form-btn' variant='contained' type='submit' endIcon=<MdSend /> >Send</Button>
+                        <Button className='form-btn' variant='contained' type='submit' endIcon={<MdSend /> }>Send</Button>
                     </Tooltip>
 
                 </form>
                 <div className="form-img-box">
-                    <img src='https://res.cloudinary.com/dxguqzge7/image/upload/v1678166555/Customer_Review_nubqcq.jpg' loading='lazy' alt="Customer Review" className='review-img' />
+                    <img src={customerReview} loading='lazy' alt="Customer Review" className='review-img' />
                 </div>
             </div>
             {reviews.length >= 1 ? <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 1, width: "80vw" }}>

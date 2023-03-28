@@ -116,7 +116,6 @@ const UpdateDetails = () => {
     }
     const handleResetPassword = async (e) => {
         e.preventDefault()
-        console.log(1);
         try {
             if (!password.currentPassword && !password.newPassword) {
                 toast.error("Please Fill the all Fields", { autoClose: 500, theme: 'colored' })

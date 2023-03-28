@@ -8,3 +8,4 @@ export let Jewelry = 'https://res.cloudinary.com/dxguqzge7/image/upload/v1678168
 export let Shoes = 'https://res.cloudinary.com/dxguqzge7/image/upload/v1678165390/cld-sample-5.jpg';
 export let Books = 'https://res.cloudinary.com/dxguqzge7/image/upload/v1678166574/Book_mnfy62.jpg';
 export let EmptyCart = 'https://res.cloudinary.com/dxguqzge7/image/upload/v1678444307/12084781_20943930_avlhak.jpg';
+export let customerReview="https://res.cloudinary.com/dxguqzge7/image/upload/v1678166555/Customer_Review_nubqcq.jpg"

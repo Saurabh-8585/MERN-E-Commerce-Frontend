@@ -7,14 +7,14 @@ import axios from 'axios'
 import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { MdLockOutline } from 'react-icons/md'
-import CopyRight from '../../Components/CopyRight/CopyRight'
+import CopyRight from '../../../Components/CopyRight/CopyRight'
 
 
 
-const Login = () => {
-  const [credentials, setCredentials] = useState({ email: "", password: "" })
+const AdminLogin = () => {
+
+  const [credentials, setCredentials] = useState({ email: "", password: "", key: "" })
   const navigate = useNavigate()
-
   const handleOnChange = (e) => {
     setCredentials({ ...credentials, [e.target.name]: e.target.value })
   }
@@ -38,23 +38,26 @@ const Login = () => {
         toast.error("Please enter valid password", { autoClose: 500, theme: 'colored' })
       }
       else if (credentials.email && credentials.password) {
-        const sendAuth = await axios.post(`${process.env.REACT_APP_LOGIN}`, { email: credentials.email, password: credentials.password })
+        const sendAuth = await axios.post(process.env.REACT_APP_ADMIN_LOGIN,
+          {
+            email: credentials.email,
+            password: credentials.password,
+            key: credentials.key
+          })
         const receive = await sendAuth.data
         if (receive.success === true) {
           toast.success("Login Successfully", { autoClose: 500, theme: 'colored' })
           localStorage.setItem('Authorization', receive.authToken)
           navigate('/')
-        }
-        else{
+        } else {
           toast.error("Something went wrong, Please try again", { autoClose: 500, theme: 'colored' })
           navigate('/')
         }
       }
     }
     catch (error) {
-      error.response.data.error.length === 1 ?
-        toast.error(error.response.data.error[0].msg, { autoClose: 500, theme: 'colored' })
-        : toast.error(error.response.data.error, { autoClose: 500, theme: 'colored' })
+      console.log(error);
+      toast.error(error.response.data.error, { autoClose: 500, theme: 'colored' })
     }
 
   }
@@ -87,7 +90,6 @@ const Login = () => {
             value={credentials.email}
             name='email'
             onChange={handleOnChange}
-            autoComplete="email"
             autoFocus
           />
           <TextField
@@ -100,7 +102,17 @@ const Login = () => {
             label="Password"
             type="password"
             id="password"
-            autoComplete="current-password"
+
+          />
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            value={credentials.key}
+            name='key'
+            onChange={handleOnChange}
+            label="Admin Code"
+            type="password"
           />
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
@@ -121,7 +133,7 @@ const Login = () => {
               </Link>
             </Grid>
             <Grid item>
-              <Link to="/register" variant="body2" >
+              <Link to="/admin/register" variant="body2" >
                 Don't have an account?<span style={{ color: '#1976d2' }}> Sign Up</span>
               </Link>
             </Grid>
@@ -133,4 +145,4 @@ const Login = () => {
   )
 }
 
-export default Login
+export default AdminLogin

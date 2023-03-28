@@ -6,12 +6,12 @@ import { Avatar, Button, Checkbox, CssBaseline, FormControlLabel, Grid, TextFiel
 import { MdLockOutline } from 'react-icons/md'
 import { Box, Container } from '@mui/system'
 import { toast } from 'react-toastify'
-import CopyRight from '../../Components/CopyRight/CopyRight'
+import CopyRight from '../../../Components/CopyRight/CopyRight'
 
 
-const Register = () => {
+const AdminRegister = () => {
 
-  const [credentials, setCredentials] = useState({ firstName: "", lastName: '', email: "", phoneNumber: '', password: "" })
+  const [credentials, setCredentials] = useState({ firstName: "", lastName: '', email: "", phoneNumber: '', password: "", key: "" })
   const navigate = useNavigate()
   const handleOnChange = (e) => {
     setCredentials({ ...credentials, [e.target.name]: e.target.value })
@@ -43,13 +43,14 @@ const Register = () => {
         toast.error("Please enter password with more than 5 characters", { autoClose: 500, theme: 'colored' })
       }
       else if (credentials.email && credentials.firstName && credentials.lastName && credentials.phoneNumber && credentials.password) {
-        const sendAuth = await axios.post(`${process.env.REACT_APP_REGISTER}`,
+        const sendAuth = await axios.post(process.env.REACT_APP_ADMIN_REGISTER,
           {
             firstName: credentials.firstName,
             lastName: credentials.lastName,
             email: credentials.email,
             phoneNumber: credentials.phoneNumber,
             password: credentials.password,
+            key: credentials.key
           })
         const receive = await sendAuth.data
         if (receive.success === true) {
@@ -57,7 +58,7 @@ const Register = () => {
           localStorage.setItem('Authorization', receive.authToken)
           navigate('/')
         }
-        else{
+        else {
           toast.error("Something went wrong, Please try again", { autoClose: 500, theme: 'colored' })
           navigate('/')
         }
@@ -152,6 +153,18 @@ const Register = () => {
                 />
               </Grid>
               <Grid item xs={12}>
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  value={credentials.key}
+                  name='key'
+                  onChange={handleOnChange}
+                  label="Admin Code"
+                  type="password"
+                />
+              </Grid>
+              <Grid item xs={12}>
                 <FormControlLabel
                   control={<Checkbox value="allowExtraEmails" color="primary" />}
                   label="I want to receive inspiration, marketing promotions and updates via email."
@@ -169,7 +182,7 @@ const Register = () => {
             <Grid container justifyContent="flex-end">
               <Grid item>
                 Already have an account?
-                <Link to='/login' style={{ color: '#1976d2', marginLeft: 3 }}>
+                <Link to='/admin/login' style={{ color: '#1976d2', marginLeft: 3 }}>
                   Sign in
                 </Link>
               </Grid>
@@ -182,4 +195,4 @@ const Register = () => {
   )
 }
 
-export default Register
+export default AdminRegister

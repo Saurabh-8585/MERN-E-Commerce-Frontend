@@ -1,0 +1,16 @@
+.container {
+    margin-top: 100px;
+    height: 500px;
+    border: 2px solid black;
+}
+
+.form-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 100px;
+    border: 2px solid black;
+    padding: 10px;
+    gap: 10px;
+}
