@@ -100,7 +100,7 @@ const Cart = () => {
             toast.error("Please add items in cart to proceed", { autoClose: 500, theme: 'colored' })
         }
         else {
-            localStorage.setItem('totalAmount', total)
+            sessionStorage.setItem('totalAmount', total)
             navigate('/checkout')
         }
     }

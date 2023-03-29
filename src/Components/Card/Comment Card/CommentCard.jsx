@@ -6,6 +6,9 @@ import { GiCancel } from 'react-icons/gi'
 import { toast } from 'react-toastify';
 const CommentCard = ({ userReview, setReviews, reviews, fetchReviews }) => {
     let date = new Date(userReview.updatedAt).toLocaleDateString('en-us', { weekday: "long", year: "numeric", month: "short", day: "numeric" })
+
+    let time = new Date(userReview.updatedAt).toLocaleTimeString('en-US')
+
     const [authUser, setAuthUser] = useState()
     const [editComment, setEditComment] = useState(userReview.comment)
     const [edit, setEdit] = useState(false)
@@ -116,7 +119,7 @@ const CommentCard = ({ userReview, setReviews, reviews, fetchReviews }) => {
                 }
 
                 <p style={{ textAlign: "left", color: "gray", margin: "20px 0" }}>
-                    {date}
+                    {date} {time}
                 </p>
 
                 {authUser === userReview?.user?._id &&

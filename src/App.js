@@ -16,9 +16,10 @@ import CheckoutForm from './Components/Checkout/CheckoutForm';
 import UpdateDetails from './Pages/Update_User/UpdateDetails';
 import ForgotPasswordForm from './Auth/ForgotPassword/ForgotPasswordForm';
 import AddNewPassword from './Auth/ForgotPassword/AddNewPassword';
-import CategoryCard from './Components/Category_Card/CategoryCard';
 import AdminLogin from './Admin/Auth/Login/AdminLogin';
 import AdminRegister from './Admin/Auth/Register/AdminRegister';
+import AdminHomePage from './Admin/Pages/AdminHomePage';
+import SingleUserPage from './Admin/Pages/SingleUserPage';
 
 
 
@@ -35,8 +36,6 @@ function App() {
             <Route path='/' index element={<HomePage />} />
             <Route path="/login" element={< Login />} />
             <Route path='/register' element={<Register />} />
-            <Route path="/admin/login" element={< AdminLogin />} />
-            <Route path='/admin/register' element={<AdminRegister />} />
             <Route path='/Detail/type/:cat/:id' element={<ProductDetail />} />
             <Route path='product/type/:cat' element={<SingleCategory />} />
             <Route path='/cart' element={<Cart />} />
@@ -46,7 +45,10 @@ function App() {
             <Route path='/paymentsuccess' element={<PaymentSuccess />} />
             <Route path='/forgotpassword' element={<ForgotPasswordForm />} />
             <Route path='/user/reset/:id/:token' element={<AddNewPassword />} />
-            <Route path='/card' element={<CategoryCard />} />
+            <Route path="/admin/login" element={< AdminLogin />} />
+            <Route path='/admin/register' element={<AdminRegister />} />
+            <Route path='/admin/home' element={<AdminHomePage />} />
+            <Route path='/admin/home/user/:id' element={<SingleUserPage />} />
           </Routes>
         </div>
         <MobileNavigation />

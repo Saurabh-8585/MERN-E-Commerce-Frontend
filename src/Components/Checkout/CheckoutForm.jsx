@@ -7,6 +7,7 @@ import axios from 'axios'
 import { ContextFunction } from '../../Context/Context'
 import { Link, useNavigate } from 'react-router-dom'
 import { profile } from '../../Assets/Images/Image'
+import { toast } from 'react-toastify'
 
 const CheckoutForm = () => {
     const { cart } = useContext(ContextFunction)
@@ -15,7 +16,7 @@ const CheckoutForm = () => {
     let authToken = localStorage.getItem('Authorization')
     let setProceed = authToken ? true : false
     let navigate = useNavigate()
-    let totalAmount = localStorage.getItem('totalAmount')
+    let totalAmount = sessionStorage.getItem('totalAmount')
 
     useEffect(() => {
         if (setProceed) {
@@ -61,41 +62,47 @@ const CheckoutForm = () => {
 
     const checkOutHandler = async (e) => {
         e.preventDefault()
-        try {
-            const { data: { key } } = await axios.get(`${process.env.REACT_APP_GET_KEY}`)
-            const { data } = await axios.post(`${process.env.REACT_APP_GET_CHECKOUT}`, {
-                amount: totalAmount,
-                productDetails: JSON.stringify(cart),
-                userId: userData._id,
-                userDetails: JSON.stringify(userDetails),
-            })
 
-            const options = {
-                key: key,
-                amount: totalAmount,
-                currency: "INR",
-                name: userData.firstName + ' ' + userData.lastName,
-                description: "Payment",
-                image: profile,
-                order_id: data.order.id,
-                callback_url: process.env.REACT_APP_GET_PAYMENTVERIFICATION,
-                prefill: {
+        if (!userDetails.firstName || !userDetails.lastName || !userDetails.userEmail || !userDetails.phoneNumber || !userDetails.address || !userDetails.zipCode || !userDetails.city || !userDetails.userState) {
+            toast.error("Please fill all fields", { autoClose: 500, theme: "colored" })
+        }
+        else {
+            try {
+                const { data: { key } } = await axios.get(`${process.env.REACT_APP_GET_KEY}`)
+                const { data } = await axios.post(`${process.env.REACT_APP_GET_CHECKOUT}`, {
+                    amount: totalAmount,
+                    productDetails: JSON.stringify(cart),
+                    userId: userData._id,
+                    userDetails: JSON.stringify(userDetails),
+                })
+
+                const options = {
+                    key: key,
+                    amount: totalAmount,
+                    currency: "INR",
                     name: userData.firstName + ' ' + userData.lastName,
-                    email: userData.email,
-                    contact: userData.phoneNumber
-                },
-                notes: {
-                    "address": `${userData.address} ${userData.city} ${userData.zipCode} ${userData.userState}`
-                },
-                theme: {
-                    "color": "#1976d2"
-                },
+                    description: "Payment",
+                    image: profile,
+                    order_id: data.order.id,
+                    callback_url: process.env.REACT_APP_GET_PAYMENTVERIFICATION,
+                    prefill: {
+                        name: userData.firstName + ' ' + userData.lastName,
+                        email: userData.email,
+                        contact: userData.phoneNumber
+                    },
+                    notes: {
+                        "address": `${userData.address} ${userData.city} ${userData.zipCode} ${userData.userState}`
+                    },
+                    theme: {
+                        "color": "#1976d2"
+                    },
 
-            };
-            const razor = new window.Razorpay(options);
-            razor.open();
-        } catch (error) {
-            console.log(error);
+                };
+                const razor = new window.Razorpay(options);
+                razor.open();
+            } catch (error) {
+                console.log(error);
+            }
         }
     }
 

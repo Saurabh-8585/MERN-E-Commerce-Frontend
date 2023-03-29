@@ -56,8 +56,12 @@ const AdminLogin = () => {
       }
     }
     catch (error) {
-      console.log(error);
-      toast.error(error.response.data.error, { autoClose: 500, theme: 'colored' })
+      if (error.response.data.success == false) {
+        toast.error("Invalid Credentials", { autoClose: 500, theme: 'colored' })
+      }
+      else {
+        toast.error("Something went wrong, Please try again", { autoClose: 500, theme: 'colored' })
+      }
     }
 
   }

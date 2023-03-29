@@ -16,7 +16,7 @@ const DesktopNavigation = () => {
   const { cart, setCart, wishlistData, setWishlistData } = useContext(ContextFunction)
   const [openAlert, setOpenAlert] = useState(false);
   const navigate = useNavigate()
-  let authToken = localStorage.getItem('Authorization')
+  let authToken = localStorage.getItem('Authorization');
   let setProceed = authToken !== null ? true : false
   useEffect(() => {
     getCart(setProceed, setCart, authToken)
