@@ -41,7 +41,7 @@ const SingleUserPage = () => {
             <Container>
                 <UserInfoItem userData={userData} />
                 <UserCartItem userCart={userCart} />
-                {/* <UserWishlistItem userWishlist={userWishlist} /> */}
+                <UserWishlistItem userWishlist={userWishlist} />
                 <UserReviewItem userReview={userReview} authToken={authToken} />
             </Container >
         </>
