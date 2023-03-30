@@ -46,7 +46,7 @@ const CommentCard = ({ userReview, setReviews, reviews, fetchReviews }) => {
     }
     const deleteCommentByAdmin = async () => {
         try {
-            const { data } = await axios.delete(`http://localhost:5000/api/admin/review/${userReview._id}/${authUser}`, {
+            const { data } = await axios.delete(`${process.env.REACT_APP_ADMIN_DELETE_REVIEW}/${userReview._id}/${authUser}`, {
                 headers: {
                     'Authorization': authToken
                 }
