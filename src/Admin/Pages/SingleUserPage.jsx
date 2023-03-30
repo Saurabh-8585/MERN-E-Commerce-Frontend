@@ -1,6 +1,11 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import UserInfoItem from '../Components/UserInfoItem';
+import UserCartItem from '../Components/UserCartItem';
+import UserWishlistItem from '../Components/UserWishlistItem';
+import UserReviewItem from '../Components/UserReviewItem';
+import { useParams } from 'react-router-dom';
+import { Container } from '@mui/material';
 
 const SingleUserPage = () => {
     const { id } = useParams();
@@ -24,7 +29,6 @@ const SingleUserPage = () => {
                     'Authorization': authToken
                 }
             });
-            console.log(data);
             setData(data)
         } catch (error) {
             console.log(error);
@@ -33,7 +37,14 @@ const SingleUserPage = () => {
 
     }
     return (
-        <div>SingleUserPage{id}</div>
+        <>
+            <Container>
+                <UserInfoItem userData={userData} />
+                <UserCartItem userCart={userCart} />
+                <UserWishlistItem userWishlist={userWishlist} />
+            </Container >
+            <UserReviewItem userReview={userReview} authToken={authToken}/>
+        </>
     )
 }
 

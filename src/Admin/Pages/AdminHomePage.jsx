@@ -24,12 +24,14 @@ const AdminHomePage = () => {
             setAdmin(true)
         } catch (error) {
             console.log(error);
-            toast.error("Something went wrong", { autoClose: 500, theme: "colored" });
+            !isAdmin && navigate('/')
+            toast.error(error.response.data, { autoClose: 500, theme: "colored" });
         }
     }
     return (
-        <div style={{padding:10}}>AdminHomePage
-            <UserTable user={user} setUser={setUser} />
+        <div style={{ padding: 10 }}>AdminHomePage
+            {isAdmin ? <UserTable user={user} setUser={setUser} />
+                : <h1 style={{ textAlign: "center" }}>Not Authorized User</h1>}
         </div>
     )
 }

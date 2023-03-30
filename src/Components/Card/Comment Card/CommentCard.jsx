@@ -12,6 +12,7 @@ const CommentCard = ({ userReview, setReviews, reviews, fetchReviews }) => {
     const [authUser, setAuthUser] = useState()
     const [editComment, setEditComment] = useState(userReview.comment)
     const [edit, setEdit] = useState(false)
+    const [isAdmin, setIsAdmin] = useState(false)
     const [value, setValue] = useState(userReview.rating);
     console.log(userReview);
     let authToken = localStorage.getItem('Authorization')
@@ -25,6 +26,9 @@ const CommentCard = ({ userReview, setReviews, reviews, fetchReviews }) => {
             }
         })
         setAuthUser(data._id);
+        if (data.isAdmin === true) {
+            setIsAdmin(true)
+        }
     }
     const handleDeleteComment = async () => {
         try {
@@ -39,6 +43,19 @@ const CommentCard = ({ userReview, setReviews, reviews, fetchReviews }) => {
             toast.success(error, { autoClose: 500, theme: 'colored' })
         }
 
+    }
+    const deleteCommentByAdmin = async () => {
+        try {
+            const { data } = await axios.delete(`http://localhost:5000/api/admin/review/${userReview._id}/${authUser}`, {
+                headers: {
+                    'Authorization': authToken
+                }
+            })
+            toast.success(data.msg, { autoClose: 500, theme: 'colored' })
+            setReviews(reviews.filter(r => r._id !== userReview._id))
+        } catch (error) {
+            toast.success(error, { autoClose: 500, theme: 'colored' })
+        }
     }
     const sendEditResponse = async () => {
         if (!editComment && !value) {
@@ -122,7 +139,7 @@ const CommentCard = ({ userReview, setReviews, reviews, fetchReviews }) => {
                     {date} {time}
                 </p>
 
-                {authUser === userReview?.user?._id &&
+                {(authUser === userReview?.user?._id || isAdmin) &&
                     <Box sx={{ height: 20, transform: 'translateZ(0px)', flexGrow: 1 }}>
                         <SpeedDial
                             ariaLabel="SpeedDial basic example"
@@ -138,7 +155,7 @@ const CommentCard = ({ userReview, setReviews, reviews, fetchReviews }) => {
                             <SpeedDialAction
                                 icon={<AiFillDelete />}
                                 tooltipTitle={"Delete"}
-                                onClick={handleDeleteComment}
+                                onClick={isAdmin ? deleteCommentByAdmin : handleDeleteComment}
                             />
 
                         </SpeedDial>
