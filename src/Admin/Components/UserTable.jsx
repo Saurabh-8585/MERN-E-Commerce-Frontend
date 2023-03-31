@@ -11,7 +11,6 @@ import {
     from '@mui/material'
 import { Link } from 'react-router-dom';
 const UserTable = ({ user, setUser }) => {
-    console.log(user);
     const columns = [
         {
             id: 'name',

@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { AiFillEdit, AiFillDelete, AiOutlineSend } from 'react-icons/ai'
 import { GiCancel } from 'react-icons/gi'
+import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 const CommentCard = ({ userReview, setReviews, reviews, fetchReviews }) => {
     let date = new Date(userReview.updatedAt).toLocaleDateString('en-us', { weekday: "long", year: "numeric", month: "short", day: "numeric" })
@@ -14,7 +15,6 @@ const CommentCard = ({ userReview, setReviews, reviews, fetchReviews }) => {
     const [edit, setEdit] = useState(false)
     const [isAdmin, setIsAdmin] = useState(false)
     const [value, setValue] = useState(userReview.rating);
-    console.log(userReview);
     let authToken = localStorage.getItem('Authorization')
     useEffect(() => {
         authToken && getUser()
@@ -45,16 +45,22 @@ const CommentCard = ({ userReview, setReviews, reviews, fetchReviews }) => {
 
     }
     const deleteCommentByAdmin = async () => {
-        try {
-            const { data } = await axios.delete(`${process.env.REACT_APP_ADMIN_DELETE_REVIEW}/${userReview._id}/${authUser}`, {
-                headers: {
-                    'Authorization': authToken
-                }
-            })
-            toast.success(data.msg, { autoClose: 500, theme: 'colored' })
-            setReviews(reviews.filter(r => r._id !== userReview._id))
-        } catch (error) {
-            toast.success(error, { autoClose: 500, theme: 'colored' })
+        if (isAdmin) {
+            try {
+                const { data } = await axios.delete(`${process.env.REACT_APP_ADMIN_DELETE_REVIEW}/${userReview._id}`,
+                    {
+                        headers: {
+                            'Authorization': authToken
+                        }
+                    })
+                toast.success(data.msg, { autoClose: 500, theme: 'colored' })
+                setReviews(reviews.filter(r => r._id !== userReview._id))
+            } catch (error) {
+                console.log(error);
+                toast.success(error.response.data, { autoClose: 500, theme: 'colored' })
+            }
+        } else {
+            toast.success("Access denied", { autoClose: 500, theme: 'colored' })
         }
     }
     const sendEditResponse = async () => {
@@ -95,22 +101,28 @@ const CommentCard = ({ userReview, setReviews, reviews, fetchReviews }) => {
                 <Avatar alt="Customer Avatar" />
             </Grid>
             <Grid justifyContent="left" item xs zeroMinWidth >
-                <h4 style={{ margin: 0, textAlign: "left" }}>{userReview?.user?.firstName + ' ' + userReview?.user?.lastName}</h4>
-                <p style={{ textAlign: "left", marginTop: 10 }}>
-                    {!edit && <Rating name="read-only" value={userReview.rating} readOnly precision={0.5} />}
-                    {edit &&
-                        <Rating
-                            name="simple-controlled"
-                            value={value}
-                            precision={0.5}
-                            onChange={(event, newValue) => {
-                                setValue(newValue);
-                            }}
-                        />}
-                </p>
-                <p style={{ textAlign: "left", wordBreak: 'break-word', paddingRight: 10, margin: '10px 0' }}>
-                    {!edit && userReview.comment.trim()
-                    }
+                {isAdmin &&
+                    <Link to={`/Detail/type/${userReview.productId.type}/${userReview.productId._id}`} key={userReview._id}>
+
+                        <h4 style={{ margin: 0, textAlign: "left" }}>{userReview?.user?.firstName + ' ' + userReview?.user?.lastName}</h4>
+                        <p style={{ textAlign: "left", marginTop: 10 }}>
+                            {!edit && <Rating name="read-only" value={userReview.rating} readOnly precision={0.5} />}
+                            {edit &&
+                                <Rating
+                                    name="simple-controlled"
+                                    value={value}
+                                    precision={0.5}
+                                    onChange={(event, newValue) => {
+                                        setValue(newValue);
+                                    }}
+                                />}
+                        </p>
+                        <p style={{ textAlign: "left", wordBreak: 'break-word', paddingRight: 10, margin: '10px 0' }}>
+                            {!edit && userReview.comment}
+                        </p>
+                    </Link>
+                }
+                <p>
                     {edit && <TextField
                         id="standard-basic"
                         value={editComment.trim()} onChange={(e) => {
@@ -162,7 +174,7 @@ const CommentCard = ({ userReview, setReviews, reviews, fetchReviews }) => {
                     </Box>
                 }
             </Grid>
-        </Grid>
+        </Grid >
 
 
     )

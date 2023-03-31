@@ -36,12 +36,12 @@ const Wishlist = () => {
     const removeFromWishlist = async (product) => {
         if (setProceed) {
             try {
-                setWishlistData(wishlistData.filter(c => c.productId._id !== product.productId._id))
                 const deleteProduct = await axios.delete(`${process.env.REACT_APP_DELETE_WISHLIST}/${product.productId._id}`, {
                     headers: {
                         'Authorization': authToken
                     }
                 })
+                setWishlistData(wishlistData.filter(c => c.productId._id !== product.productId._id))
                 toast.success("Removed From Wishlist", { autoClose: 500, theme: 'colored' })
             } catch (error) {
                 toast.error(error, { autoClose: 500, theme: 'colored' })
@@ -58,7 +58,7 @@ const Wishlist = () => {
 
     return (
         <>
-        <Typography variant='h3' sx={{ textAlign: 'center', margin: "10px 0 ", color: '#1976d2', fontWeight: 'bold' }}>Wishlist</Typography>
+            <Typography variant='h3' sx={{ textAlign: 'center', margin: "10px 0 ", color: '#1976d2', fontWeight: 'bold' }}>Wishlist</Typography>
             {setProceed &&
 
                 wishlistData.length <= 0 ?

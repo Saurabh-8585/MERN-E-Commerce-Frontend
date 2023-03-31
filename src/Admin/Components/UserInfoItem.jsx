@@ -1,10 +1,15 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Container, Grid, TextField, Typography } from '@mui/material'
 
-const UserInfoItem = ({ userData }) => {
+const UserInfoItem = ({ commonGetRequest, id }) => {
+    const [userData, setUserData] = useState([]);
+    useEffect(() => {
+        commonGetRequest(process.env.REACT_APP_ADMIN_GET_USER, id, setUserData);
+    }, [])
+
     return (
         <Container sx={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column', marginBottom: 10 }}>
-            <Typography variant='h6' sx={{ margin: '20px 0' }}>User Details</Typography>
+            <Typography variant='h6'fontWeight="bold" sx={{ margin: '20px 0' }}>User Details</Typography>
             <Grid container spacing={2}>
                 <Grid item xs={12} sm={6}>
                     <TextField inputProps={{ readOnly: true }} label="First Name" name='firstName' value={userData.firstName || ''} variant="outlined" fullWidth />

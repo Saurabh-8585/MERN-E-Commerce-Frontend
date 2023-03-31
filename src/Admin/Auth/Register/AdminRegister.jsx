@@ -56,15 +56,14 @@ const AdminRegister = () => {
         if (receive.success === true) {
           toast.success("Registered Successfully", { autoClose: 500, theme: 'colored' })
           localStorage.setItem('Authorization', receive.authToken)
-          navigate('/')
+          navigate('/admin/home')
         }
         else {
-          toast.error("Something went wrong, Please try again", { autoClose: 500, theme: 'colored' })
-          navigate('/')
+          toast.error("Invalid Credentials", { autoClose: 500, theme: 'colored' })
         }
       }
     } catch (error) {
-      toast.error(error.response.data.error, { autoClose: 500, theme: 'colored' })
+      toast.error("Invalid Credentials", { autoClose: 500, theme: 'colored' })
     }
 
   }

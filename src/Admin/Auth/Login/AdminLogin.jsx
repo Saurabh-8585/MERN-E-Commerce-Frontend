@@ -48,20 +48,14 @@ const AdminLogin = () => {
         if (receive.success === true) {
           toast.success("Login Successfully", { autoClose: 500, theme: 'colored' })
           localStorage.setItem('Authorization', receive.authToken)
-          navigate('/')
+          navigate('/admin/home')
         } else {
-          toast.error("Something went wrong, Please try again", { autoClose: 500, theme: 'colored' })
-          navigate('/')
+          toast.error("Invalid Credentials", { autoClose: 500, theme: 'colored' })
         }
       }
     }
     catch (error) {
-      if (error.response.data.success == false) {
         toast.error("Invalid Credentials", { autoClose: 500, theme: 'colored' })
-      }
-      else {
-        toast.error("Something went wrong, Please try again", { autoClose: 500, theme: 'colored' })
-      }
     }
 
   }

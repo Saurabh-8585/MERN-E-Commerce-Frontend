@@ -86,13 +86,18 @@ const Cart = () => {
 
     const removeFromCart = async (product) => {
         if (setProceed) {
-            setCart(cart.filter(c => c.productId._id !== product.productId._id))
-            toast.error("Removed From Cart", { autoClose: 500, theme: 'colored' })
-            const response = await axios.delete(`${process.env.REACT_APP_DELETE_CART}/${product.productId._id}`, {
-                headers: {
-                    'Authorization': authToken
-                }
-            })
+            try {
+                const response = await axios.delete(`${process.env.REACT_APP_DELETE_CART}/${product.productId._id}`, {
+                    headers: {
+                        'Authorization': authToken
+                    }
+                })
+                toast.error("Removed From Cart", { autoClose: 500, theme: 'colored' })
+                setCart(cart.filter(c => c.productId._id !== product.productId._id))
+            } catch (error) {
+                toast.error("Something went wrong", { autoClose: 500, theme: 'colored' })
+
+            }
         }
     }
     const proceedToCheckout = async () => {
