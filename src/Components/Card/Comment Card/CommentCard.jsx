@@ -6,10 +6,8 @@ import { GiCancel } from 'react-icons/gi'
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 const CommentCard = ({ userReview, setReviews, reviews, fetchReviews }) => {
-    let date = new Date(userReview.updatedAt).toLocaleDateString('en-us', { weekday: "long", year: "numeric", month: "short", day: "numeric" })
-
-    let time = new Date(userReview.updatedAt).toLocaleTimeString('en-US')
-
+    let date = new Date(userReview.createdAt).toLocaleDateString('en-us', { weekday: "long", year: "numeric", month: "short", day: "numeric" })
+    let time = new Date(userReview.createdAt).toLocaleTimeString('en-US')
     const [authUser, setAuthUser] = useState()
     const [editComment, setEditComment] = useState(userReview.comment)
     const [edit, setEdit] = useState(false)
@@ -101,31 +99,26 @@ const CommentCard = ({ userReview, setReviews, reviews, fetchReviews }) => {
                 <Avatar alt="Customer Avatar" />
             </Grid>
             <Grid justifyContent="left" item xs zeroMinWidth >
-                {isAdmin &&
-                    <Link to={`/Detail/type/${userReview.productId.type}/${userReview.productId._id}`} key={userReview._id}>
-
-                        <h4 style={{ margin: 0, textAlign: "left" }}>{userReview?.user?.firstName + ' ' + userReview?.user?.lastName}</h4>
-                        <p style={{ textAlign: "left", marginTop: 10 }}>
-                            {!edit && <Rating name="read-only" value={userReview.rating} readOnly precision={0.5} />}
-                            {edit &&
-                                <Rating
-                                    name="simple-controlled"
-                                    value={value}
-                                    precision={0.5}
-                                    onChange={(event, newValue) => {
-                                        setValue(newValue);
-                                    }}
-                                />}
-                        </p>
-                        <p style={{ textAlign: "left", wordBreak: 'break-word', paddingRight: 10, margin: '10px 0' }}>
-                            {!edit && userReview.comment}
-                        </p>
-                    </Link>
-                }
+                <h4 style={{ margin: 0, textAlign: "left" }}>{userReview?.user?.firstName + ' ' + userReview?.user?.lastName}</h4>
+                <p style={{ textAlign: "left", marginTop: 10 }}>
+                    {!edit && <Rating name="read-only" value={userReview.rating} readOnly precision={0.5} />}
+                    {edit &&
+                        <Rating
+                            name="simple-controlled"
+                            value={value}
+                            precision={0.5}
+                            onChange={(event, newValue) => {
+                                setValue(newValue);
+                            }}
+                        />}
+                </p>
+                <p style={{ textAlign: "left", wordBreak: 'break-word', paddingRight: 10, margin: '10px 0' }}>
+                    {!edit && userReview.comment}
+                </p>
                 <p>
                     {edit && <TextField
                         id="standard-basic"
-                        value={editComment.trim()} onChange={(e) => {
+                        value={editComment} onChange={(e) => {
                             setEditComment(e.target.value)
                         }}
                         label="Edit Review"

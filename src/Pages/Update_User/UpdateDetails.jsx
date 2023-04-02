@@ -153,7 +153,8 @@ const UpdateDetails = () => {
                 }
             });
             toast.success("Account deleted successfully", { autoClose: 500, theme: 'colored' })
-            localStorage.removeItem('Authorization', 'totalAmount')
+            localStorage.removeItem('Authorization');
+            sessionStorage.removeItem('totalAmount');
             navigate("/login")
         } catch (error) {
             toast.error(error.response.data, { autoClose: 500, theme: 'colored' })

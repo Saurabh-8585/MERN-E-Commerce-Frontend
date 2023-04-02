@@ -3,6 +3,7 @@ import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify';
 import UserTable from '../Components/UserTable';
+import ProductChart from '../Components/Charts/ProductChart';
 
 const AdminHomePage = () => {
     const [user, setUser] = useState([]);
@@ -29,10 +30,14 @@ const AdminHomePage = () => {
         }
     }
     return (
-        <div style={{ padding: 10 }}>AdminHomePage
-            {isAdmin ? <UserTable user={user} setUser={setUser} />
-                : <h1 style={{ textAlign: "center" }}>Not Authorized User</h1>}
-        </div>
+        <>
+            <div style={{ padding:"0 50px" }}>
+                <h1 style={{ textAlign: "center", margin: "20px 0", color: "#1976d2" }}>Admin Home Page</h1>
+                {isAdmin ? <UserTable user={user} setUser={setUser} />
+                    : <h1 style={{ textAlign: "center" }}>Not Authorized User</h1>}
+            </div>
+            <ProductChart />
+        </> 
     )
 }
 

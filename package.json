@@ -18,6 +18,7 @@
     "react-router-dom": "^6.5.0",
     "react-scripts": "5.0.1",
     "react-toastify": "^9.1.1",
+    "recharts": "^2.5.0",
     "styled-components": "^5.3.6",
     "web-vitals": "^2.1.4"
   },
