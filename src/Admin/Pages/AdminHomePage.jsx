@@ -31,13 +31,12 @@ const AdminHomePage = () => {
     }
     return (
         <>
-            <div style={{ padding:"0 50px" }}>
+            <div style={{ padding: "0 50px" }}>
                 <h1 style={{ textAlign: "center", margin: "20px 0", color: "#1976d2" }}>Admin Home Page</h1>
-                {isAdmin ? <UserTable user={user} setUser={setUser} />
-                    : <h1 style={{ textAlign: "center" }}>Not Authorized User</h1>}
+                <UserTable user={user} setUser={setUser} />
             </div>
             <ProductChart />
-        </> 
+        </>
     )
 }
 

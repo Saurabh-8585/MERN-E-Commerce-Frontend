@@ -1,7 +1,19 @@
 import { Container } from '@mui/material';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
-import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend, CartesianGrid, ResponsiveContainer } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend, CartesianGrid, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
+const RADIAN = Math.PI / 175;
+const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, index }) => {
+    const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
+    const x = cx + radius * Math.cos(-midAngle * RADIAN);
+    const y = cy + radius * Math.sin(-midAngle * RADIAN);
+
+    return (
+        <text x={x} y={y} fill="white" textAnchor={x > cx ? 'start' : 'end'} dominantBaseline="central">
+            {`${(percent * 100).toFixed(0)}%`}
+        </text>
+    );
+};
 const ProductChart = () => {
     const [products, setProducts] = useState([]);
     const [review, setReview] = useState([])
@@ -24,135 +36,109 @@ const ProductChart = () => {
 
         }
     }
-
-    let cloths = products.filter(prod => prod.type === "cloths");
-    let shoes = products.filter(prod => prod.type === "shoe");
-    let electronics = products.filter(prod => prod.type === "electronics");
-    let books = products.filter(prod => prod.type === "book");
-    let jewelry = products.filter(prod => prod.type === "jewelry");
     const productData = [
         {
             name: "Cloths",
-            Quantity: cloths.length
+            Quantity: products.filter(prod => prod.type === "cloths").length
         },
         {
             name: "Shoes",
-            Quantity: shoes.length
+            Quantity: products.filter(prod => prod.type === "shoe").length
         },
         {
             name: "Electronics",
-            Quantity: electronics.length
+            Quantity: products.filter(prod => prod.type === "electronics").length
         },
         {
             name: "Books",
-            Quantity: books.length
+            Quantity: products.filter(prod => prod.type === "book").length
         },
         {
             name: "Jewelry",
-            Quantity: jewelry.length
+            Quantity: products.filter(prod => prod.type === "jewelry").length
         },
-    ]
-    let zero = review.filter(prod => Math.round(prod.rating) === 0);
-    let one = review.filter(prod => Math.round(prod.rating) === 1);
-    let two = review.filter(prod => Math.round(prod.rating) === 2);
-    let three = review.filter(prod => Math.round(prod.rating) === 3);
-    let four = review.filter(prod => Math.round(prod.rating) === 4);
-    let five = review.filter(prod => Math.round(prod.rating) === 5);
+    ];
     const reviewData = [
         {
             name: "Zero ⭐",
-            Reviews: zero.length,
+            Reviews: review.filter(prod => Math.round(prod.rating) === 0).length,
         },
         {
             name: "One ⭐",
-            Reviews: one.length,
+            Reviews: review.filter(prod => Math.round(prod.rating) === 1).length,
         },
         {
             name: "Two ⭐",
-            Reviews: two.length,
+            Reviews: review.filter(prod => Math.round(prod.rating) === 2).length,
         },
         {
             name: "Three ⭐",
-            Reviews: three.length,
+            Reviews: review.filter(prod => Math.round(prod.rating) === 3).length,
         },
         {
             name: "Four ⭐",
-            Reviews: four.length,
+            Reviews: review.filter(prod => Math.round(prod.rating) === 4).length,
         },
         {
             name: "Five ⭐",
-            Reviews: five.length,
+            Reviews: review.filter(prod => Math.round(prod.rating) === 5).length,
         },
-    ]
-    let CartCloths = cart.filter(prod => prod.productId.type === "cloths");
-    let CartShoes = cart.filter(prod => prod.productId.type === "shoe");
-    let CartElectronics = cart.filter(prod => prod.productId.type === "electronics");
-    let CartBooks = cart.filter(prod => prod.productId.type === "book");
-    let CartJewelry = cart.filter(prod => prod.productId.type === "jewelry");
-
+    ];
 
     const cartData = [
         {
             name: "Cloths",
-            "Quantity in cart": CartCloths.length
+            "Quantity in cart": cart.filter(prod => prod.productId.type === "cloths").length
         },
         {
             name: "Shoes",
-            "Quantity in cart": CartShoes.length
+            "Quantity in cart": cart.filter(prod => prod.productId.type === "shoe").length
         },
         {
             name: "Electronics",
-            "Quantity in cart": CartElectronics.length
+            "Quantity in cart": cart.filter(prod => prod.productId.type === "electronics").length
         },
         {
             name: "Books",
-            "Quantity in cart": CartBooks.length
+            "Quantity in cart": cart.filter(prod => prod.productId.type === "book").length
         },
         {
             name: "Jewelry",
-            "Quantity in cart": CartJewelry.length
+            "Quantity in cart": cart.filter(prod => prod.productId.type === "jewelry").length
         },
-    ]
-
-    let WishlistCloths = wishlist.filter(prod => prod.productId.type === "cloths");
-    let WishlistShoes = wishlist.filter(prod => prod.productId.type === "shoe");
-    let WishlistElectronics = wishlist.filter(prod => prod.productId.type === "electronics");
-    let WishlistBooks = wishlist.filter(prod => prod.productId.type === "book");
-    let WishlistJewelry = wishlist.filter(prod => prod.productId.type === "jewelry");
-
-
-
+    ];
 
     const wishlistData = [
         {
             name: "Cloths",
-            "Quantity in wishlist": WishlistCloths.length
+            "Quantity in wishlist": wishlist.filter(prod => prod.productId.type === "cloths").length
         },
         {
             name: "Shoes",
-            "Quantity in wishlist": WishlistShoes.length
+            "Quantity in wishlist": wishlist.filter(prod => prod.productId.type === "shoe").length
         },
         {
             name: "Electronics",
-            "Quantity in wishlist": WishlistElectronics.length
+            "Quantity in wishlist": wishlist.filter(prod => prod.productId.type === "electronics").length
         },
         {
             name: "Books",
-            "Quantity in wishlist": WishlistBooks.length
+            "Quantity in wishlist": wishlist.filter(prod => prod.productId.type === "book").length
         },
         {
             name: "Jewelry",
-            "Quantity in wishlist": WishlistJewelry.length
+            "Quantity in wishlist": wishlist.filter(prod => prod.productId.type === "jewelry").length
         },
-    ]
+    ];
 
+    const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', "#8884d8"];
 
     console.log(cart);
     return (
         <Container sx={{ marginTop: 5 }}>
             <h3 style={{ textAlign: "center", margin: "20px 0", color: "#8884d8" }}>Products</h3>
             <ResponsiveContainer width="100%" aspect={2.5}>
-                <BarChart width={730} height={250} data={productData}>
+                <BarChart width={150} height={40} data={productData}>
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis dataKey="name" />
                     <YAxis />
@@ -161,20 +147,40 @@ const ProductChart = () => {
                     <Bar dataKey="Quantity" fill="#8884d8" />
                 </BarChart>
             </ResponsiveContainer>
-
-            <h3 style={{ textAlign: "center", margin: "30px 0", color: "#17becf" }}>Users Cart</h3>
-            <ResponsiveContainer width="100%" aspect={2.5}>
-                <BarChart width={730} height={250} data={cartData}>
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="name" />
-                    <YAxis />
+            <h3 style={{ textAlign: "center", margin: "15px 0", color: "#17becf" }}>Users Cart</h3>
+            <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: 15 }}>
+                <h3 style={{ color: '#00C49F' }}>Shoes </h3>
+                <h2 style={{ color: "#00C49F" }}>&#9632;</h2>
+                <h3 style={{ color: '#0088FE' }}>Cloths</h3>
+                <h2 style={{ color: "#0088FE" }}>&#9632;</h2>
+                <h3 style={{ color: '#FF8042' }}>Books</h3>
+                <h2 style={{ color: "#FF8042" }}>&#9632;</h2>
+                <h3 style={{ color: '#FFBB28' }}>Electronics</h3>
+                <h2 style={{ color: "#FFBB28" }}>&#9632;</h2>
+                <h3 style={{ color: '#8884d8' }}>Jewelry</h3>
+                <h2 style={{ color: "#8884d8" }}>&#9632;</h2>
+            </div>
+            <ResponsiveContainer width="100%" aspect={1.5}>
+                <PieChart width={400} height={100}>
                     <Tooltip />
-                    <Legend />
-                    <Bar dataKey="Quantity in cart" fill="#17becf " />
-                </BarChart>
+                    <Pie
+                        data={cartData}
+                        cx="50%"
+                        cy="50%"
+                        labelLine={false}
+                        label={renderCustomizedLabel}
+                        outerRadius={150}
+                        fill="#8884d8"
+                        dataKey="Quantity in cart"
+                    >
+                        <Tooltip />
+                        {cartData.map((entry, index) => (
+                            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                        ))}
+                    </Pie>
+                </PieChart>
+
             </ResponsiveContainer>
-
-
             <h3 style={{ textAlign: "center", margin: "30px 0", color: "#e377c2    " }}>Users Wishlist</h3>
             <ResponsiveContainer width="100%" aspect={2.5}>
                 <BarChart width={730} height={250} data={wishlistData}>
@@ -190,7 +196,7 @@ const ProductChart = () => {
 
 
             <h3 style={{ textAlign: "center", margin: "30px 0", color: "#83a6ed" }}>Reviews</h3>
-            <ResponsiveContainer width="100%" aspect={5}>
+            <ResponsiveContainer width="100%" aspect={2.5}>
                 <BarChart width={730} height={250} data={reviewData}>
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis dataKey="name" />
