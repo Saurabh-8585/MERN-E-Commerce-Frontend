@@ -1,7 +1,6 @@
 import { Container } from '@mui/material';
-import axios from 'axios';
-import React, { useEffect, useState } from 'react'
-import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend, CartesianGrid, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
+import React from 'react'
+import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend, CartesianGrid, ResponsiveContainer, PieChart, Pie, Cell, LineChart, Line } from 'recharts';
 const RADIAN = Math.PI / 175;
 const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, index }) => {
     const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
@@ -14,28 +13,8 @@ const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, per
         </text>
     );
 };
-const ProductChart = () => {
-    const [products, setProducts] = useState([]);
-    const [review, setReview] = useState([])
-    const [cart, setCart] = useState([])
-    const [wishlist, setWishlist] = useState([])
+const ProductChart = ({ products, review, cart, wishlist, paymentData }) => {
 
-    useEffect(() => {
-        getProducts()
-    }, [])
-    const getProducts = async () => {
-        try {
-            const { data } = await axios.get(process.env.REACT_APP_GET_CHART_DATA)
-            console.log(data);
-            setProducts(data.product)
-            setReview(data.review)
-            setCart(data.cart)
-            setWishlist(data.wishlist)
-        } catch (error) {
-            console.log(error);
-
-        }
-    }
     const productData = [
         {
             name: "Cloths",
@@ -59,10 +38,6 @@ const ProductChart = () => {
         },
     ];
     const reviewData = [
-        {
-            name: "Zero ⭐",
-            Reviews: review.filter(prod => Math.round(prod.rating) === 0).length,
-        },
         {
             name: "One ⭐",
             Reviews: review.filter(prod => Math.round(prod.rating) === 1).length,
@@ -131,11 +106,34 @@ const ProductChart = () => {
         },
     ];
 
+
+    const groupedData = paymentData.reduce((acc, curr) => {
+        const month = curr.createdAt.split("-")[1];
+        const existingIndex = acc.findIndex((d) => d.createdAt === month);
+
+        if (existingIndex >= 0) {
+            acc[existingIndex].amt += curr.totalAmount;
+        } else {
+            acc.push({
+                createdAt: month,
+                Amount: curr.totalAmount,
+            });
+        }
+
+        return acc;
+    }, []);
+
+
+    const formatXAxis = (tickItem) => {
+        return new Date(tickItem).toLocaleString("default", { month: "short" });
+    };
+
+
     const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', "#8884d8"];
 
-    console.log(cart);
     return (
-        <Container sx={{ marginTop: 5 }}>
+        <Container sx={{ marginTop: 5, marginBottom: 15 }}>
+
             <h3 style={{ textAlign: "center", margin: "20px 0", color: "#8884d8" }}>Products</h3>
             <ResponsiveContainer width="100%" aspect={2.5}>
                 <BarChart width={150} height={40} data={productData}>
@@ -147,8 +145,36 @@ const ProductChart = () => {
                     <Bar dataKey="Quantity" fill="#8884d8" />
                 </BarChart>
             </ResponsiveContainer>
+            <h3 style={{ textAlign: "center", margin: "30px 0", color: "#1f77b4" }}>Payment</h3>
+            <ResponsiveContainer width="100%" aspect={2.5}>
+                <LineChart
+                    width={500}
+                    height={300}
+                    data={groupedData}
+                    margin={{
+                        top: 5,
+                        right: 30,
+                        left: 20,
+                        bottom: 5
+                    }}
+                >
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="createdAt" tickFormatter={formatXAxis} />
+                    <YAxis />
+                    <Tooltip />
+                    <Legend />
+                    <Line
+                        type="monotone"
+                        dataKey="Amount"
+                        tickFormatter={<formatXAxis />}
+                        stroke="#1f77b4"
+                        activeDot={{ r: 8 }}
+                    />
+                    {/* <Line type="monotone" dataKey="uv" stroke="#82ca9d" /> */}
+                </LineChart>
+            </ResponsiveContainer>
             <h3 style={{ textAlign: "center", margin: "15px 0", color: "#17becf" }}>Users Cart</h3>
-            <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: 15 }}>
+            <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: 15, flexWrap: "wrap" }}>
                 <h3 style={{ color: '#00C49F' }}>Shoes </h3>
                 <h2 style={{ color: "#00C49F" }}>&#9632;</h2>
                 <h3 style={{ color: '#0088FE' }}>Cloths</h3>
@@ -160,8 +186,9 @@ const ProductChart = () => {
                 <h3 style={{ color: '#8884d8' }}>Jewelry</h3>
                 <h2 style={{ color: "#8884d8" }}>&#9632;</h2>
             </div>
-            <ResponsiveContainer width="100%" aspect={1.5}>
-                <PieChart width={400} height={100}>
+            {/* <ResponsiveContainer width="110%" aspect={1} height="100%" style={{ padding: 0 }}> */}
+            <Container sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                <PieChart width={400} height={400} >
                     <Tooltip />
                     <Pie
                         data={cartData}
@@ -172,6 +199,7 @@ const ProductChart = () => {
                         outerRadius={150}
                         fill="#8884d8"
                         dataKey="Quantity in cart"
+
                     >
                         <Tooltip />
                         {cartData.map((entry, index) => (
@@ -179,8 +207,8 @@ const ProductChart = () => {
                         ))}
                     </Pie>
                 </PieChart>
-
-            </ResponsiveContainer>
+            </Container>
+            {/* </ResponsiveContainer> */}
             <h3 style={{ textAlign: "center", margin: "30px 0", color: "#e377c2    " }}>Users Wishlist</h3>
             <ResponsiveContainer width="100%" aspect={2.5}>
                 <BarChart width={730} height={250} data={wishlistData}>
@@ -193,14 +221,12 @@ const ProductChart = () => {
                 </BarChart>
             </ResponsiveContainer>
 
-
-
             <h3 style={{ textAlign: "center", margin: "30px 0", color: "#83a6ed" }}>Reviews</h3>
             <ResponsiveContainer width="100%" aspect={2.5}>
                 <BarChart width={730} height={250} data={reviewData}>
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis dataKey="name" />
-                    <YAxis />
+                    <YAxis allowDecimals={false} />
                     <Tooltip />
                     <Legend />
                     <Bar dataKey="Reviews" fill="#83a6ed" />

@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify';
-import UserTable from '../Components/UserTable';
-import ProductChart from '../Components/Charts/ProductChart';
+import { Container } from '@mui/material';
+import BasicTabs from '../Components/AdminTabs';
 
 const AdminHomePage = () => {
     const [user, setUser] = useState([]);
@@ -30,13 +30,11 @@ const AdminHomePage = () => {
         }
     }
     return (
-        <>
-            <div style={{ padding: "0 50px" }}>
-                <h1 style={{ textAlign: "center", margin: "20px 0", color: "#1976d2" }}>Admin Home Page</h1>
-                <UserTable user={user} setUser={setUser} />
-            </div>
-            <ProductChart />
-        </>
+        isAdmin && (
+            <Container maxWidth="100%">
+                <h1 style={{ textAlign: "center", margin: "20px 0", color: "#1976d2" }}>Admin Dashboard </h1>
+                <BasicTabs user={user} setUser={setUser} />
+            </Container>)
     )
 }
 

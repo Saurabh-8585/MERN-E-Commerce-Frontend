@@ -69,3 +69,31 @@ a {
 }
 
 @media (min-width: 768px) and (max-width:1023px) {}
+.placeholder-animation {
+  position: relative;
+}
+
+.placeholder-animation::before {
+  content: attr(placeholder);
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: slide 2s ease-in-out infinite;
+}
+
+@keyframes slide {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-50%);
+  }
+  100% {
+    transform: translateY(-100%);
+  }
+}
