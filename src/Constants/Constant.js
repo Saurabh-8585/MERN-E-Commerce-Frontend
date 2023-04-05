@@ -23,7 +23,7 @@ const getWishList = async (setProceed, setWishlistData, authToken) => {
 }
 const handleLogOut = (setProceed, toast, navigate, setOpenAlert) => {
     if (setProceed) {
-        localStorage.removeItem('Authorization', 'totalAmount')
+        localStorage.removeItem('Authorization')
         toast.success("Logout Successfully", { autoClose: 500, theme: 'colored' })
         navigate('/')
         setOpenAlert(false)
@@ -40,8 +40,25 @@ const handleClickOpen = (setOpenAlert) => {
 const handleClose = (setOpenAlert) => {
     setOpenAlert(false);
 };
+const getAllProducts = async (setData) => {
+    try {
+        const { data } = await axios.get(process.env.REACT_APP_FETCH_PRODUCT);
+        setData(data)
+
+
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+const getSingleProduct = async (setProduct, id, setLoading) => {
+
+    const { data } = await axios.get(`${process.env.REACT_APP_FETCH_PRODUCT}/${id}`)
+    setProduct(data)
+    setLoading(false);
+
+}
 
 
 
-
-export { getCart, getWishList, handleClickOpen, handleClose, handleLogOut }
+export { getCart, getWishList, handleClickOpen, handleClose, handleLogOut, getAllProducts, getSingleProduct }

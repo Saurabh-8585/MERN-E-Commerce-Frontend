@@ -1,9 +1,9 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react'
-import UserInfoItem from '../Components/UserInfoItem';
-import UserCartItem from '../Components/UserCartItem';
-import UserWishlistItem from '../Components/UserWishlistItem';
-import UserReviewItem from '../Components/UserReviewItem';
+import React from 'react'
+import UserInfoItem from '../Components/UserData/UserInfoItem';
+import UserCartItem from '../Components/UserData/UserCartItem';
+import UserWishlistItem from '../Components/UserData/UserWishlistItem';
+import UserReviewItem from '../Components/UserData/UserReviewItem';
 import { useParams } from 'react-router-dom';
 import { Container } from '@mui/material';
 

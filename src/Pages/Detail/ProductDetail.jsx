@@ -14,6 +14,7 @@ import {
     Chip,
     Rating,
     ButtonGroup,
+    Skeleton,
 } from '@mui/material';
 import Slide from '@mui/material/Slide';
 import { MdAddShoppingCart } from 'react-icons/md'
@@ -24,6 +25,7 @@ import { toast } from 'react-toastify';
 import { ContextFunction } from '../../Context/Context';
 import ProductReview from '../../Components/Review/ProductReview';
 import ProductCard from '../../Components/Card/Product Card/ProductCard';
+import { getSingleProduct } from '../../Constants/Constant';
 
 
 const Transition = forwardRef(function Transition(props, ref) {
@@ -37,18 +39,16 @@ const ProductDetail = () => {
     const [product, setProduct] = useState([])
     const [similarProduct, setSimilarProduct] = useState([])
     const [productQuantity, setProductQuantity] = useState(1)
-
+    const [loading, setLoading] = useState(true);
 
 
     let authToken = localStorage.getItem('Authorization')
     let setProceed = authToken ? true : false
 
-    const getProduct = async () => {
-        const { data } = await axios.get(`${process.env.REACT_APP_FETCH_PRODUCT}/${id}`)
-        setProduct(data)
-    }
+
     useEffect(() => {
-        getProduct()
+
+        getSingleProduct(setProduct, id, setLoading)
         getSimilarProducts()
         window.scroll(0, 0)
     }, [id])
@@ -121,7 +121,7 @@ const ProductDetail = () => {
         data.push(product.author, product.category)
     }
     else if (cat === 'cloths') {
-        data.push(product.category,cat)
+        data.push(product.category, cat)
     }
     else if (cat === 'electronics') {
         data.push(product.category, cat)
@@ -165,72 +165,85 @@ const ProductDetail = () => {
                 </Dialog>
 
                 <main className='main-content'>
-                    <div className="product-image">
-                        <div className='detail-img-box'  >
-                            <img alt={product.name} src={product.image} className='detail-img' />
-                            <br />
-                        </div>
-                    </div>
-                    <section className='product-details'>
-                        <Typography variant='h4'>{product.name}</Typography>
-
-                        <Typography >
-                            {product.description}
-                        </Typography>
-                        <Typography >
-                            <div className="chip">
-                                {/* product?.brand, product?.gender, product?.category */}
-                                {
-                                    data.map((item, index) => (
-                                        <Chip label={item} key={index} variant="outlined" />
-                                    ))
-                                }
+                    {loading ? (
+                        <Skeleton variant='rectangular' height={400} />
+                    ) : (
+                        <div className="product-image">
+                            <div className='detail-img-box'  >
+                                <img alt={product.name} src={product.image} className='detail-img' />
+                                <br />
                             </div>
-                        </Typography>
-                        <Chip
-                            label={product.price > 1000 ? "Upto 9% off" : "Upto 38% off"}
-                            variant="outlined"
-                            sx={{ background: '#1976d2', color: 'white', width: '150px', fontWeight: 'bold' }}
-                            avatar={<TbDiscount2 color='white' />}
+                        </div>
+                    )}
+                    {   loading ? (
+                        <section style={{ display: 'flex', flexWrap: "wrap", width: "100%", justifyContent: "space-around", alignItems: 'center' }}>
+                            <Skeleton variant='rectangular' height={200} width="200px" />
+                            <Skeleton variant='text' height={400} width={700} />
 
+                        </section>
 
-                        />
-                        <div style={{ display: 'flex', gap: 20 }}>
-                            <Typography variant="h6" color="red"><s> ₹{product.price > 1000 ? product.price + 1000 : product.price + 300}</s> </Typography>
-                            <Typography variant="h6" color="primary">
-                                ₹{product.price}
+                    ) : (
+                        <section className='product-details'>
+                            <Typography variant='h4'>{product.name}</Typography>
+
+                            <Typography >
+                                {product.description}
                             </Typography>
-                        </div>
-                        <Box
-                            sx={{
-                                display: 'flex',
-                                flexDirection: 'column',
-                                // background: 'red',
-                                '& > *': {
-                                    m: 1,
-                                },
-                            }}
-                        >
-                            <ButtonGroup variant="outlined" aria-label="outlined button group">
-                                <Button onClick={increaseQuantity}>+</Button>
-                                <Button>{productQuantity}</Button>
-                                <Button onClick={decreaseQuantity}>-</Button>
-                            </ButtonGroup>
-                        </Box>
-                        <Rating name="read-only" value={Math.round(product.rating)} readOnly precision={0.5} />
-                        <div style={{ display: 'flex' }} >
-                            <Tooltip title='Add To Cart'>
-                                <Button variant='contained' className='all-btn' startIcon={<MdAddShoppingCart />} onClick={(() => addToCart(product))}>Buy</Button>
-                            </Tooltip>
-                            <Tooltip title='Add To Wishlist'>
-                                <Button style={{ marginLeft: 10,paddingLeft:18 }} variant='contained' className='all-btn' startIcon={<AiFillHeart />} onClick={(() => addToWhishList(product))}>Wishlist</Button>
-                            </Tooltip>
-                            <Tooltip title='Share'>
-                                <Button style={{ marginLeft: 10 }} variant='contained' className='all-btn' startIcon={<AiOutlineShareAlt />} onClick={() => shareProduct(product)}>Share</Button>
-                            </Tooltip>
+                            <Typography >
+                                <div className="chip">
+                                    {/* product?.brand, product?.gender, product?.category */}
+                                    {
+                                        data.map((item, index) => (
+                                            <Chip label={item} key={index} variant="outlined" />
+                                        ))
+                                    }
+                                </div>
+                            </Typography>
+                            <Chip
+                                label={product.price > 1000 ? "Upto 9% off" : "Upto 38% off"}
+                                variant="outlined"
+                                sx={{ background: '#1976d2', color: 'white', width: '150px', fontWeight: 'bold' }}
+                                avatar={<TbDiscount2 color='white' />}
 
-                        </div>
-                    </section>
+
+                            />
+                            <div style={{ display: 'flex', gap: 20 }}>
+                                <Typography variant="h6" color="red"><s> ₹{product.price > 1000 ? product.price + 1000 : product.price + 300}</s> </Typography>
+                                <Typography variant="h6" color="primary">
+                                    ₹{product.price}
+                                </Typography>
+                            </div>
+                            <Box
+                                sx={{
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    // background: 'red',
+                                    '& > *': {
+                                        m: 1,
+                                    },
+                                }}
+                            >
+                                <ButtonGroup variant="outlined" aria-label="outlined button group">
+                                    <Button onClick={increaseQuantity}>+</Button>
+                                    <Button>{productQuantity}</Button>
+                                    <Button onClick={decreaseQuantity}>-</Button>
+                                </ButtonGroup>
+                            </Box>
+                            <Rating name="read-only" value={Math.round(product.rating)} readOnly precision={0.5} />
+                            <div style={{ display: 'flex' }} >
+                                <Tooltip title='Add To Cart'>
+                                    <Button variant='contained' className='all-btn' startIcon={<MdAddShoppingCart />} onClick={(() => addToCart(product))}>Buy</Button>
+                                </Tooltip>
+                                <Tooltip title='Add To Wishlist'>
+                                    <Button style={{ marginLeft: 10, paddingLeft: 18 }} variant='contained' className='all-btn' startIcon={<AiFillHeart />} onClick={(() => addToWhishList(product))}>Wishlist</Button>
+                                </Tooltip>
+                                <Tooltip title='Share'>
+                                    <Button style={{ marginLeft: 10 }} variant='contained' className='all-btn' startIcon={<AiOutlineShareAlt />} onClick={() => shareProduct(product)}>Share</Button>
+                                </Tooltip>
+
+                            </div>
+                        </section>
+                    )}
                 </main>
                 <ProductReview setProceed={setProceed} authToken={authToken} id={id} setOpenAlert={setOpenAlert} />
 

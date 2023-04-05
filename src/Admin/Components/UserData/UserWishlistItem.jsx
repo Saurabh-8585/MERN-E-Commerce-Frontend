@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Container, Typography } from '@mui/material'
-import CartCard from '../../Components/Card/CartCard/CartCard'
+import CartCard from '../../../Components/Card/CartCard/CartCard'
 import axios from 'axios'
 import { toast } from 'react-toastify'
 

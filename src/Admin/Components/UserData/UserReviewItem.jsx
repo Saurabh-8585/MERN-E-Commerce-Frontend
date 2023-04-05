@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Box, Typography } from '@mui/material'
 import { Link } from 'react-router-dom'
-import CommentCard from '../../Components/Card/Comment Card/CommentCard';
+import CommentCard from '../../../Components/Card/Comment Card/CommentCard';
 
 
 const UserReviewItem = ({ commonGetRequest, id }) => {

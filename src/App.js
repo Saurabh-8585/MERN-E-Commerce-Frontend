@@ -20,6 +20,7 @@ import AdminLogin from './Admin/Auth/Login/AdminLogin';
 import AdminRegister from './Admin/Auth/Register/AdminRegister';
 import AdminHomePage from './Admin/Pages/AdminHomePage';
 import SingleUserPage from './Admin/Pages/SingleUserPage';
+import SingleProduct from './Admin/Pages/SingleProduct';
 
 
 
@@ -33,6 +34,7 @@ function App() {
         <DesktopNavigation />
         <div className='margin'>
           <Routes>
+            {/*User Routes  */}
             <Route path='/' index element={<HomePage />} />
             <Route path="/login" element={< Login />} />
             <Route path='/register' element={<Register />} />
@@ -45,10 +47,13 @@ function App() {
             <Route path='/paymentsuccess' element={<PaymentSuccess />} />
             <Route path='/forgotpassword' element={<ForgotPasswordForm />} />
             <Route path='/user/reset/:id/:token' element={<AddNewPassword />} />
+
+            {/* Admin Routes */}
             <Route path="/admin/login" element={< AdminLogin />} />
             <Route path='/admin/register' element={<AdminRegister />} />
             <Route path='/admin/home' element={<AdminHomePage />} />
             <Route path='/admin/home/user/:id' element={<SingleUserPage />} />
+            <Route path='/admin/home/product/:id' element={<SingleProduct />} />
           </Routes>
         </div>
         <MobileNavigation />

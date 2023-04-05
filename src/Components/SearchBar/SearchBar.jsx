@@ -7,24 +7,14 @@ import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import { styled } from '@mui/material/styles';
 import { Link } from "react-router-dom";
+import { getAllProducts } from "../../Constants/Constant";
 const SearchBar = () => {
     const [data, setData] = useState([]);
     const [filteredData, setFilteredData] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
 
     useEffect(() => {
-        const getAllProducts = async () => {
-            try {
-                const { data } = await axios.get(process.env.REACT_APP_FETCH_PRODUCT);
-                console.log(data);
-                setData(data)
-
-
-            } catch (error) {
-                console.log(error);
-            }
-        }
-        getAllProducts();
+        getAllProducts(setData);
     }, [])
 
     const handleSearch = event => {
@@ -49,19 +39,11 @@ const SearchBar = () => {
         { key: "number", placeholder: "Search product by type" },
         { key: "category", placeholder: "Search product by category" },
     ];
-    const [selectedCriteria, setSelectedCriteria] = useState(searchCriteria[0].key);
-
-    useEffect(() => {
-        const intervalId = setInterval(() => {
-            const currentIndex = searchCriteria.findIndex((c) => c.key === selectedCriteria);
-            const nextIndex = (currentIndex + 1) % searchCriteria.length;
-            setSelectedCriteria(searchCriteria[nextIndex].key);
-        }, 1000);
-
-        return () => clearInterval(intervalId);
-    }, [selectedCriteria]);
 
 
+
+console.log({data});
+console.log({data});
 
     const Item = styled(Paper)(({ theme }) => ({
         backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -75,8 +57,7 @@ const SearchBar = () => {
             <TextField
                 id="search"
                 type="search"
-                // label="Search"
-                placeholder={searchCriteria.find((c) => c.key === selectedCriteria).placeholder}
+                label="Search Products"
 
                 value={searchTerm}
                 onChange={handleSearch}

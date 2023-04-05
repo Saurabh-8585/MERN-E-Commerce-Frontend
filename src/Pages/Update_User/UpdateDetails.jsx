@@ -7,7 +7,7 @@ import { TiArrowBack } from 'react-icons/ti'
 import { useNavigate } from 'react-router-dom'
 import styles from './Update.module.css'
 import { toast } from 'react-toastify'
-const Transition = forwardRef(function Transition(props, ref) {
+export const Transition = forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 

@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
+import { Tab, Tabs, Typography, Box } from '@mui/material';
 import ProductChart from './Charts/ProductChart';
-import UserTable from './UserTable';
+import UserTable from './Tables/UserTable';
 import axios from 'axios';
+import ProductTable from './Tables/ProductTable';
+import { VscGraph } from 'react-icons/vsc'
+import { CgProfile } from 'react-icons/cg'
+import { AiOutlineShoppingCart } from 'react-icons/ai'
+import { getAllProducts } from '../../Constants/Constant';
+
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -18,10 +21,12 @@ function TabPanel(props) {
             id={`simple-tabpanel-${index}`}
             aria-labelledby={`simple-tab-${index}`}
             {...other}
+
         >
             {value === index && (
                 <Box sx={{ p: 3 }}>
-                    <Typography>{children}</Typography>
+                    <Typography >{children} </Typography>
+
                 </Box>
             )}
         </div>
@@ -48,11 +53,13 @@ export default function BasicTabs({ user, setUser }) {
     const [cart, setCart] = useState([]);
     const [wishlist, setWishlist] = useState([]);
     const [paymentData, setPaymentData] = useState([]);
+    const [data, setData] = useState([]);
 
     useEffect(() => {
-        getProducts();
+        getAllProducts(setData);
+        getProductInfo();
     }, [])
-    const getProducts = async () => {
+    const getProductInfo = async () => {
         try {
             const { data } = await axios.get(process.env.REACT_APP_GET_CHART_DATA)
             setProducts(data.product);
@@ -66,6 +73,7 @@ export default function BasicTabs({ user, setUser }) {
         }
     }
 
+
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
@@ -74,12 +82,12 @@ export default function BasicTabs({ user, setUser }) {
         <Box sx={{ width: '100%' }}>
             <Box sx={{ borderBottom: 1, borderColor: 'divider', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                 <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-                    <Tab label="Statistics" {...a11yProps(0)} />
-                    <Tab label="Users" {...a11yProps(1)} />
-                    <Tab label="Products" {...a11yProps(2)} />
+                    <Tab label='Statistics'  {...a11yProps(0)} iconPosition='start' icon={<VscGraph fontSize={20} />} />
+                    <Tab label="Users" {...a11yProps(1)} iconPosition='start' icon={<CgProfile fontSize={20} />} />
+                    <Tab label="Products" {...a11yProps(2)} iconPosition='start' icon={<AiOutlineShoppingCart fontSize={20} />} />
                 </Tabs>
             </Box>
-            <TabPanel value={value} index={0}>
+            <TabPanel value={value} index={0} >
                 <ProductChart
                     products={products}
                     review={review}
@@ -91,7 +99,7 @@ export default function BasicTabs({ user, setUser }) {
                 <UserTable user={user} setUser={setUser} />
             </TabPanel>
             <TabPanel value={value} index={2}>
-                Item Three
+                <ProductTable data={data} />
             </TabPanel>
         </Box>
     );
