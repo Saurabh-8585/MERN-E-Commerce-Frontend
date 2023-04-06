@@ -102,7 +102,6 @@ const SingleCategory = () => {
 
                     </Link>
                 ))}
-
             </Container>
         </Container >
     )

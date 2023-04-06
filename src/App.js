@@ -53,7 +53,7 @@ function App() {
             <Route path='/admin/register' element={<AdminRegister />} />
             <Route path='/admin/home' element={<AdminHomePage />} />
             <Route path='/admin/home/user/:id' element={<SingleUserPage />} />
-            <Route path='/admin/home/product/:id' element={<SingleProduct />} />
+            <Route path='/admin/home/product/:type/:id' element={<SingleProduct />} />
           </Routes>
         </div>
         <MobileNavigation />

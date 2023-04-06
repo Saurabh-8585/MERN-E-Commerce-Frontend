@@ -134,7 +134,8 @@ const CommentCard = ({ userReview, setReviews, reviews, fetchReviews }) => {
 
                 {edit && <div style={{
                     display: 'flex', gap: 5, margin: 10
-                }}>   <Button sx={{ width: 10, borderRadius: '30px' }} variant='contained' onClick={sendEditResponse}> {<AiOutlineSend />} </Button>
+                }}>
+                    <Button sx={{ width: 10, borderRadius: '30px' }} variant='contained' onClick={sendEditResponse}> {<AiOutlineSend />} </Button>
                     <Button sx={{ width: 10, borderRadius: '30px' }} variant='contained' color='error' onClick={() => setEdit(false)}>
                         {<GiCancel style={{ fontSize: 15, color: 'white' }} />} </Button>
                 </div>

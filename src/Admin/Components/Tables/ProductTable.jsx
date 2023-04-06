@@ -89,6 +89,8 @@ const ProductTable = ({ data }) => {
         setFilteredData(filterData());
     }, [data, searchTerm]);
 
+    const getType = data.filter(prod => prod.type == "book");
+    console.log(getType);
 
     return (
         <>
@@ -148,28 +150,28 @@ const ProductTable = ({ data }) => {
 
                                     >
                                         <TableCell component="th" scope="row" align="center">
-                                            <Link to={`/admin/home/product/${prod._id}`}>
+                                            <Link to={`/admin/home/product/${prod.type}/${prod._id}`}>
                                                 {prod.name.slice(0, 20)}
                                             </Link>
                                         </TableCell>
                                         <TableCell align="center">
-                                            <Link to={`/admin/home/product/${prod._id}`}>
+                                            <Link to={`/admin/home/product/${prod.type}/${prod._id}`}>
                                                 <img src={prod.image} alt={prod.name} style={{ width: "100px", height: "100px", objectFit: "contain" }} />
 
                                             </Link>
                                         </TableCell>
                                         <TableCell align="center">
-                                            <Link to={`/admin/home/product/${prod._id}`}>
+                                            <Link to={`/admin/home/product/${prod.type}/${prod._id}`}>
                                                 {prod.type}
                                             </Link>
                                         </TableCell>
                                         <TableCell align="center">
-                                            <Link to={`/admin/home/product/${prod._id}`}>
+                                            <Link to={`/admin/home/product/${prod.type}/${prod._id}`}>
                                                 ₹{prod.price}
                                             </Link>
                                         </TableCell>
                                         <TableCell align="center">
-                                            <Link to={`/admin/home/product/${prod._id}`}>
+                                            <Link to={`/admin/home/product/${prod.type}/${prod._id}`}>
                                                 {prod.rating}
                                             </Link>
                                         </TableCell>

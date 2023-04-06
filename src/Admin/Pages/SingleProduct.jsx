@@ -6,12 +6,12 @@ import { AiOutlineFileDone } from 'react-icons/ai';
 const SingleProduct = () => {
     const [product, setProduct] = useState([]);
     const [loading, setLoading] = useState(true);
-    const { id } = useParams();
-
+    const { id, type } = useParams();
+    console.log(type);
     useEffect(() => {
         getSingleProduct(setProduct, id, setLoading)
     }, [])
-    const handleOnchange = () => {
+    const handleOnchange = (e) => {
 
     }
     const handleSubmit = () => {
@@ -40,29 +40,35 @@ const SingleProduct = () => {
             )}
             <form noValidate autoComplete="off" onSubmit={handleSubmit} >
                 <Grid container spacing={2}>
-                    <Grid item xs={12} sm={6}>
-                        <TextField label="First Name" name='firstName' value={''} onChange={handleOnchange} variant="outlined" fullWidth />
-                    </Grid>
-                    <Grid item xs={12} sm={6}>
-                        <TextField label="Last Name" name='lastName' value={''} onChange={handleOnchange} variant="outlined" fullWidth />
-                    </Grid>
-                    <Grid item xs={12} sm={6}>
-                        <TextField label="Contact Number" type='tel' name='phoneNumber' value={''} onChange={handleOnchange} variant="outlined" fullWidth />
-                    </Grid>
-                    <Grid item xs={12} sm={6}>
-                        <TextField label="Email" name='email' value={''} onChange={handleOnchange} variant="outlined" fullWidth />
-                    </Grid>
-                    <Grid item xs={12}>
-                        <TextField label="Address" name='address' value={''} onChange={handleOnchange} variant="outlined" fullWidth />
-                    </Grid>
-                    <Grid item xs={12} sm={6}>
-                        <TextField label="City" name='city' value={''} onChange={handleOnchange} variant="outlined" fullWidth />
-                    </Grid>
-                    <Grid item xs={12} sm={6}>
-                        <TextField type='tel' label="Postal/Zip Code" name='zipCode' value={''} onChange={handleOnchange} variant="outlined" fullWidth />
-                    </Grid>
                     <Grid item xs={12} >
-                        <TextField label="Province/State" name='userState' value={''} onChange={handleOnchange} variant="outlined" fullWidth />
+                        <TextField label="Name" name='name' value={product.name || ""} onChange={handleOnchange} variant="outlined" fullWidth />
+                    </Grid>
+                    {/* {type == "book" && <Grid item xs={12} sm={6}>
+                        <TextField label="Author" name='author' value={product.author || ''} onChange={handleOnchange} variant="outlined" fullWidth />
+                    </Grid>
+                    } */}
+                    <Grid item xs={12} sm={6}>
+                        <TextField label="Price" name='price' value={product.price || ''} onChange={handleOnchange} variant="outlined" inputMode='numeric' fullWidth />
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                        <TextField label="Rating" name='rating' value={product.rating || ''} onChange={handleOnchange} variant="outlined" inputMode='numeric' fullWidth />
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                        <TextField label="Category" name='category' value={product.category || ''} onChange={handleOnchange} variant="outlined" fullWidth />
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                        <TextField label="Product Type" name='type' value={product.type || ''} onChange={handleOnchange} variant="outlined" fullWidth />
+                    </Grid>
+                    <Grid item xs={12} sm={6} sx={{ margin: "10px auto" }}>
+                        <TextField
+                            id="filled-textarea"
+                            value={product.description || ""} onChange={handleOnchange}
+                            label="Description"
+                            multiline
+                            sx={{ width: "100%" }}
+                            variant="outlined"
+
+                        />
                     </Grid>
                 </Grid>
                 <Container sx={{ display: 'flex', justifyContent: 'space-around', marginTop: 5 }}>
