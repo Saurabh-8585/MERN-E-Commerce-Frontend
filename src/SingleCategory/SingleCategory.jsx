@@ -24,10 +24,15 @@ const SingleCategory = () => {
     }, [])
 
     const getCategoryProduct = async () => {
-        setIsLoading(true)
-        const { data } = await axios.post(`${process.env.REACT_APP_PRODUCT_TYPE}`, { userType: cat })
-        setIsLoading(false)
-        setProductData(data)
+        try {
+            setIsLoading(true)
+            const { data } = await axios.post(`${process.env.REACT_APP_PRODUCT_TYPE}`, { userType: cat })
+            setIsLoading(false)
+            setProductData(data)
+
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     const productFilter = []
@@ -95,7 +100,7 @@ const SingleCategory = () => {
                 </FormControl>
             </Box>
             {loading}
-            <Container maxWidth='xl' style={{ marginTop: 10, display: "flex", justifyContent: 'center', flexWrap: "wrap", paddingBottom: 20, marginBottom:30,width: '100%' }}>
+            <Container maxWidth='xl' style={{ marginTop: 10, display: "flex", justifyContent: 'center', flexWrap: "wrap", paddingBottom: 20, marginBottom: 30, width: '100%' }}>
                 {productData.map(prod => (
                     <Link to={`/Detail/type/${cat}/${prod._id}`} key={prod._id}>
                         <ProductCard prod={prod} />

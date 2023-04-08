@@ -8,7 +8,6 @@ import ProductTable from './Tables/ProductTable';
 import { VscGraph } from 'react-icons/vsc'
 import { CgProfile } from 'react-icons/cg'
 import { AiOutlineShoppingCart } from 'react-icons/ai'
-import { getAllProducts } from '../../Constants/Constant';
 
 
 function TabPanel(props) {
@@ -53,20 +52,19 @@ export default function BasicTabs({ user, setUser }) {
     const [cart, setCart] = useState([]);
     const [wishlist, setWishlist] = useState([]);
     const [paymentData, setPaymentData] = useState([]);
-    const [data, setData] = useState([]);
 
     useEffect(() => {
-        getAllProducts(setData);
         getProductInfo();
     }, [])
     const getProductInfo = async () => {
         try {
-            const { data } = await axios.get(process.env.REACT_APP_GET_CHART_DATA)
+            const { data } = await axios.get(process.env.REACT_APP_ADMIN_GET_CHART_DATA)
             setProducts(data.product);
             setReview(data.review);
             setCart(data.cart);
             setWishlist(data.wishlist);
             setPaymentData(data.payment);
+            console.log(data.findType);
         } catch (error) {
             console.log(error);
 
@@ -99,7 +97,7 @@ export default function BasicTabs({ user, setUser }) {
                 <UserTable user={user} setUser={setUser} />
             </TabPanel>
             <TabPanel value={value} index={2}>
-                <ProductTable data={data} />
+                <ProductTable data={products} />
             </TabPanel>
         </Box>
     );

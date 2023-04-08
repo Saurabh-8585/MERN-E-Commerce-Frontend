@@ -1,25 +1,101 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { getSingleProduct } from '../../Constants/Constant';
+// import { getSingleProduct } from '../../Constants/Constant';
+import axios from "axios";
+
 import { Box, Button, Container, Grid, Skeleton, TextField, Typography } from '@mui/material';
 import { AiOutlineFileDone } from 'react-icons/ai';
+import { toast } from 'react-toastify';
 const SingleProduct = () => {
     const [product, setProduct] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(false);
+
+    let authToken = localStorage.getItem("Authorization")
+    const [productInfo, setProductInfo] = useState({
+        name: "",
+        image: "",
+        price: "",
+        rating: "",
+        category: "",
+        type: "",
+        description: "",
+    });
+
     const { id, type } = useParams();
     console.log(type);
     useEffect(() => {
-        getSingleProduct(setProduct, id, setLoading)
+        getSingleProduct()
     }, [])
+    const getSingleProduct = async () => {
+        const { data } = await axios.get(`${process.env.REACT_APP_FETCH_PRODUCT}/${id}`)
+        setProduct(data)
+        productInfo.name = data.name
+        productInfo.image = data.image
+        productInfo.price = data.price
+        productInfo.rating = data.rating
+        productInfo.category = data.category
+        productInfo.type = data.type
+        productInfo.description = data.description
+        setProduct(data)
+        setLoading(false);
+
+    }
     const handleOnchange = (e) => {
+        setProductInfo({ ...productInfo, [e.target.name]: e.target.value })
 
     }
-    const handleSubmit = () => {
+    const productFilter = []
+
+    if (type === 'book') {
+        productFilter.push('scifi', 'business', 'mystery', 'cookbooks', 'accessories')
+    }
+    else if (type === 'cloths') {
+        productFilter.push('men', 'women')
+    }
+    else if (type === 'shoe') {
+        productFilter.push('running', 'football', 'formal', 'casual')
+    }
+    else if (type === 'electronics') {
+        productFilter.push('monitor', 'ssd', 'hdd')
 
     }
-    console.log(product);
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        if (!productInfo.name && !productInfo.image && !productInfo.price && !productInfo.rating && !productInfo.category && !productInfo.type && !productInfo.description) {
+            toast.error("Please fill the all fields", { autoClose: 500, })
+
+        }
+        if (!productFilter.includes(productInfo.category)) {
+            setError(true)
+            console.log(productInfo.category.includes(productFilter), productFilter);
+        }
+        else {
+            setError(false)
+            try {
+                const { data } = await axios.put(`${process.env.REACT_APP_ADMIN_UPDATE_PRODUCT}/${product._id}`, { productDetails: productInfo }, {
+                    headers: {
+                        'Authorization': authToken
+                    }
+                })
+                if (data.success) {
+                    toast.success("Product updated successfully", { autoClose: 500, })
+
+                }
+                else {
+                    toast.error("Something went wrong", { autoClose: 500, })
+                }
+
+            } catch (error) {
+                toast.error("Something went wrong", { autoClose: 500, })
+
+            }
+        }
+    }
+
+    // console.log(productFilter);
     return (
-        <Container sx={{ width: "100%" }}>
+        <Container sx={{ width: "100%",marginBottom:10 }}>
             {loading ? (
                 <section style={{ display: 'flex', flexWrap: "wrap", width: "100%", justifyContent: "space-around", alignItems: 'center' }}>
                     <Skeleton variant='rectangular' height={200} width="200px" />
@@ -38,31 +114,32 @@ const SingleProduct = () => {
                     </div>
                 </Box>
             )}
-            <form noValidate autoComplete="off" onSubmit={handleSubmit} >
+            <form noValidate autoComplete="off" onSubmit={handleSubmit} style={{marginTop:30}} >
                 <Grid container spacing={2}>
                     <Grid item xs={12} >
-                        <TextField label="Name" name='name' value={product.name || ""} onChange={handleOnchange} variant="outlined" fullWidth />
-                    </Grid>
-                    {/* {type == "book" && <Grid item xs={12} sm={6}>
-                        <TextField label="Author" name='author' value={product.author || ''} onChange={handleOnchange} variant="outlined" fullWidth />
-                    </Grid>
-                    } */}
-                    <Grid item xs={12} sm={6}>
-                        <TextField label="Price" name='price' value={product.price || ''} onChange={handleOnchange} variant="outlined" inputMode='numeric' fullWidth />
+                        <TextField label="Name" name='name' value={productInfo.name} onChange={handleOnchange} variant="outlined" fullWidth />
                     </Grid>
                     <Grid item xs={12} sm={6}>
-                        <TextField label="Rating" name='rating' value={product.rating || ''} onChange={handleOnchange} variant="outlined" inputMode='numeric' fullWidth />
+                        <TextField label="Price" name='price' value={productInfo.price} onChange={handleOnchange} variant="outlined" inputMode='numeric' fullWidth />
                     </Grid>
                     <Grid item xs={12} sm={6}>
-                        <TextField label="Category" name='category' value={product.category || ''} onChange={handleOnchange} variant="outlined" fullWidth />
+                        <TextField label="Rating" name='rating' value={productInfo.rating} onChange={handleOnchange} variant="outlined" inputMode='numeric' fullWidth />
                     </Grid>
                     <Grid item xs={12} sm={6}>
-                        <TextField label="Product Type" name='type' value={product.type || ''} onChange={handleOnchange} variant="outlined" fullWidth />
+                        <TextField label="Category" name='category' value={productInfo.category} onChange={handleOnchange} variant="outlined" fullWidth />
+                        {error && <>
+                            <p style={{ marginTop: 5, color: "red",padding:1 }}>Please add  correct category like</p>
+
+                            {productFilter.map(prod => <span style={{marginRight:4,padding:2 }}>{prod}</span>)}
+                        </>}
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                        <TextField label="Product Type" name='type' value={productInfo.type} onChange={handleOnchange} variant="outlined" fullWidth />
                     </Grid>
                     <Grid item xs={12} sm={6} sx={{ margin: "10px auto" }}>
                         <TextField
                             id="filled-textarea"
-                            value={product.description || ""} onChange={handleOnchange}
+                            value={productInfo.description} onChange={handleOnchange}
                             label="Description"
                             multiline
                             sx={{ width: "100%" }}
