@@ -95,7 +95,7 @@ const SingleProduct = () => {
 
     // console.log(productFilter);
     return (
-        <Container sx={{ width: "100%",marginBottom:10 }}>
+        <Container sx={{ width: "100%", marginBottom: 10 }}>
             {loading ? (
                 <section style={{ display: 'flex', flexWrap: "wrap", width: "100%", justifyContent: "space-around", alignItems: 'center' }}>
                     <Skeleton variant='rectangular' height={200} width="200px" />
@@ -114,7 +114,7 @@ const SingleProduct = () => {
                     </div>
                 </Box>
             )}
-            <form noValidate autoComplete="off" onSubmit={handleSubmit} style={{marginTop:30}} >
+            <form noValidate autoComplete="off" onSubmit={handleSubmit} style={{ marginTop: 30 }} >
                 <Grid container spacing={2}>
                     <Grid item xs={12} >
                         <TextField label="Name" name='name' value={productInfo.name} onChange={handleOnchange} variant="outlined" fullWidth />
@@ -128,9 +128,9 @@ const SingleProduct = () => {
                     <Grid item xs={12} sm={6}>
                         <TextField label="Category" name='category' value={productInfo.category} onChange={handleOnchange} variant="outlined" fullWidth />
                         {error && <>
-                            <p style={{ marginTop: 5, color: "red",padding:1 }}>Please add  correct category like</p>
+                            <p style={{ marginTop: 5, color: "red", padding: 1 }}>Please add  correct category like</p>
 
-                            {productFilter.map(prod => <span style={{marginRight:4,padding:2 }}>{prod}</span>)}
+                            {productFilter.map(prod => <span style={{ marginRight: 4, padding: 2 }}>{prod}</span>)}
                         </>}
                     </Grid>
                     <Grid item xs={12} sm={6}>
@@ -144,6 +144,7 @@ const SingleProduct = () => {
                             multiline
                             sx={{ width: "100%" }}
                             variant="outlined"
+                            name='description'
 
                         />
                     </Grid>
