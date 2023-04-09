@@ -1,5 +1,5 @@
 import './Desktop.css'
-import React, { forwardRef, useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { AiOutlineHeart, AiOutlineShoppingCart, AiFillCloseCircle } from 'react-icons/ai'
 import { CgProfile } from 'react-icons/cg'
 import { FiLogOut } from 'react-icons/fi'
@@ -7,10 +7,8 @@ import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { Badge, Button, Dialog, DialogActions, DialogContent, Menu, MenuItem, Slide, Tooltip, Typography } from '@mui/material';
 import { ContextFunction } from '../Context/Context';
 import { toast } from 'react-toastify';
-import { getCart, getWishList, handleLogOut, handleClickOpen, handleClose } from '../Constants/Constant'
-const Transition = forwardRef(function Transition(props, ref) {
-  return <Slide direction="up" ref={ref} {...props} />;
-});
+import { getCart, getWishList, handleLogOut, handleClickOpen, handleClose, Transition } from '../Constants/Constant'
+
 const DesktopNavigation = () => {
 
   const { cart, setCart, wishlistData, setWishlistData } = useContext(ContextFunction)

@@ -1,15 +1,13 @@
 import { Box, Button, Container, Dialog, DialogActions, DialogContent, DialogContentText, Grid, Slide, TextField, Typography } from '@mui/material'
 import axios from 'axios'
-import React, { forwardRef, useEffect, useState } from 'react'
+import React, {  useEffect, useState } from 'react'
 import { AiFillCloseCircle, AiFillDelete, AiOutlineFileDone } from 'react-icons/ai'
 import { RiLockPasswordLine } from 'react-icons/ri'
-import { TiArrowBack } from 'react-icons/ti'
 import { useNavigate } from 'react-router-dom'
 import styles from './Update.module.css'
 import { toast } from 'react-toastify'
-export const Transition = forwardRef(function Transition(props, ref) {
-    return <Slide direction="up" ref={ref} {...props} />;
-});
+import { Transition } from '../../Constants/Constant'
+
 
 const UpdateDetails = () => {
     const [userData, setUserData] = useState([])

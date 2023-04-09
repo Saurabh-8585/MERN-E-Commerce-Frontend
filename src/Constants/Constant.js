@@ -1,4 +1,6 @@
+import { Slide } from "@mui/material";
 import axios from "axios";
+import { forwardRef } from "react";
 const getCart = async (setProceed, setCart, authToken) => {
     if (setProceed) {
         const { data } = await axios.get(`${process.env.REACT_APP_GET_CART}`,
@@ -59,6 +61,12 @@ const getSingleProduct = async (setProduct, id, setLoading) => {
 
 }
 
+const Transition = forwardRef(function Transition(props, ref) {
+    return <Slide direction="up" ref={ref} {...props} />;
+});
 
 
-export { getCart, getWishList, handleClickOpen, handleClose, handleLogOut, getAllProducts, getSingleProduct }
+
+
+
+export { getCart, getWishList, handleClickOpen, handleClose, handleLogOut, getAllProducts, getSingleProduct, Transition }

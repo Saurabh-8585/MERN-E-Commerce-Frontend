@@ -1,5 +1,4 @@
 import { Container, InputAdornment, TextField, Typography } from "@mui/material";
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { AiOutlineSearch } from 'react-icons/ai';
 import Box from '@mui/material/Box';

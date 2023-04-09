@@ -3,13 +3,15 @@ import { useParams } from 'react-router-dom'
 // import { getSingleProduct } from '../../Constants/Constant';
 import axios from "axios";
 
-import { Box, Button, Container, Grid, Skeleton, TextField, Typography } from '@mui/material';
-import { AiOutlineFileDone } from 'react-icons/ai';
+import { Box, Button, Container, Dialog, DialogActions, DialogContent, DialogContentText, Grid, Skeleton, TextField, Typography } from '@mui/material';
+import { AiFillCloseCircle, AiFillDelete, AiOutlineFileDone } from 'react-icons/ai';
 import { toast } from 'react-toastify';
+import { Transition } from '../../Constants/Constant';
 const SingleProduct = () => {
     const [product, setProduct] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
+    const [openAlert, setOpenAlert] = useState(false);
 
     let authToken = localStorage.getItem("Authorization")
     const [productInfo, setProductInfo] = useState({
@@ -23,7 +25,7 @@ const SingleProduct = () => {
     });
 
     const { id, type } = useParams();
-    console.log(type);
+    
     useEffect(() => {
         getSingleProduct()
     }, [])
@@ -92,6 +94,9 @@ const SingleProduct = () => {
             }
         }
     }
+    const deleteProduct = async () => {
+
+    }
 
     // console.log(productFilter);
     return (
@@ -153,7 +158,28 @@ const SingleProduct = () => {
                     <Button variant='contained' endIcon={<AiOutlineFileDone />} type='submit'>Save</Button>
                 </Container>
             </form >
-
+            <Box sx={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center', margin: "25px 0", width: '100%' }}>
+                <Typography variant='h6'>Delete {productInfo.name   }?</Typography>
+                <Button variant='contained' color='error' endIcon={<AiFillDelete />} onClick={() => setOpenAlert(true)}>Delete</Button>
+            </Box>
+            <Dialog
+                open={openAlert}
+                TransitionComponent={Transition}
+                keepMounted
+                onClose={() => setOpenAlert(false)}
+                aria-describedby="alert-dialog-slide-description"
+            >
+                <DialogContent sx={{ width: { xs: 280, md: 350, xl: 400 } }}>
+                    <DialogContentText style={{ textAlign: 'center' }} id="alert-dialog-slide-description">
+                        <Typography variant='body1'>Do you want to delete this product?</Typography>
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions sx={{ display: 'flex', justifyContent: 'space-evenly' }}>
+                    <Button variant='contained' endIcon={<AiFillDelete />} color='error' onClick={deleteProduct}>Delete</Button>
+                    <Button variant='contained' color='primary'
+                        onClick={() => setOpenAlert(false)} endIcon={<AiFillCloseCircle />}>Close</Button>
+                </DialogActions>
+            </Dialog>
         </Container>
     )
 }

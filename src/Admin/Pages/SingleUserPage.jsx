@@ -6,6 +6,7 @@ import UserWishlistItem from '../Components/UserData/UserWishlistItem';
 import UserReviewItem from '../Components/UserData/UserReviewItem';
 import { useParams } from 'react-router-dom';
 import { Container } from '@mui/material';
+import UserOrderItem from '../Components/UserData/UserOrderItem';
 
 const SingleUserPage = () => {
     const { id } = useParams();
@@ -28,6 +29,7 @@ const SingleUserPage = () => {
         <>
             <Container>
                 <UserInfoItem commonGetRequest={commonGetRequest} authToken={authToken} id={id} />
+                <UserOrderItem commonGetRequest={commonGetRequest} authToken={authToken} id={id} />
                 <UserCartItem commonGetRequest={commonGetRequest} authToken={authToken} id={id} />
                 <UserWishlistItem commonGetRequest={commonGetRequest} authToken={authToken} id={id} />
                 <UserReviewItem commonGetRequest={commonGetRequest} authToken={authToken} id={id} />

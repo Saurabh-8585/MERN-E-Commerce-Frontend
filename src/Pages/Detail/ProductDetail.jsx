@@ -25,12 +25,9 @@ import { toast } from 'react-toastify';
 import { ContextFunction } from '../../Context/Context';
 import ProductReview from '../../Components/Review/ProductReview';
 import ProductCard from '../../Components/Card/Product Card/ProductCard';
-import { getSingleProduct } from '../../Constants/Constant';
+import { Transition, getSingleProduct } from '../../Constants/Constant';
 
 
-const Transition = forwardRef(function Transition(props, ref) {
-    return <Slide direction="up" ref={ref} {...props} />;
-});
 
 const ProductDetail = () => {
     const { cart, setCart, wishlistData, setWishlistData } = useContext(ContextFunction)

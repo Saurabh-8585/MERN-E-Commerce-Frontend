@@ -3,7 +3,6 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { AiFillEdit, AiFillDelete, AiOutlineSend } from 'react-icons/ai'
 import { GiCancel } from 'react-icons/gi'
-import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 const CommentCard = ({ userReview, setReviews, reviews, fetchReviews }) => {
     let date = new Date(userReview.createdAt).toLocaleDateString('en-us', { weekday: "long", year: "numeric", month: "short", day: "numeric" })

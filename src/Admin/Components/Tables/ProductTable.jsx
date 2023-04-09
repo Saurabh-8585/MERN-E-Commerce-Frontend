@@ -114,10 +114,10 @@ const ProductTable = ({ data }) => {
             <Paper
                 style={{
                     overflow: "auto",
-                    maxHeight: "400px"
+                    maxHeight: "500px"
                 }}
             >
-                <TableContainer component={Paper} sx={{ maxHeight: '400px' }}>
+                <TableContainer component={Paper} sx={{ maxHeight: '500px' }}>
                     <Table stickyHeader aria-label="sticky table">
                         <TableHead sx={{ position: 'sticky', top: 0 }}>
                             <TableRow>

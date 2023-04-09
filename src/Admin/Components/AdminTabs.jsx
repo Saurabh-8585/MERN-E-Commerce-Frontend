@@ -64,7 +64,7 @@ export default function BasicTabs({ user, setUser }) {
             setCart(data.cart);
             setWishlist(data.wishlist);
             setPaymentData(data.payment);
-            console.log(data.findType);
+            console.log(data.payment);
         } catch (error) {
             console.log(error);
 
@@ -94,7 +94,7 @@ export default function BasicTabs({ user, setUser }) {
                     paymentData={paymentData} />
             </TabPanel>
             <TabPanel value={value} index={1}>
-                <UserTable user={user} setUser={setUser} />
+                <UserTable user={user} setUser={setUser} paymentData={paymentData} />
             </TabPanel>
             <TabPanel value={value} index={2}>
                 <ProductTable data={products} />

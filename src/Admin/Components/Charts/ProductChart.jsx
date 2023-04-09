@@ -14,6 +14,7 @@ const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, per
     );
 };
 const ProductChart = ({ products, review, cart, wishlist, paymentData }) => {
+    console.log({ paymentData });
 
     const productData = [
         {
@@ -107,22 +108,32 @@ const ProductChart = ({ products, review, cart, wishlist, paymentData }) => {
     ];
 
 
-    const groupedData = paymentData.reduce((acc, curr) => {
-        const month = curr.createdAt.split("-")[1];
-        const existingIndex = acc.findIndex((d) => d.createdAt === month);
+    // const groupedData = paymentData.reduce((acc, curr) => {
+    //     const month = curr.createdAt.split("-")[1];
+    //     const existingIndex = acc.findIndex((d) => d.createdAt === month);
 
-        if (existingIndex >= 0) {
-            acc[existingIndex].amt += curr.totalAmount;
+    //     if (existingIndex >= 0) {
+    //         acc[existingIndex].amt += curr.totalAmount;
+    //     } else {
+    //         acc.push({
+    //             createdAt: month,
+    //             Amount: curr.totalAmount,
+    //         });
+    //     }
+
+    //     return acc;
+    // }, []);
+    const groupedData = paymentData.reduce((acc, item) => {
+        const month = item.createdAt.substr(0, 7); // Extract month from createdAt
+        const index = acc.findIndex((el) => el.month === month); // Check if month already exists in accumulator
+        if (index !== -1) {
+            acc[index].totalAmount += item.totalAmount; // Add total amount to existing month
         } else {
-            acc.push({
-                createdAt: month,
-                Amount: curr.totalAmount,
-            });
+            acc.push({ month: month, totalAmount: item.totalAmount }); // Add new month to accumulator
         }
-
         return acc;
     }, []);
-
+    console.log({ groupedData });
 
     const formatXAxis = (tickItem) => {
         return new Date(tickItem).toLocaleString("default", { month: "short" });
@@ -159,14 +170,14 @@ const ProductChart = ({ products, review, cart, wishlist, paymentData }) => {
                     }}
                 >
                     <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="createdAt" tickFormatter={formatXAxis} />
+                    <XAxis dataKey="month" tickFormatter={formatXAxis} />
                     <YAxis />
                     <Tooltip />
                     <Legend />
                     <Line
                         type="monotone"
-                        dataKey="Amount"
-                        tickFormatter={<formatXAxis />}
+                        dataKey="totalAmount"
+                        tickFormatter={formatXAxis}
                         stroke="#1f77b4"
                         activeDot={{ r: 8 }}
                     />

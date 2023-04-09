@@ -3,7 +3,6 @@ import AliceCarousel from 'react-alice-carousel';
 import BannerData from '../../Helpers/HomePageBanner'
 import 'react-alice-carousel/lib/alice-carousel.css';
 import { Link } from 'react-router-dom';
-import { Button } from '@mui/material';
 const Carousel = () => {
     const responsive = {
         0: { items: 1 },

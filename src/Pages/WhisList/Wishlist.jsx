@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom'
 import { Box, Button, Dialog, DialogActions, DialogContent, Typography } from '@mui/material'
 import { AiFillCloseCircle, AiOutlineLogin } from 'react-icons/ai'
 import { EmptyCart } from '../../Assets/Images/Image';
+import { Transition } from '../../Constants/Constant'
 
 const Wishlist = () => {
     const { wishlistData, setWishlistData } = useContext(ContextFunction)
@@ -79,6 +80,8 @@ const Wishlist = () => {
             <Dialog open={openAlert}
                 keepMounted
                 onClose={handleClose}
+                TransitionComponent={Transition}
+
                 aria-describedby="alert-dialog-slide-description">
                 <DialogContent sx={{ width: { xs: 280, md: 350, xl: 400 }, display: 'flex', justifyContent: 'center' }}>
                     <Typography variant='h5'> Please Login To Proceed</Typography>

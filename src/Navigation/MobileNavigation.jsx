@@ -4,16 +4,14 @@ import BottomNavigation from '@mui/material/BottomNavigation';
 import { AiOutlineHome, AiOutlineHeart, AiOutlineShoppingCart, AiFillMail, AiFillCloseCircle } from 'react-icons/ai'
 import { CgProfile } from 'react-icons/cg'
 import { FiLogOut } from 'react-icons/fi'
-import React, { forwardRef, useContext, useEffect, useState } from 'react'
+import React, {  useContext, useEffect, useState } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom';
 import { Badge, Button, Dialog, DialogActions, DialogContent, Slide, Typography } from '@mui/material';
 import { ContextFunction } from '../Context/Context';
 import { toast } from 'react-toastify';
-import { getCart, getWishList, handleClickOpen, handleClose, handleLogOut } from '../Constants/Constant';
+import { Transition, getCart, getWishList, handleClickOpen, handleClose, handleLogOut } from '../Constants/Constant';
 
-const Transition = forwardRef(function Transition(props, ref) {
-    return <Slide direction="up" ref={ref} {...props} />;
-});
+
 const MobileNavigation = () => {
     const { cart, setCart, wishlistData, setWishlistData } = useContext(ContextFunction)
     const [openAlert, setOpenAlert] = useState(false);

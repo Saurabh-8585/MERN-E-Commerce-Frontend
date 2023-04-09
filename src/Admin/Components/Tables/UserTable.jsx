@@ -63,10 +63,6 @@ const UserTable = ({ user, setUser }) => {
         return queries.every((query) => firstName.includes(query) || lastName.includes(query) || fullName.includes(query) || phoneNumber.includes(query) || email.includes(query));
     });
 
-
-
-
-
     return (
         <>
             <Container sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: 5, marginTop: 5 }}>

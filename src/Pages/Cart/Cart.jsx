@@ -20,6 +20,7 @@ import ProductCard from '../../Components/Card/Product Card/ProductCard';
 import './Cart.css'
 import OrderSummary from './OrderSummary';
 import { EmptyCart } from '../../Assets/Images/Image';
+import { Transition } from '../../Constants/Constant';
 
 
 
@@ -165,6 +166,7 @@ const Cart = () => {
                 open={openAlert}
                 keepMounted
                 onClose={handleClose}
+                TransitionComponent={Transition}
                 aria-describedby="alert-dialog-slide-description"
             >
                 <DialogContent sx={{ width: { xs: 280, md: 350, xl: 400 }, display: 'flex', justifyContent: 'center' }}>

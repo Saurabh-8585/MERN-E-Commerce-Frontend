@@ -3,12 +3,13 @@ import { Box, Button, Container, Dialog, DialogActions, DialogContent, DialogCon
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { AiFillCloseCircle, AiFillDelete } from 'react-icons/ai';
-import { Transition } from '../../../Pages/Update_User/UpdateDetails';
 import { useNavigate } from 'react-router-dom';
+import { Transition } from '../../../Constants/Constant';
 
 const UserInfoItem = ({ commonGetRequest, id, authToken }) => {
     const [userData, setUserData] = useState([]);
     const [openAlert, setOpenAlert] = useState(false);
+    
     let navigate = useNavigate()
     useEffect(() => {
         commonGetRequest(process.env.REACT_APP_ADMIN_GET_USER, id, setUserData);
@@ -65,6 +66,9 @@ const UserInfoItem = ({ commonGetRequest, id, authToken }) => {
                 <Typography variant='h6'>Delete {userData.firstName} {userData.lastName}'s Account?</Typography>
                 <Button variant='contained' color='error' endIcon={<AiFillDelete />} onClick={() => setOpenAlert(true)}>Delete</Button>
             </Box>
+         
+
+            
             <Dialog
                 open={openAlert}
                 TransitionComponent={Transition}
