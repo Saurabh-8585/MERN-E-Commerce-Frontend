@@ -10,11 +10,13 @@ import {
     Container,
     InputAdornment,
     TextField,
+
 }
     from '@mui/material'
 import { Link } from 'react-router-dom';
 import { AiOutlineSearch } from 'react-icons/ai';
-const UserTable = ({ user, setUser }) => {
+import AddUser from '../AddUser';
+const UserTable = ({ user, setUser, getUser }) => {
     const columns = [
         {
             id: 'name',
@@ -48,7 +50,6 @@ const UserTable = ({ user, setUser }) => {
     const [searchQuery, setSearchQuery] = useState("");
     const handleSearchInputChange = (event) => {
         setSearchQuery(event.target.value);
-        console.log(filteredUsers);
     };
 
 
@@ -66,6 +67,7 @@ const UserTable = ({ user, setUser }) => {
     return (
         <>
             <Container sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: 5, marginTop: 5 }}>
+
                 <TextField
                     id="search"
                     type="search"
@@ -82,6 +84,7 @@ const UserTable = ({ user, setUser }) => {
                     }}
                 />
             </Container>
+            <AddUser getUser={getUser} />
             <Paper
                 style={{
                     overflow: "auto",
@@ -89,7 +92,7 @@ const UserTable = ({ user, setUser }) => {
                 }}
             >
                 <TableContainer component={Paper} sx={{ maxHeight: '400px' }}>
-                    <Table stickyHeader aria-label="sticky table">
+                    <Table stickyHeader aria-label="sticky table" >
                         <TableHead sx={{ position: 'sticky', top: 0 }}>
                             <TableRow>
                                 {columns.map((column) => (
@@ -149,6 +152,11 @@ const UserTable = ({ user, setUser }) => {
                             ))
                             )
                             }
+                            <TableRow>
+                                <TableCell rowSpan={3} />
+                                <TableCell colSpan={2}>Total users</TableCell>
+                                <TableCell align="center">{user.length}</TableCell>
+                            </TableRow> 
                         </TableBody>
                     </Table>
                 </TableContainer >

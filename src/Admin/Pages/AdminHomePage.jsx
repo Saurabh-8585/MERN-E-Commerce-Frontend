@@ -33,7 +33,7 @@ const AdminHomePage = () => {
         isAdmin && (
             <Container maxWidth="100%">
                 <h1 style={{ textAlign: "center", margin: "20px 0", color: "#1976d2" }}>Admin Dashboard </h1>
-                <BasicTabs user={user} setUser={setUser} />
+                <BasicTabs user={user} setUser={setUser} getUser={getUser}/>
             </Container>)
     )
 }

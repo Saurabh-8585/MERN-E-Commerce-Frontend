@@ -45,7 +45,7 @@ function a11yProps(index) {
     };
 }
 
-export default function BasicTabs({ user, setUser }) {
+export default function BasicTabs({ user, setUser,getUser }) {
     const [value, setValue] = useState(0);
     const [products, setProducts] = useState([]);
     const [review, setReview] = useState([]);
@@ -94,7 +94,7 @@ export default function BasicTabs({ user, setUser }) {
                     paymentData={paymentData} />
             </TabPanel>
             <TabPanel value={value} index={1}>
-                <UserTable user={user} setUser={setUser} paymentData={paymentData} />
+                <UserTable user={user} setUser={setUser} paymentData={paymentData} getUser={getUser}/>
             </TabPanel>
             <TabPanel value={value} index={2}>
                 <ProductTable data={products} />
