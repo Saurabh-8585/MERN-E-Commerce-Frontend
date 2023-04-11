@@ -10,7 +10,7 @@ const UserCartItem = ({ commonGetRequest, id, authToken }) => {
 
     const removeCartItemByAdmin = async (product) => {
         try {
-            const { data } = await axios.delete(`${process.env.REACT_APP_ADMIN_DELETE_CART}/${product.productId._id}`, {
+            const { data } = await axios.delete(`${process.env.REACT_APP_ADMIN_DELETE_CART}/${product._id}`, {
                 headers: {
                     'Authorization': authToken
                 }

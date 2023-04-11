@@ -14,6 +14,7 @@ import {
 }
     from '@mui/material'
 import { Link } from 'react-router-dom';
+import AddProduct from '../AddProduct';
 const ProductTable = ({ data }) => {
     const [filteredData, setFilteredData] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
@@ -89,8 +90,6 @@ const ProductTable = ({ data }) => {
         setFilteredData(filterData());
     }, [data, searchTerm]);
 
-    const getType = data.filter(prod => prod.type == "book");
-    console.log(getType);
 
     return (
         <>
@@ -111,6 +110,7 @@ const ProductTable = ({ data }) => {
                     }}
                 />
             </Container>
+            <AddProduct/>
             <Paper
                 style={{
                     overflow: "auto",

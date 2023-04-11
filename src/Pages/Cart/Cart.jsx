@@ -88,7 +88,7 @@ const Cart = () => {
     const removeFromCart = async (product) => {
         if (setProceed) {
             try {
-                const response = await axios.delete(`${process.env.REACT_APP_DELETE_CART}/${product.productId._id}`, {
+                const response = await axios.delete(`${process.env.REACT_APP_DELETE_CART}/${product._id}`, {
                     headers: {
                         'Authorization': authToken
                     }
@@ -128,27 +128,24 @@ const Cart = () => {
                     </Box>
 
                 }
-                <Grid container spacing={3}>
-                    <Grid item xs={12} sm={6} md={7} lg={7}>
-                        <Grid container>
-                            <Grid item xs={12} sm={12} md={12} lg={12} sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', }}>
-                                {
-                                    cart.length > 0 &&
-                                    cart.map(product =>
-                                        <CartCard product={product} removeFromCart={removeFromCart} key={product._id} />
+                <Container sx={{ display: 'flex', flexDirection: "column", mb: 10 }}>
+                    <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexWrap: 'wrap' }}>
+                        {
+                            cart.length > 0 &&
+                            cart.map(product =>
+                                <CartCard product={product} removeFromCart={removeFromCart} key={product._id} />
 
-                                    )}
-                            </Grid>
-                        </Grid>
-                    </Grid>
+                            )}
+                    </Box>
+
                     {
                         cart.length > 0 &&
-                        <Grid item xs={12} sm={6} md={5} lg={5}  >
+                        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                             <OrderSummary proceedToCheckout={proceedToCheckout} total={total} shippingCoast={shippingCoast} />
-                        </Grid>
+                        </Box>
                     }
-                </Grid>
 
+                </Container>
             </Container>
             {setProceed && <Typography variant='h6' sx={{ textAlign: 'center', margin: "5px 0" }}>Previous Orders</Typography>}
             <Container maxWidth='xl' style={{ marginTop: 10, display: "flex", justifyContent: 'center', flexWrap: "wrap", paddingBottom: 20 }}>
@@ -161,7 +158,6 @@ const Cart = () => {
                     )
                     )}
             </Container>
-
             <Dialog
                 open={openAlert}
                 keepMounted

@@ -1,18 +1,11 @@
 import { Box, Button, Card, CardActions, CardContent, Grid, Typography } from '@mui/material'
 import React from 'react'
+import { IoBagCheckOutline } from 'react-icons/io5'
 
 const OrderSummary = ({ proceedToCheckout, total, shippingCoast }) => {
     return (
         <Card
-            sx={{
-                position: "sticky",
-                top: "1rem",
-                minWidth: 350,
-                margin: '20px auto',
-                // height:250,
-
-
-            }}
+            sx={{ width: { xs: 450, sm: 550, md: 550, lg: 700 } }}
             // className={classes.root}
 
             elevation={15}
@@ -42,7 +35,7 @@ const OrderSummary = ({ proceedToCheckout, total, shippingCoast }) => {
                             ₹{shippingCoast}
                         </Typography>
                     </Box>
-                    <Box sx={{ display: 'flex', justifyContent: 'space-between', marginTop: 2}}>
+                    <Box sx={{ display: 'flex', justifyContent: 'space-between', marginTop: 2 }}>
                         <Typography variant="body1" component="div" color='primary'>
                             Total
                         </Typography>
@@ -52,9 +45,9 @@ const OrderSummary = ({ proceedToCheckout, total, shippingCoast }) => {
                     </Box>
                 </Grid>
             </CardContent>
-            <CardActions>
-                <Button variant='contained' size="large" color="primary" onClick={proceedToCheckout}>
-                    Proceed To Checkout
+            <CardActions sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', mb: 2 }}>
+                <Button variant='contained' size='large' endIcon={<IoBagCheckOutline />} color="primary" onClick={proceedToCheckout}>
+                    Checkout
                 </Button>
             </CardActions>
         </Card >

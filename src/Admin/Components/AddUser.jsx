@@ -1,4 +1,4 @@
-import { Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Divider, FormControlLabel, Grid, Paper, TextField, Typography } from '@mui/material';
+import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Divider, Grid, TextField, Typography } from '@mui/material';
 import axios from 'axios';
 import React, { useState } from 'react'
 import { MdOutlineCancel, MdPersonAddAlt1 } from 'react-icons/md';
@@ -64,34 +64,14 @@ const AddUser = ({ getUser }) => {
     }
     return (
         <>
-            {/* <Box
-                sx={{
-                    display: 'flex',
-                    flexWrap: 'wrap',
-                    '& > :not(style)': {
-                        m: 1,
-                        width: 128,
-                        height: 128,
-                    },
-                }}
-            >
-                <Paper elevation={0} />
-                <Paper />
-            </Box> */}
-
-
             <Box sx={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center', margin: "20px 0" }} >
                 <Typography variant='h6' textAlign='center' color="#1976d2" fontWeight="bold">Add new user </Typography>
                 <Button variant='contained' endIcon={<MdPersonAddAlt1 />} onClick={handleClickOpen}>Add</Button>
             </Box>
-            <Divider sx={{mb:5}}/>  
+            <Divider sx={{ mb: 5 }} />
             <Dialog open={open} onClose={handleClose} >
                 <DialogTitle sx={{ textAlign: "center", fontWeight: 'bold', color: "#1976d2" }}> Add new user</DialogTitle>
                 <DialogContent>
-                    {/* <DialogContentText>
-                        To subscribe to this website, please enter your email address here. We
-                        will send updates occasionally.
-                    </DialogContentText> */}
                     <Box onSubmit={handleSubmit} sx={{ mt: 2 }}>
                         <Grid container spacing={2}>
                             <Grid item xs={12} sm={6}>
@@ -160,8 +140,6 @@ const AddUser = ({ getUser }) => {
                         <DialogActions sx={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center', mt: 2 }}>
                             <Button fullWidth variant='contained' color='error' onClick={handleClose} endIcon={<MdOutlineCancel />}>Cancel</Button>
                             <Button type="submit" onClick={handleSubmit} fullWidth variant="contained" endIcon={<MdPersonAddAlt1 />}>Add</Button>
-
-
                         </DialogActions>
                     </Box >
                 </DialogContent>
