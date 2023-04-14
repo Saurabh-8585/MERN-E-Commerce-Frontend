@@ -70,8 +70,7 @@ const AddProduct = ({ getProductInfo }) => {
                 setOpen(false);
                 if (data === true) {
                     getProductInfo()
-                    
-                    toast.success("Registered Successfully", { autoClose: 500, theme: 'colored' })
+                    toast.success("Product added successfully", { autoClose: 500, theme: 'colored' })
                 }
                 else {
                     toast.error("Some thing went wrong", { autoClose: 500, theme: 'colored' })
