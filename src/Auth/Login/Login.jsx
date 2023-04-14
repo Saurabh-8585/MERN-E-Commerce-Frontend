@@ -29,7 +29,7 @@ const Login = () => {
     let emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     try {
       if (!credentials.email && !credentials.password) {
-        toast.error("Please Fill the all Fields", { autoClose: 500, theme: 'colored' })
+        toast.error("All fields are required", { autoClose: 500, theme: 'colored' })
       }
       else if (!emailRegex.test(credentials.email)) {
         toast.error("Please enter a valid email", { autoClose: 500, theme: 'colored' })

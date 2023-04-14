@@ -3,6 +3,7 @@ import axios from 'axios';
 import React, { useState } from 'react'
 import { MdOutlineCancel, MdPersonAddAlt1 } from 'react-icons/md';
 import { toast } from 'react-toastify';
+import { Transition } from '../../Constants/Constant';
 
 
 const AddUser = ({ getUser }) => {
@@ -69,7 +70,11 @@ const AddUser = ({ getUser }) => {
                 <Button variant='contained' endIcon={<MdPersonAddAlt1 />} onClick={handleClickOpen}>Add</Button>
             </Box>
             <Divider sx={{ mb: 5 }} />
-            <Dialog open={open} onClose={handleClose} >
+            <Dialog
+                open={open}
+                onClose={handleClose}
+                keepMounted
+                TransitionComponent={Transition}>
                 <DialogTitle sx={{ textAlign: "center", fontWeight: 'bold', color: "#1976d2" }}> Add new user</DialogTitle>
                 <DialogContent>
                     <Box onSubmit={handleSubmit} sx={{ mt: 2 }}>

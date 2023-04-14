@@ -13,10 +13,10 @@ const AddNewPassword = () => {
     const [password, setPassword] = useState('')
     let navigate = useNavigate()
     const handleSubmit = async (e) => {
+        e.preventDefault()
         try {
-            e.preventDefault()
+            
             const { data } = await axios.post(`${process.env.REACT_APP_FORGOT_PASSWORD}/${id}/${token}`, { newPassword: password })
-            console.log(data);
             if (data.msg.name == "TokenExpiredError") {
                 toast.error("Token is expired Please try again", { autoClose: 500, theme: 'colored' })
                 navigate('/login')

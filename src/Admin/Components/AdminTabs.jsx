@@ -97,7 +97,7 @@ export default function BasicTabs({ user, setUser,getUser }) {
                 <UserTable user={user} setUser={setUser} paymentData={paymentData} getUser={getUser}/>
             </TabPanel>
             <TabPanel value={value} index={2}>
-                <ProductTable data={products} />
+                <ProductTable data={products} getProductInfo={getProductInfo}/>
             </TabPanel>
         </Box>
     );

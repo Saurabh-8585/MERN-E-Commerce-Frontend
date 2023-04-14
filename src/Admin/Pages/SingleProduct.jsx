@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 // import { getSingleProduct } from '../../Constants/Constant';
 import axios from "axios";
 
-import { Box, Button, Container, Dialog, DialogActions, DialogContent, DialogContentText, Grid, Skeleton, TextField, Typography } from '@mui/material';
+import { Box, Button, Container, Dialog, DialogActions, DialogContent, DialogContentText, FormControl, Grid, InputLabel, MenuItem, Select, Skeleton, TextField, Typography } from '@mui/material';
 import { AiFillCloseCircle, AiFillDelete, AiOutlineFileDone } from 'react-icons/ai';
 import { toast } from 'react-toastify';
 import { Transition } from '../../Constants/Constant';
@@ -22,16 +22,16 @@ const SingleProduct = () => {
         category: "",
         type: "",
         description: "",
+        brand: ""
     });
 
     const { id, type } = useParams();
-    
+    let navigate = useNavigate()
     useEffect(() => {
         getSingleProduct()
     }, [])
     const getSingleProduct = async () => {
         const { data } = await axios.get(`${process.env.REACT_APP_FETCH_PRODUCT}/${id}`)
-        setProduct(data)
         productInfo.name = data.name
         productInfo.image = data.image
         productInfo.price = data.price
@@ -39,6 +39,8 @@ const SingleProduct = () => {
         productInfo.category = data.category
         productInfo.type = data.type
         productInfo.description = data.description
+        data.author && (productInfo.author = data.author)
+        data.brand && (productInfo.brand = data.brand)
         setProduct(data)
         setLoading(false);
 
@@ -49,23 +51,27 @@ const SingleProduct = () => {
     }
     const productFilter = []
 
-    if (type === 'book') {
+    if (productInfo.type === 'book') {
         productFilter.push('scifi', 'business', 'mystery', 'cookbooks', 'accessories')
     }
-    else if (type === 'cloths') {
+    else if (productInfo.type === 'cloths') {
         productFilter.push('men', 'women')
     }
-    else if (type === 'shoe') {
+    else if (productInfo.type === 'shoe') {
         productFilter.push('running', 'football', 'formal', 'casual')
     }
-    else if (type === 'electronics') {
+    else if (productInfo.type === 'electronics') {
         productFilter.push('monitor', 'ssd', 'hdd')
+
+    }
+    else {
+        productFilter.push('jewelery')
 
     }
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (!productInfo.name && !productInfo.image && !productInfo.price && !productInfo.rating && !productInfo.category && !productInfo.type && !productInfo.description) {
-            toast.error("Please fill the all fields", { autoClose: 500, })
+            toast.error("All fields are required", { autoClose: 500, })
 
         }
         if (!productFilter.includes(productInfo.category)) {
@@ -95,10 +101,31 @@ const SingleProduct = () => {
         }
     }
     const deleteProduct = async () => {
+        try {
+            const { data } = await axios.delete(`${process.env.REACT_APP_ADMIN_DELETE_PRODUCT}/${product._id}`, {
+                headers: {
+                    'Authorization': authToken
+                }
+            });
+            console.log(data);
+            if (data == true) {
+                toast.success("Product deleted successfully", { autoClose: 500, theme: 'colored' })
+                navigate(-1);
+            }
+            else {
+                toast.error("Something went wrong", { autoClose: 500, theme: 'colored' })
+            }
 
+        } catch (error) {
+
+            toast.error(error.response.data, { autoClose: 500, theme: 'colored' })
+        }
     }
+    const shoeBrand = ['adidas', 'hushpuppies', 'nike', 'reebok', 'vans']
+    const typeDropdown = ['book', 'cloths', 'shoe', 'electronics', 'jewelry'];
 
-    // console.log(productFilter);
+
+
     return (
         <Container sx={{ width: "100%", marginBottom: 10 }}>
             {loading ? (
@@ -119,7 +146,7 @@ const SingleProduct = () => {
                     </div>
                 </Box>
             )}
-            <form noValidate autoComplete="off" onSubmit={handleSubmit} style={{ marginTop: 30 }} >
+            <form autoComplete="off" onSubmit={handleSubmit} style={{ marginTop: 30 }} >
                 <Grid container spacing={2}>
                     <Grid item xs={12} >
                         <TextField label="Name" name='name' value={productInfo.name} onChange={handleOnchange} variant="outlined" fullWidth />
@@ -130,16 +157,66 @@ const SingleProduct = () => {
                     <Grid item xs={12} sm={6}>
                         <TextField label="Rating" name='rating' value={productInfo.rating} onChange={handleOnchange} variant="outlined" inputMode='numeric' fullWidth />
                     </Grid>
-                    <Grid item xs={12} sm={6}>
-                        <TextField label="Category" name='category' value={productInfo.category} onChange={handleOnchange} variant="outlined" fullWidth />
-                        {error && <>
-                            <p style={{ marginTop: 5, color: "red", padding: 1 }}>Please add  correct category like</p>
-
-                            {productFilter.map(prod => <span style={{ marginRight: 4, padding: 2 }}>{prod}</span>)}
-                        </>}
+                    <Grid item xs={12} sm={(productInfo.type === 'book' || productInfo.type === 'shoe') ? 6 : 12} >
+                        <FormControl fullWidth>
+                            <InputLabel id="demo-simple-select-label">Product Category</InputLabel>
+                            <Select
+                                labelId="demo-simple-select-label"
+                                id="demo-simple-select"
+                                value={productInfo.category}
+                                label="Product Category"
+                                name='category'
+                                onChange={handleOnchange}
+                            >
+                                {productFilter.map(item =>
+                                    <MenuItem value={item} key={item}>{item}</MenuItem>
+                                )}
+                            </Select>
+                        </FormControl>
                     </Grid>
-                    <Grid item xs={12} sm={6}>
-                        <TextField label="Product Type" name='type' value={productInfo.type} onChange={handleOnchange} variant="outlined" fullWidth />
+                    {
+                        productInfo.type === 'book' &&
+                        <Grid item xs={12} sm={6}>
+                            <TextField label="Author" name='author' value={productInfo.author} onChange={handleOnchange} variant="outlined" fullWidth />
+                        </Grid>
+                    }
+                    {
+                        productInfo.type === 'shoe' &&
+                        <Grid item xs={12} sm={6}>
+                            <FormControl fullWidth>
+                                <InputLabel id="demo-simple-select-label">Shoe Brand</InputLabel>
+                                <Select
+                                    labelId="demo-simple-select-label"
+                                    id="demo-simple-select"
+                                    value={productInfo.brand}
+                                    label="Shoe Brand"
+                                    name='brand'
+                                    required
+                                    onChange={handleOnchange}
+                                >
+                                    {shoeBrand.map(item =>
+                                        <MenuItem value={item} key={item}>{item}</MenuItem>
+                                    )}
+                                </Select>
+                            </FormControl>
+                        </Grid>
+                    }
+                    <Grid item xs={12} >
+                        <FormControl fullWidth>
+                            <InputLabel id="demo-simple-select-label">Product Type</InputLabel>
+                            <Select
+                                labelId="demo-simple-select-label"
+                                id="demo-simple-select"
+                                value={productInfo.type}
+                                label="Product Type"
+                                name='type'
+                                onChange={handleOnchange}
+                            >
+                                {typeDropdown.map(item =>
+                                    <MenuItem value={item} key={item}>{item}</MenuItem>
+                                )}
+                            </Select>
+                        </FormControl>
                     </Grid>
                     <Grid item xs={12} sm={6} sx={{ margin: "10px auto" }}>
                         <TextField
@@ -159,7 +236,7 @@ const SingleProduct = () => {
                 </Container>
             </form >
             <Box sx={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center', margin: "25px 0", width: '100%' }}>
-                <Typography variant='h6'>Delete {productInfo.name   }?</Typography>
+                <Typography variant='h6'>Delete {productInfo.name}?</Typography>
                 <Button variant='contained' color='error' endIcon={<AiFillDelete />} onClick={() => setOpenAlert(true)}>Delete</Button>
             </Box>
             <Dialog
@@ -180,7 +257,7 @@ const SingleProduct = () => {
                         onClick={() => setOpenAlert(false)} endIcon={<AiFillCloseCircle />}>Close</Button>
                 </DialogActions>
             </Dialog>
-        </Container>
+        </Container >
     )
 }
 

@@ -15,7 +15,7 @@ import {
     from '@mui/material'
 import { Link } from 'react-router-dom';
 import AddProduct from '../AddProduct';
-const ProductTable = ({ data }) => {
+const ProductTable = ({ data,getProductInfo }) => {
     const [filteredData, setFilteredData] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const columns = [
@@ -110,7 +110,7 @@ const ProductTable = ({ data }) => {
                     }}
                 />
             </Container>
-            <AddProduct/>
+            <AddProduct getProductInfo={getProductInfo}/>
             <Paper
                 style={{
                     overflow: "auto",
