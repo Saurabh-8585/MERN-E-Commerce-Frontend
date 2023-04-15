@@ -24,7 +24,6 @@ const AdminHomePage = () => {
             setUser(data)
             setAdmin(true)
         } catch (error) {
-            console.log(error);
             !isAdmin && navigate('/')
             toast.error(error.response.data, { autoClose: 500, theme: "colored" });
         }

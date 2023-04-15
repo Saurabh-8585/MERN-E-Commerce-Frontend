@@ -15,7 +15,7 @@ import {
     from '@mui/material'
 import { Link } from 'react-router-dom';
 import AddProduct from '../AddProduct';
-const ProductTable = ({ data,getProductInfo }) => {
+const ProductTable = ({ data, getProductInfo }) => {
     const [filteredData, setFilteredData] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const columns = [
@@ -110,14 +110,14 @@ const ProductTable = ({ data,getProductInfo }) => {
                     }}
                 />
             </Container>
-            <AddProduct getProductInfo={getProductInfo}/>
+            <AddProduct getProductInfo={getProductInfo} data={data} />
             <Paper
                 style={{
                     overflow: "auto",
                     maxHeight: "500px"
                 }}
             >
-                <TableContainer component={Paper} sx={{ maxHeight: '500px' }}>
+                <TableContainer sx={{ maxHeight: '500px' }}>
                     <Table stickyHeader aria-label="sticky table">
                         <TableHead sx={{ position: 'sticky', top: 0 }}>
                             <TableRow>
@@ -127,7 +127,7 @@ const ProductTable = ({ data,getProductInfo }) => {
                                         align={column.align}
                                         style={{ minWidth: column.minWidth, color: "#1976d2" }}
                                     >
-                                        <b>{column.label}</b>
+                                        {column.label}
                                     </TableCell>
                                 ))}
                             </TableRow>

@@ -225,7 +225,7 @@ const ProductChart = ({ products, review, cart, wishlist, paymentData }) => {
                 <BarChart width={730} height={250} data={wishlistData}>
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis dataKey="name" />
-                    <YAxis />
+                    <YAxis allowDecimals={false}/>
                     <Tooltip />
                     <Legend />
                     <Bar dataKey="Quantity in wishlist" fill="#e377c2     " />

@@ -7,7 +7,7 @@ import axios from 'axios';
 import { Transition } from '../../Constants/Constant';
 import { MdOutlineCancel, MdOutlineFileUpload, MdProductionQuantityLimits } from 'react-icons/md';
 
-const AddProduct = ({ getProductInfo }) => {
+const AddProduct = ({ getProductInfo,data }) => {
     // const [age, setAge] = useState('');
 
     // const handleChange = (event) => {
@@ -107,8 +107,11 @@ const AddProduct = ({ getProductInfo }) => {
         <>
             <Box sx={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center', margin: "20px 0" }} >
                 <Typography variant='h6' textAlign='center' color="#1976d2" fontWeight="bold">Add new product </Typography>
-                <Button variant='contained' endIcon={<MdProductionQuantityLimits />} onClick={handleClickOpen}>Add</Button>
+                <Button variant='contained'  endIcon={<MdProductionQuantityLimits />} onClick={handleClickOpen}>Add</Button>
             </Box>
+            <Typography variant='h6' textAlign='center' color="#1976d2" fontWeight="bold">
+                Total products {data.length}
+            </Typography>
             <Divider sx={{ mb: 5 }} />
             <Dialog
                 open={open}

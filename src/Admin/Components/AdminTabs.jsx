@@ -8,6 +8,8 @@ import ProductTable from './Tables/ProductTable';
 import { VscGraph } from 'react-icons/vsc'
 import { CgProfile } from 'react-icons/cg'
 import { AiOutlineShoppingCart } from 'react-icons/ai'
+import { FaShippingFast } from 'react-icons/fa'
+import OrderTable from './Tables/OrderTable';
 
 
 function TabPanel(props) {
@@ -83,6 +85,7 @@ export default function BasicTabs({ user, setUser,getUser }) {
                     <Tab label='Statistics'  {...a11yProps(0)} iconPosition='start' icon={<VscGraph fontSize={20} />} />
                     <Tab label="Users" {...a11yProps(1)} iconPosition='start' icon={<CgProfile fontSize={20} />} />
                     <Tab label="Products" {...a11yProps(2)} iconPosition='start' icon={<AiOutlineShoppingCart fontSize={20} />} />
+                    <Tab label="Orders" {...a11yProps(3)} iconPosition='start' icon={<FaShippingFast fontSize={20} />} />
                 </Tabs>
             </Box>
             <TabPanel value={value} index={0} >
@@ -94,10 +97,13 @@ export default function BasicTabs({ user, setUser,getUser }) {
                     paymentData={paymentData} />
             </TabPanel>
             <TabPanel value={value} index={1}>
-                <UserTable user={user} setUser={setUser} paymentData={paymentData} getUser={getUser}/>
+                <UserTable user={user} paymentData={paymentData} getUser={getUser}/>
             </TabPanel>
             <TabPanel value={value} index={2}>
                 <ProductTable data={products} getProductInfo={getProductInfo}/>
+            </TabPanel>
+            <TabPanel value={value} index={3}>
+                <OrderTable orders={paymentData} />
             </TabPanel>
         </Box>
     );

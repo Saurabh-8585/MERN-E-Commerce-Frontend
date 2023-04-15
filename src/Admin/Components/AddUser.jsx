@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 import { Transition } from '../../Constants/Constant';
 
 
-const AddUser = ({ getUser }) => {
+const AddUser = ({ getUser, user }) => {
     const [open, setOpen] = useState(false);
     const [credentials, setCredentials] = useState({ firstName: "", lastName: '', email: "", phoneNumber: '', password: "" })
     const handleOnChange = (e) => {
@@ -66,9 +66,13 @@ const AddUser = ({ getUser }) => {
     return (
         <>
             <Box sx={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center', margin: "20px 0" }} >
-                <Typography variant='h6' textAlign='center' color="#1976d2" fontWeight="bold">Add new user </Typography>
+                <Typography variant='h6' textAlign='center' color="#1976d2" fontWeight="bold">Add new user
+                </Typography>
                 <Button variant='contained' endIcon={<MdPersonAddAlt1 />} onClick={handleClickOpen}>Add</Button>
             </Box>
+            <Typography variant='h6' textAlign='center' color="#1976d2" fontWeight="bold">
+                Total users {user.length}
+            </Typography>
             <Divider sx={{ mb: 5 }} />
             <Dialog
                 open={open}

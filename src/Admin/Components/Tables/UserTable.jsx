@@ -16,7 +16,7 @@ import {
 import { Link } from 'react-router-dom';
 import { AiOutlineSearch } from 'react-icons/ai';
 import AddUser from '../AddUser';
-const UserTable = ({ user, setUser, getUser }) => {
+const UserTable = ({ user, getUser }) => {
     const columns = [
         {
             id: 'name',
@@ -45,7 +45,6 @@ const UserTable = ({ user, setUser, getUser }) => {
 
         },
     ];
-
 
     const [searchQuery, setSearchQuery] = useState("");
     const handleSearchInputChange = (event) => {
@@ -84,7 +83,7 @@ const UserTable = ({ user, setUser, getUser }) => {
                     }}
                 />
             </Container>
-            <AddUser getUser={getUser} />
+            <AddUser getUser={getUser} user={user} />
             <Paper
                 style={{
                     overflow: "auto",
@@ -101,7 +100,7 @@ const UserTable = ({ user, setUser, getUser }) => {
                                         align={column.align}
                                         style={{ minWidth: column.minWidth, color: "#1976d2" }}
                                     >
-                                        <b>{column.label}</b>
+                                        {column.label}
                                     </TableCell>
                                 ))}
                             </TableRow>
@@ -152,11 +151,6 @@ const UserTable = ({ user, setUser, getUser }) => {
                             ))
                             )
                             }
-                            <TableRow>
-                                <TableCell rowSpan={3} />
-                                <TableCell colSpan={2}>Total users</TableCell>
-                                <TableCell align="center">{user.length}</TableCell>
-                            </TableRow> 
                         </TableBody>
                     </Table>
                 </TableContainer >
