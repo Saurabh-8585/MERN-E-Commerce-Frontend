@@ -10,6 +10,9 @@ const PaymentSuccess = () => {
         <div className='main-payment-box'>
             <Typography variant='h6' sx={{ marginTop: 1 }}>Payment Successful   <AiOutlineFileDone style={{ color: '#1976d2' }} /></Typography>
             <Typography variant='body2'>Reference Number ={referenceNumber}</Typography>
+            <Typography variant='body2' textAlign='center'>Your payment has been successfully submitted.
+                <br />oc
+                We've sent you an email with all of the details of your order.</Typography>
 
             <Box sx={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                 <div className="main-payment-card">

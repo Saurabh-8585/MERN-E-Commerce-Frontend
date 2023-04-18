@@ -53,6 +53,13 @@ const AddUser = ({ getUser, user }) => {
                 if (receive.success === true) {
                     getUser()
                     toast.success("Registered Successfully", { autoClose: 500, theme: 'colored' })
+                    setCredentials({
+                        firstName: "",
+                        lastName: '',
+                        email: "",
+                        phoneNumber: '',
+                        password: ""
+                    })
                 }
                 else {
                     toast.error("Some thing went wrong", { autoClose: 500, theme: 'colored' })

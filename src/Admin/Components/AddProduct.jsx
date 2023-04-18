@@ -7,7 +7,7 @@ import axios from 'axios';
 import { Transition } from '../../Constants/Constant';
 import { MdOutlineCancel, MdOutlineFileUpload, MdProductionQuantityLimits } from 'react-icons/md';
 
-const AddProduct = ({ getProductInfo,data }) => {
+const AddProduct = ({ getProductInfo, data }) => {
     // const [age, setAge] = useState('');
 
     // const handleChange = (event) => {
@@ -71,6 +71,17 @@ const AddProduct = ({ getProductInfo,data }) => {
                 if (data === true) {
                     getProductInfo()
                     toast.success("Product added successfully", { autoClose: 500, theme: 'colored' })
+                    setProductInfo({
+                        name: "",
+                        image: "",
+                        price: "",
+                        rating: "",
+                        category: "",
+                        type: "",
+                        description: "",
+                        author: "",
+                        brand: ""
+                    });
                 }
                 else {
                     toast.error("Some thing went wrong", { autoClose: 500, theme: 'colored' })
@@ -107,7 +118,7 @@ const AddProduct = ({ getProductInfo,data }) => {
         <>
             <Box sx={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center', margin: "20px 0" }} >
                 <Typography variant='h6' textAlign='center' color="#1976d2" fontWeight="bold">Add new product </Typography>
-                <Button variant='contained'  endIcon={<MdProductionQuantityLimits />} onClick={handleClickOpen}>Add</Button>
+                <Button variant='contained' endIcon={<MdProductionQuantityLimits />} onClick={handleClickOpen}>Add</Button>
             </Box>
             <Typography variant='h6' textAlign='center' color="#1976d2" fontWeight="bold">
                 Total products {data.length}
