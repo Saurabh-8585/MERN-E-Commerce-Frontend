@@ -13,7 +13,7 @@ const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, per
         </text>
     );
 };
-const ProductChart = ({ products, review, cart, wishlist, paymentData }) => {
+const ProductChart = ({ products, review, cart, wishlist, paymentData, user }) => {
     console.log({ paymentData });
 
     const productData = [
@@ -107,32 +107,17 @@ const ProductChart = ({ products, review, cart, wishlist, paymentData }) => {
         },
     ];
 
-
-    // const groupedData = paymentData.reduce((acc, curr) => {
-    //     const month = curr.createdAt.split("-")[1];
-    //     const existingIndex = acc.findIndex((d) => d.createdAt === month);
-
-    //     if (existingIndex >= 0) {
-    //         acc[existingIndex].amt += curr.totalAmount;
-    //     } else {
-    //         acc.push({
-    //             createdAt: month,
-    //             Amount: curr.totalAmount,
-    //         });
-    //     }
-
-    //     return acc;
-    // }, []);
-    const groupedData = paymentData.reduce((acc, item) => {
-        const month = item.createdAt.substr(0, 7); // Extract month from createdAt
-        const index = acc.findIndex((el) => el.month === month); // Check if month already exists in accumulator
-        if (index !== -1) {
-            acc[index].totalAmount += item.totalAmount; // Add total amount to existing month
-        } else {
-            acc.push({ month: month, totalAmount: item.totalAmount }); // Add new month to accumulator
-        }
-        return acc;
-    }, []);
+    const groupedData = paymentData.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+        .reduce((acc, item) => {
+            const month = item.createdAt.substr(0, 7); // Extract month from createdAt
+            const index = acc.findIndex((el) => el.month === month); // Check if month already exists in accumulator
+            if (index !== -1) {
+                acc[index].totalAmount += item.totalAmount; // Add total amount to existing month
+            } else {
+                acc.push({ month: month, totalAmount: item.totalAmount }); // Add new month to accumulator
+            }
+            return acc;
+        }, []);
     console.log({ groupedData });
 
     const formatXAxis = (tickItem) => {
@@ -141,111 +126,120 @@ const ProductChart = ({ products, review, cart, wishlist, paymentData }) => {
 
 
     const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', "#8884d8"];
-
     return (
-        <Container sx={{ marginTop: 5, marginBottom: 15 }}>
+        <>
+            <Container sx={{ marginTop: 5, marginBottom: 15 }}>
+                <h3 style={{ textAlign: "center", margin: "30px 0", color: "#1f77b4" }}>Payment</h3>
+                <div style={{ width: '100%', height: 300 }}>
+                    <ResponsiveContainer >
+                        <LineChart
+                            width={500}
+                            height={300}
+                            data={groupedData}
+                            margin={{
+                                top: 5,
+                                right: 30,
+                                left: 20,
+                                bottom: 5
+                            }}
+                        >
+                            <CartesianGrid strokeDasharray="3 3" />
+                            <XAxis dataKey="month" tickFormatter={formatXAxis} />
+                            <YAxis />
+                            <Tooltip />
+                            <Legend />
+                            <Line
+                                type="monotone"
+                                dataKey="totalAmount"
+                                tickFormatter={formatXAxis}
+                                stroke="#1f77b4"
+                                activeDot={{ r: 8 }}
+                            />
+                            {/* <Line type="monotone" dataKey="uv" stroke="#82ca9d" /> */}
+                        </LineChart>
+                    </ResponsiveContainer>
+                </div>
+                <h3 style={{ textAlign: "center", margin: "20px 0", color: "#8884d8" }}>Products</h3>
+                <div style={{ width: '100%', height: 300 }}>
+                    <ResponsiveContainer >
+                        <BarChart width={150} height={40} data={productData}>
+                            <CartesianGrid strokeDasharray="3 3" />
+                            <XAxis dataKey="name" />
+                            <YAxis />
+                            <Tooltip />
+                            <Legend />
+                            <Bar dataKey="Quantity" fill="#8884d8" />
+                        </BarChart>
+                    </ResponsiveContainer>
+                </div>
+                <h3 style={{ textAlign: "center", margin: "15px 0", color: "#17becf" }}>Users Cart</h3>
+                <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: 15, flexWrap: "wrap" }}>
+                    <h3 style={{ color: '#00C49F' }}>Shoes </h3>
+                    <h2 style={{ color: "#00C49F" }}>&#9632;</h2>
+                    <h3 style={{ color: '#0088FE' }}>Cloths</h3>
+                    <h2 style={{ color: "#0088FE" }}>&#9632;</h2>
+                    <h3 style={{ color: '#FF8042' }}>Books</h3>
+                    <h2 style={{ color: "#FF8042" }}>&#9632;</h2>
+                    <h3 style={{ color: '#FFBB28' }}>Electronics</h3>
+                    <h2 style={{ color: "#FFBB28" }}>&#9632;</h2>
+                    <h3 style={{ color: '#8884d8' }}>Jewelry</h3>
+                    <h2 style={{ color: "#8884d8" }}>&#9632;</h2>
+                </div>
+                {/* <Container sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}> */}
+                <div style={{ width: '100%', height: 400 }}>
+                    <ResponsiveContainer>
+                        <PieChart>
+                            <Tooltip />
+                            <Pie
+                                data={cartData}
+                                cx="50%"
+                                cy="50%"
+                                labelLine={false}
+                                label={renderCustomizedLabel}
+                                outerRadius={150}
+                                fill="#8884d8"
+                                dataKey="Quantity in cart"
+                            >
+                                <Tooltip />
+                                {cartData.map((entry, index) => (
+                                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                                ))}
+                            </Pie>
+                        </PieChart>
+                    </ResponsiveContainer>
+                </div>
+                {/* </Container> */}
+                <h3 style={{ textAlign: "center", margin: "30px 0", color: "#e377c2    " }}>Users Wishlist</h3>
+                <div style={{ width: '100%', height: 400 }}>
+                    <ResponsiveContainer >
+                        <BarChart width={730} height={250} data={wishlistData}>
+                            <CartesianGrid strokeDasharray="3 3" />
+                            <XAxis dataKey="name" />
+                            <YAxis allowDecimals={false} />
+                            <Tooltip />
+                            <Legend />
+                            <Bar dataKey="Quantity in wishlist" fill="#e377c2     " />
+                        </BarChart>
+                    </ResponsiveContainer>
+                </div>
+                <h3 style={{ textAlign: "center", margin: "30px 0", color: "#83a6ed" }}>Reviews</h3>
+                <div style={{ width: '100%', height: 400 }}>
 
-            <h3 style={{ textAlign: "center", margin: "20px 0", color: "#8884d8" }}>Products</h3>
-            <ResponsiveContainer width="100%" aspect={2.5}>
-                <BarChart width={150} height={40} data={productData}>
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="name" />
-                    <YAxis />
-                    <Tooltip />
-                    <Legend />
-                    <Bar dataKey="Quantity" fill="#8884d8" />
-                </BarChart>
-            </ResponsiveContainer>
-            <h3 style={{ textAlign: "center", margin: "30px 0", color: "#1f77b4" }}>Payment</h3>
-            <ResponsiveContainer width="100%" aspect={2.5}>
-                <LineChart
-                    width={500}
-                    height={300}
-                    data={groupedData}
-                    margin={{
-                        top: 5,
-                        right: 30,
-                        left: 20,
-                        bottom: 5
-                    }}
-                >
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="month" tickFormatter={formatXAxis} />
-                    <YAxis />
-                    <Tooltip />
-                    <Legend />
-                    <Line
-                        type="monotone"
-                        dataKey="totalAmount"
-                        tickFormatter={formatXAxis}
-                        stroke="#1f77b4"
-                        activeDot={{ r: 8 }}
-                    />
-                    {/* <Line type="monotone" dataKey="uv" stroke="#82ca9d" /> */}
-                </LineChart>
-            </ResponsiveContainer>
-            <h3 style={{ textAlign: "center", margin: "15px 0", color: "#17becf" }}>Users Cart</h3>
-            <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: 15, flexWrap: "wrap" }}>
-                <h3 style={{ color: '#00C49F' }}>Shoes </h3>
-                <h2 style={{ color: "#00C49F" }}>&#9632;</h2>
-                <h3 style={{ color: '#0088FE' }}>Cloths</h3>
-                <h2 style={{ color: "#0088FE" }}>&#9632;</h2>
-                <h3 style={{ color: '#FF8042' }}>Books</h3>
-                <h2 style={{ color: "#FF8042" }}>&#9632;</h2>
-                <h3 style={{ color: '#FFBB28' }}>Electronics</h3>
-                <h2 style={{ color: "#FFBB28" }}>&#9632;</h2>
-                <h3 style={{ color: '#8884d8' }}>Jewelry</h3>
-                <h2 style={{ color: "#8884d8" }}>&#9632;</h2>
-            </div>
-            {/* <ResponsiveContainer width="110%" aspect={1} height="100%" style={{ padding: 0 }}> */}
-            <Container sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                <PieChart width={400} height={400} >
-                    <Tooltip />
-                    <Pie
-                        data={cartData}
-                        cx="50%"
-                        cy="50%"
-                        labelLine={false}
-                        label={renderCustomizedLabel}
-                        outerRadius={150}
-                        fill="#8884d8"
-                        dataKey="Quantity in cart"
+                    <ResponsiveContainer>
+                        <BarChart width={730} height={250} data={reviewData}>
+                            <CartesianGrid strokeDasharray="3 3" />
+                            <XAxis dataKey="name" />
+                            <YAxis allowDecimals={false} />
+                            <Tooltip />
+                            <Legend />
+                            <Bar dataKey="Reviews" fill="#83a6ed" />
 
-                    >
-                        <Tooltip />
-                        {cartData.map((entry, index) => (
-                            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                        ))}
-                    </Pie>
-                </PieChart>
+                        </BarChart>
+                    </ResponsiveContainer>
+
+                </div>
             </Container>
-            {/* </ResponsiveContainer> */}
-            <h3 style={{ textAlign: "center", margin: "30px 0", color: "#e377c2    " }}>Users Wishlist</h3>
-            <ResponsiveContainer width="100%" aspect={2.5}>
-                <BarChart width={730} height={250} data={wishlistData}>
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="name" />
-                    <YAxis allowDecimals={false}/>
-                    <Tooltip />
-                    <Legend />
-                    <Bar dataKey="Quantity in wishlist" fill="#e377c2     " />
-                </BarChart>
-            </ResponsiveContainer>
-
-            <h3 style={{ textAlign: "center", margin: "30px 0", color: "#83a6ed" }}>Reviews</h3>
-            <ResponsiveContainer width="100%" aspect={2.5}>
-                <BarChart width={730} height={250} data={reviewData}>
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="name" />
-                    <YAxis allowDecimals={false} />
-                    <Tooltip />
-                    <Legend />
-                    <Bar dataKey="Reviews" fill="#83a6ed" />
-
-                </BarChart>
-            </ResponsiveContainer>
-
-        </Container>
+        </>
     )
 }
 

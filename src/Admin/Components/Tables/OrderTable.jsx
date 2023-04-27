@@ -6,9 +6,6 @@ const OrderTable = ({ orders }) => {
 
     return (
         <>
-            <Typography variant='h6' textAlign='center' color="#1976d2" fontWeight="bold">
-                Total orders {sortedOrders.length}
-            </Typography>
             <Paper
                 style={{
                     overflow: "auto",

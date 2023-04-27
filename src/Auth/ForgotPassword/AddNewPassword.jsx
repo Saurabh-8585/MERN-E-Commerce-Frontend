@@ -1,21 +1,26 @@
 import React, { useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { Avatar, Button, CssBaseline, TextField, Typography } from '@mui/material'
+import { Avatar, Button, CssBaseline, InputAdornment, TextField, Typography } from '@mui/material'
 import { Box, Container } from '@mui/system'
 import { MdLockOutline } from 'react-icons/md'
-import { Link } from 'react-router-dom'
 import axios from 'axios'
 import { toast } from 'react-toastify'
 import CopyRight from '../../Components/CopyRight/CopyRight'
+import { RiEyeFill, RiEyeOffFill } from 'react-icons/ri';
+
 
 const AddNewPassword = () => {
     const { id, token } = useParams()
     const [password, setPassword] = useState('')
+    const [showPassword, setShowPassword] = useState(false);
+    const handleClickShowPassword = () => {
+        setShowPassword(!showPassword);
+    };
     let navigate = useNavigate()
     const handleSubmit = async (e) => {
         e.preventDefault()
         try {
-            
+
             const { data } = await axios.post(`${process.env.REACT_APP_FORGOT_PASSWORD}/${id}/${token}`, { newPassword: password })
             if (data.msg.name == "TokenExpiredError") {
                 toast.error("Token is expired Please try again", { autoClose: 500, theme: 'colored' })
@@ -56,13 +61,20 @@ const AddNewPassword = () => {
                         margin="normal"
                         required
                         fullWidth
-                        id="password"
                         label="Enter New Password"
                         value={password}
                         name='password'
                         onChange={(e) => setPassword(e.target.value)}
                         autoComplete="password"
-                        type='password'
+                        type={showPassword ? "text" : "password"}
+                        id="password"
+                        InputProps={{
+                            endAdornment: (
+                                <InputAdornment position="end" onClick={handleClickShowPassword} sx={{ cursor: 'pointer' }}>
+                                    {showPassword ? <RiEyeFill /> : <RiEyeOffFill />}
+                                </InputAdornment>
+                            )
+                        }}
                         autoFocus
                     />
                     <Button

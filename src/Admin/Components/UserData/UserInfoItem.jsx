@@ -9,10 +9,12 @@ import { Transition } from '../../../Constants/Constant';
 const UserInfoItem = ({ commonGetRequest, id, authToken }) => {
     const [userData, setUserData] = useState([]);
     const [openAlert, setOpenAlert] = useState(false);
-    
+
     let navigate = useNavigate()
     useEffect(() => {
         commonGetRequest(process.env.REACT_APP_ADMIN_GET_USER, id, setUserData);
+        window.scroll(0, 0)
+
     }, [])
 
     const deleteAccount = async () => {
@@ -66,9 +68,9 @@ const UserInfoItem = ({ commonGetRequest, id, authToken }) => {
                 <Typography variant='h6'>Delete {userData.firstName} {userData.lastName}'s Account?</Typography>
                 <Button variant='contained' color='error' endIcon={<AiFillDelete />} onClick={() => setOpenAlert(true)}>Delete</Button>
             </Box>
-         
 
-            
+
+
             <Dialog
                 open={openAlert}
                 TransitionComponent={Transition}

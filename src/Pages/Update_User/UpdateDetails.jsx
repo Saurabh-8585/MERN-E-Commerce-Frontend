@@ -1,11 +1,13 @@
-import { Box, Button, Container, Dialog, DialogActions, DialogContent, DialogContentText, Grid, Slide, TextField, Typography } from '@mui/material'
+import { Box, Button, Container, Dialog, DialogActions, DialogContent, DialogContentText, Grid, InputAdornment, Slide, TextField, Typography } from '@mui/material'
 import axios from 'axios'
-import React, {  useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { AiFillCloseCircle, AiFillDelete, AiOutlineFileDone } from 'react-icons/ai'
 import { RiLockPasswordLine } from 'react-icons/ri'
 import { useNavigate } from 'react-router-dom'
 import styles from './Update.module.css'
 import { toast } from 'react-toastify'
+import { RiEyeFill, RiEyeOffFill } from 'react-icons/ri';
+
 import { Transition } from '../../Constants/Constant'
 
 
@@ -28,6 +30,11 @@ const UpdateDetails = () => {
         currentPassword: "",
         newPassword: ""
     })
+    const [showPassword, setShowPassword] = useState(false);
+    const [showNewPassword, setShowNewPassword] = useState(false);
+    const handleClickShowPassword = () => {
+        setShowPassword(!showPassword);
+    };
     let navigate = useNavigate()
     useEffect(() => {
         setProceed ? getUserData() : navigate('/')
@@ -201,7 +208,14 @@ const UpdateDetails = () => {
                         <TextField
                             label="Current Password"
                             name='currentPassword'
-                            type='password'
+                            type={showPassword ? "text" : "password"}
+                            InputProps={{
+                                endAdornment: (
+                                    <InputAdornment position="end" onClick={handleClickShowPassword} sx={{ cursor: 'pointer' }}>
+                                        {showPassword ? <RiEyeFill /> : <RiEyeOffFill />}
+                                    </InputAdornment>
+                                )
+                            }}
                             value={password.currentPassword || ''}
                             onChange={
                                 (e) => setPassword({
@@ -215,7 +229,15 @@ const UpdateDetails = () => {
                         <TextField
                             label="New Password"
                             name='newPassword'
-                            type='password'
+                            type={showNewPassword ? "text" : "password"}
+                            id="password"
+                            InputProps={{
+                                endAdornment: (
+                                    <InputAdornment position="end" onClick={() => setShowNewPassword(!showNewPassword)} sx={{ cursor: 'pointer' }}>
+                                        {showNewPassword ? <RiEyeFill /> : <RiEyeOffFill />}
+                                    </InputAdornment>
+                                )
+                            }}
                             value={password.newPassword || ''}
                             onChange={
                                 (e) => setPassword({

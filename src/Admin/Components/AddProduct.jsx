@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 import {
-    Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Divider, Grid, Stack, TextField, Typography, InputLabel, MenuItem, FormControl, Select, Autocomplete
+    Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Divider, Grid, TextField, Typography, InputLabel, MenuItem, FormControl, Select, 
 } from '@mui/material';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import { Transition } from '../../Constants/Constant';
-import { MdOutlineCancel, MdOutlineFileUpload, MdProductionQuantityLimits } from 'react-icons/md';
+import { MdOutlineCancel, MdProductionQuantityLimits } from 'react-icons/md';
 
 const AddProduct = ({ getProductInfo, data }) => {
     // const [age, setAge] = useState('');
@@ -14,8 +14,6 @@ const AddProduct = ({ getProductInfo, data }) => {
     //     setAge(event.target.value);
     // };
     const [open, setOpen] = useState(false);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(false);
 
     let authToken = localStorage.getItem("Authorization")
     const [productInfo, setProductInfo] = useState({
@@ -120,9 +118,6 @@ const AddProduct = ({ getProductInfo, data }) => {
                 <Typography variant='h6' textAlign='center' color="#1976d2" fontWeight="bold">Add new product </Typography>
                 <Button variant='contained' endIcon={<MdProductionQuantityLimits />} onClick={handleClickOpen}>Add</Button>
             </Box>
-            <Typography variant='h6' textAlign='center' color="#1976d2" fontWeight="bold">
-                Total products {data.length}
-            </Typography>
             <Divider sx={{ mb: 5 }} />
             <Dialog
                 open={open}

@@ -29,6 +29,7 @@ const SingleProduct = () => {
     let navigate = useNavigate()
     useEffect(() => {
         getSingleProduct()
+        window.scroll(0,0)
     }, [])
     const getSingleProduct = async () => {
         const { data } = await axios.get(`${process.env.REACT_APP_FETCH_PRODUCT}/${id}`)

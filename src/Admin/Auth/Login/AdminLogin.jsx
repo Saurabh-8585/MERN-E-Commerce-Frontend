@@ -1,5 +1,5 @@
 import './login.css'
-import { Avatar, Button, Checkbox, CssBaseline, FormControlLabel, Grid, TextField, Typography } from '@mui/material'
+import { Avatar, Button, Checkbox, CssBaseline, FormControlLabel, Grid, InputAdornment, TextField, Typography } from '@mui/material'
 import { Box, Container } from '@mui/system'
 import React, { useEffect } from 'react'
 import { useState } from 'react'
@@ -7,6 +7,7 @@ import axios from 'axios'
 import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { MdLockOutline } from 'react-icons/md'
+import { RiEyeFill, RiEyeOffFill } from 'react-icons/ri';
 import CopyRight from '../../../Components/CopyRight/CopyRight'
 
 
@@ -14,6 +15,11 @@ import CopyRight from '../../../Components/CopyRight/CopyRight'
 const AdminLogin = () => {
 
   const [credentials, setCredentials] = useState({ email: "", password: "", key: "" })
+  const [showPassword, setShowPassword] = useState(false);
+  const handleClickShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
+
   const navigate = useNavigate()
   const handleOnChange = (e) => {
     setCredentials({ ...credentials, [e.target.name]: e.target.value })
@@ -55,7 +61,7 @@ const AdminLogin = () => {
       }
     }
     catch (error) {
-        toast.error("Invalid Credentials", { autoClose: 500, theme: 'colored' })
+      toast.error("Invalid Credentials", { autoClose: 500, theme: 'colored' })
     }
 
   }
@@ -98,8 +104,15 @@ const AdminLogin = () => {
             name='password'
             onChange={handleOnChange}
             label="Password"
-            type="password"
+            type={showPassword ? "text" : "password"}
             id="password"
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end" onClick={handleClickShowPassword} sx={{cursor:'pointer'}}>
+                  {showPassword ? <RiEyeFill /> : <RiEyeOffFill />}
+                </InputAdornment>
+              )
+            }}
 
           />
           <TextField

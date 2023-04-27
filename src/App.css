@@ -67,6 +67,12 @@ a {
 
 
 }
+@media (max-width: 768px) {
+  .recharts-responsive-container {
+    width: 100%;
+  }
+}
+
 
 @media (min-width: 768px) and (max-width:1023px) {}
 .placeholder-animation {

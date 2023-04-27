@@ -2,16 +2,22 @@ import '../Login/login.css'
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { Link, useNavigate } from 'react-router-dom'
-import { Avatar, Button, Checkbox, CssBaseline, FormControlLabel, Grid, TextField, Typography } from '@mui/material'
+import { Avatar, Button, Checkbox, CssBaseline, FormControlLabel, Grid, InputAdornment, TextField, Typography } from '@mui/material'
 import { MdLockOutline } from 'react-icons/md'
 import { Box, Container } from '@mui/system'
 import { toast } from 'react-toastify'
+import { RiEyeFill, RiEyeOffFill } from 'react-icons/ri';
+
 import CopyRight from '../../../Components/CopyRight/CopyRight'
 
 
 const AdminRegister = () => {
 
   const [credentials, setCredentials] = useState({ firstName: "", lastName: '', email: "", phoneNumber: '', password: "", key: "" })
+  const [showPassword, setShowPassword] = useState(false);
+  const handleClickShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
   const navigate = useNavigate()
   const handleOnChange = (e) => {
     setCredentials({ ...credentials, [e.target.name]: e.target.value })
@@ -144,10 +150,16 @@ const AdminRegister = () => {
                   fullWidth
                   name="password"
                   label="Password"
-                  type="password"
                   value={credentials.password}
                   onChange={handleOnChange}
-                  id="password"
+                  type={showPassword ? "text" : "password"}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end" onClick={handleClickShowPassword} sx={{ cursor: 'pointer' }}>
+                        {showPassword ? <RiEyeFill /> : <RiEyeOffFill />}
+                      </InputAdornment>
+                    )
+                  }}
                   autoComplete="new-password"
                 />
               </Grid>
