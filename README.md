@@ -43,7 +43,7 @@ To run the application on your local machine, follow these steps:
 2. Install the dependencies:
 
    ```
-   cd MERN-E-Commerce
+   cd MERN-E-Commerce-Frontend
    npm install
    ```
 
