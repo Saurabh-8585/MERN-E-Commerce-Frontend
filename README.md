@@ -6,6 +6,18 @@ E-Shopit is an e-commerce web application built with MongoDB, ReactJS, NodeJS, a
 
 You can access the live application at [https://e-shopit.vercel.app/](https://e-shopit.vercel.app/).
 
+## Features
+
+- User authentication and authorization(JWT)
+- Admin dashboard for managing products, orders, and users
+- Payemnt Gateway
+- Forgot Password & Reset Password
+- Product listing and search
+- Product details and reviews
+- Cart management
+- Order history 
+
+
 ## Backend
 
 The backend of the application is built with NodeJS and ExpressJS and uses a MongoDB database to store the product and user data. The source code for the backend can be found at [https://github.com/Saurabh-8585/MERN-E-Commerce-Backend](https://github.com/Saurabh-8585/MERN-E-Commerce-Backend).
@@ -17,16 +29,6 @@ The backend of the application is built with NodeJS and ExpressJS and uses a Mon
 - NodeJS
 - ExpressJS
 
-## Features
-
-- User authentication and authorization
-- Product listing and search
-- Product details and reviews
-- Cart management
-- Checkout and payment
-- Order history and status tracking
-- Admin dashboard for managing products, orders, and users
-
 ## Installation and Usage
 
 To run the application on your local machine, follow these steps:
@@ -34,7 +36,7 @@ To run the application on your local machine, follow these steps:
 1. Clone the repository:
 
    ```
-   git clone https://github.com/Saurabh-8585/MERN-E-Commerce.git
+   git clone https://github.com/Saurabh-8585/MERN-E-Commerce-Frontend
    ```
 
 2. Install the dependencies:
