@@ -110,7 +110,6 @@ const CheckoutForm = () => {
         setUserDetails({ ...userDetails, [e.target.name]: e.target.value })
     }
 
-    console.log(userDetails);
     return (
         <Container sx={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column', marginBottom: 10 }}>
             <Typography variant='h6' sx={{ margin: '20px 0' }}>Checkout</Typography>

@@ -125,7 +125,7 @@ const ProductTable = ({ data, getProductInfo }) => {
                                     <TableCell
                                         key={column.id}
                                         align={column.align}
-                                        style={{ minWidth: column.minWidth, color: "#1976d2" }}
+                                        style={{ minWidth: column.minWidth, color: "#1976d2",fontWeight:'bold' }}
                                     >
                                         {column.label}
                                     </TableCell>

@@ -1,6 +1,6 @@
 import { Container } from '@mui/material';
 import React from 'react'
-import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend, CartesianGrid, ResponsiveContainer, PieChart, Pie, Cell, LineChart, Line } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend, CartesianGrid, ResponsiveContainer, PieChart, Pie, Cell, Area, AreaChart, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar, } from 'recharts';
 const RADIAN = Math.PI / 175;
 const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, index }) => {
     const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
@@ -14,7 +14,6 @@ const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, per
     );
 };
 const ProductChart = ({ products, review, cart, wishlist, paymentData, user }) => {
-    console.log({ paymentData });
 
     const productData = [
         {
@@ -118,7 +117,6 @@ const ProductChart = ({ products, review, cart, wishlist, paymentData, user }) =
             }
             return acc;
         }, []);
-    console.log({ groupedData });
 
     const formatXAxis = (tickItem) => {
         return new Date(tickItem).toLocaleString("default", { month: "short" });
@@ -129,18 +127,18 @@ const ProductChart = ({ products, review, cart, wishlist, paymentData, user }) =
     return (
         <>
             <Container sx={{ marginTop: 5, marginBottom: 15 }}>
-                <h3 style={{ textAlign: "center", margin: "30px 0", color: "#1f77b4" }}>Payment</h3>
+                <h3 style={{ textAlign: "center", margin: "30px 0", color: "#9932CC" }}>Payment</h3>
                 <div style={{ width: '100%', height: 300 }}>
                     <ResponsiveContainer >
-                        <LineChart
-                            width={500}
-                            height={300}
+                        <AreaChart
+                            // width={500}
+                            // height={200}
                             data={groupedData}
                             margin={{
-                                top: 5,
+                                top: 10,
                                 right: 30,
-                                left: 20,
-                                bottom: 5
+                                left: 0,
+                                bottom: 0,
                             }}
                         >
                             <CartesianGrid strokeDasharray="3 3" />
@@ -148,15 +146,14 @@ const ProductChart = ({ products, review, cart, wishlist, paymentData, user }) =
                             <YAxis />
                             <Tooltip />
                             <Legend />
-                            <Line
+                            <Area
                                 type="monotone"
                                 dataKey="totalAmount"
                                 tickFormatter={formatXAxis}
-                                stroke="#1f77b4"
+                                stroke="#9932CC"
                                 activeDot={{ r: 8 }}
-                            />
-                            {/* <Line type="monotone" dataKey="uv" stroke="#82ca9d" /> */}
-                        </LineChart>
+                                fill="#9932CC" />
+                        </AreaChart>
                     </ResponsiveContainer>
                 </div>
                 <h3 style={{ textAlign: "center", margin: "20px 0", color: "#8884d8" }}>Products</h3>
@@ -188,7 +185,7 @@ const ProductChart = ({ products, review, cart, wishlist, paymentData, user }) =
                 {/* <Container sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}> */}
                 <div style={{ width: '100%', height: 400 }}>
                     <ResponsiveContainer>
-                        <PieChart>
+                        <PieChart >
                             <Tooltip />
                             <Pie
                                 data={cartData}
@@ -238,6 +235,10 @@ const ProductChart = ({ products, review, cart, wishlist, paymentData, user }) =
                     </ResponsiveContainer>
 
                 </div>
+                <div style={{ width: '100%', height: 400 }}>
+
+                </div>
+
             </Container>
         </>
     )

@@ -68,7 +68,6 @@ export default function BasicTabs({ user, setUser, getUser }) {
             setCart(data.cart);
             setWishlist(data.wishlist);
             setPaymentData(data.payment);
-            console.log(data.payment);
         } catch (error) {
             console.log(error);
 
@@ -87,13 +86,13 @@ export default function BasicTabs({ user, setUser, getUser }) {
         <Box sx={{ width: '100%' }}>
             <Grid container spacing={2} direction={isSmallScreen ? 'column' : 'row'} padding={5}>
                 <Grid item xs={12} sm={6} md={3}>
-                    <Widget numbers={`₹${totalRevenue}`} heading='Revenue' color='#9932CC' icon={<TbReportMoney />} />
-                </Grid>
-                <Grid item xs={12} sm={6} md={3}>
-                    <Widget numbers={user.length} heading='Users' color='#FF69B4' icon={<CgProfile />} />
+                    <Widget numbers={totalRevenue} heading='Revenue' color='#9932CC' icon={<TbReportMoney />} />
                 </Grid>
                 <Grid item xs={12} sm={6} md={3}>
                     <Widget numbers={products.length} heading='Products' color='#FFC300' icon={<AiOutlineShoppingCart />} />
+                </Grid>
+                <Grid item xs={12} sm={6} md={3}>
+                    <Widget numbers={user.length} heading='Users' color='#FF69B4' icon={<CgProfile />} />
                 </Grid>
                 <Grid item xs={12} sm={6} md={3}>
                     <Widget numbers={paymentData.length} heading='Orders' color='#1f77b4  ' icon={<FaShippingFast />} />

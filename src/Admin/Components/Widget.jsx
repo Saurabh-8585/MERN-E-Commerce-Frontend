@@ -1,9 +1,18 @@
 import { Box, IconButton, Typography, useMediaQuery } from '@mui/material'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import CountUp from 'react-countup';
+
 
 const Widget = ({ numbers, heading, color, icon }) => {
     const isSmallScreen = useMediaQuery('(max-width:600px)');
+    const [value, setValue] = useState(0);
+    const endValue = numbers;
 
+    useEffect(() => {
+        setValue(endValue);
+    }, [endValue]);
+
+    const prefix = heading === 'Revenue' ? '₹' : '';
     return (
         <Box
             sx={{
@@ -35,13 +44,14 @@ const Widget = ({ numbers, heading, color, icon }) => {
                         }}
                     >
                         <Typography variant="h4" sx={{ color: "white", textAlign: 'center' }}>
-                            {numbers}
+                            <CountUp start={0} prefix={prefix} end={value} duration={4} separator="," delay={0.5} />
+
                         </Typography>
                     </Box>
                 </Box>
             </Box>
             <Box>
-                <IconButton sx={{ fontSize: 45, color: "white" }}>
+                <IconButton sx={{ fontSize: 45, color: "white" }} >
                     {icon}
                 </IconButton>
             </Box>

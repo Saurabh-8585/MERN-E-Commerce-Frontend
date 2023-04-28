@@ -28,7 +28,6 @@ const SearchBar = () => {
             (item.gender && item.gender.toLowerCase().includes(event.target.value.toLowerCase()))
         );
         setFilteredData(newFilteredData);
-        console.log(searchTerm);
     };
 
     const searchCriteria = [
@@ -41,8 +40,7 @@ const SearchBar = () => {
 
 
 
-console.log({data});
-console.log({data});
+
 
     const Item = styled(Paper)(({ theme }) => ({
         backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',

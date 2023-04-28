@@ -16,11 +16,11 @@ const OrderTable = ({ orders }) => {
                     <Table stickyHeader aria-label="sticky table">
                         <TableHead sx={{ position: 'sticky', top: 0 }}>
                             <TableRow>
-                                <TableCell align='center' sx={{ color: "#1976d2" }}>User Name</TableCell>
-                                <TableCell align='center' sx={{ color: "#1976d2" }}>Email</TableCell>
-                                <TableCell align='center' sx={{ color: "#1976d2" }}>Contact</TableCell>
-                                <TableCell align='center' sx={{ color: "#1976d2" }}>Billing Amount</TableCell>
-                                <TableCell align='center' sx={{ color: "#1976d2" }}>Order Date</TableCell>
+                                <TableCell align='center' sx={{ color: "#1976d2",fontWeight:'bold' }}>User Name</TableCell>
+                                <TableCell align='center' sx={{ color: "#1976d2",fontWeight:'bold' }}>Email</TableCell>
+                                <TableCell align='center' sx={{ color: "#1976d2",fontWeight:'bold' }}>Contact</TableCell>
+                                <TableCell align='center' sx={{ color: "#1976d2",fontWeight:'bold' }}>Billing Amount</TableCell>
+                                <TableCell align='center' sx={{ color: "#1976d2",fontWeight:'bold' }}>Order Date</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
