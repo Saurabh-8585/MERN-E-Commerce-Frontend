@@ -30,17 +30,6 @@ const SearchBar = () => {
         setFilteredData(newFilteredData);
     };
 
-    const searchCriteria = [
-        { key: "name", placeholder: "Search product by name" },
-        { key: "brand", placeholder: "Search product by brand" },
-        { key: "author", placeholder: "Search product by author" },
-        { key: "number", placeholder: "Search product by type" },
-        { key: "category", placeholder: "Search product by category" },
-    ];
-
-
-
-
 
     const Item = styled(Paper)(({ theme }) => ({
         backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',

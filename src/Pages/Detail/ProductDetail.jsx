@@ -1,5 +1,5 @@
 import './Productsimilar.css'
-import React, { useEffect, useState, useContext, forwardRef } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import {
     Box,
@@ -17,7 +17,6 @@ import {
     Skeleton,
     IconButton,
 } from '@mui/material';
-import Slide from '@mui/material/Slide';
 import { MdAddShoppingCart } from 'react-icons/md'
 import { AiFillHeart, AiFillCloseCircle, AiOutlineLogin, AiOutlineShareAlt } from 'react-icons/ai'
 import { TbDiscount2 } from 'react-icons/tb'
@@ -149,7 +148,6 @@ const ProductDetail = () => {
                     onClose={() => setOpenAlert(false)}
                     aria-describedby="alert-dialog-slide-description"
                 >
-                    {/* <DialogTitle>{"Use Google's location service?"}</DialogTitle> */}
                     <DialogContent sx={{ width: { xs: 280, md: 350, xl: 400 } }}>
                         <DialogContentText style={{ textAlign: 'center' }} id="alert-dialog-slide-description">
                             Please Login To Proceed
@@ -189,7 +187,6 @@ const ProductDetail = () => {
                             </Typography>
                             <Typography >
                                 <div className="chip">
-                                    {/* product?.brand, product?.gender, product?.category */}
                                     {
                                         data.map((item, index) => (
                                             <Chip label={item} key={index} variant="outlined" />

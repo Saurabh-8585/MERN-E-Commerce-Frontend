@@ -91,7 +91,7 @@ const ProductReview = ({ authToken, setProceed, setOpenAlert, id }) => {
                 setValue(null)
             }
             catch (error) {
-                toast.error(error.response.data.msg, { theme: "colored",autoClose: 600, })
+                toast.error(error.response.data.msg, { theme: "colored", autoClose: 600, })
                 setComment('')
                 setValue('')
             }
