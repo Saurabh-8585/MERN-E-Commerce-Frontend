@@ -234,7 +234,7 @@ const ProductDetail = () => {
                                 </Tooltip>
                                 <Tooltip title='Add To Wishlist'>
                                     <Button style={{ marginLeft: 10, }} size='small' variant='contained' className='all-btn' onClick={(() => addToWhishList(product))}>
-                                        {<AiFillHeart fontSize={20}/>}
+                                        {<AiFillHeart fontSize={21}/>}
                                     </Button>
 
                                 </Tooltip>
