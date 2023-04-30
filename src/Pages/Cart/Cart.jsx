@@ -92,7 +92,7 @@ const Cart = () => {
                         'Authorization': authToken
                     }
                 })
-                toast.error("Removed From Cart", { autoClose: 500, theme: 'colored' })
+                toast.success("Removed From Cart", { autoClose: 500, theme: 'colored' })
                 setCart(cart.filter(c => c.productId._id !== product.productId._id))
             } catch (error) {
                 toast.error("Something went wrong", { autoClose: 500, theme: 'colored' })
@@ -146,7 +146,7 @@ const Cart = () => {
 
                 </Container>
             </Container>
-            {setProceed && <Typography variant='h6' sx={{ textAlign: 'center', margin: "5px 0" }}>Previous Orders</Typography>}
+            {setProceed && previousOrder.length > 0 && <Typography variant='h6' sx={{ textAlign: 'center', margin: "5px 0" }}>Previous Orders</Typography>}
             <Container maxWidth='xl' style={{ marginTop: 10, display: "flex", justifyContent: 'center', flexWrap: "wrap", paddingBottom: 20 }}>
                 {
                     previousOrder.map(product => (

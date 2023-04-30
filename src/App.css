@@ -3,7 +3,7 @@
   padding: 0;
   box-sizing: border-box;
   /* outline: 3px solid red !important; */
-font-family: 'Poppins', sans-serif;
+  font-family: 'Poppins', sans-serif;
 }
 
 .main {
@@ -36,8 +36,12 @@ a {
 }
 
 .toastContainerBox {
-  position: fixed;
-  top: 120px;
+  display: flex;
+  /* justify-content: center;
+  align-items: center; */
+  width: 300px;
+  z-index: 1000;
+  margin: auto;
 }
 
 .margin {
@@ -55,9 +59,9 @@ a {
   }
 
   .toastContainerBox {
-    max-width: 250px;
-    top: 50px;
-    left: 140px;
+    /* max-width: 250px; */
+    /* top: 50px;
+    left: 140px; */
 
   }
 
@@ -67,6 +71,7 @@ a {
 
 
 }
+
 @media (max-width: 768px) {
   .recharts-responsive-container {
     width: 100%;
@@ -75,7 +80,8 @@ a {
 
 
 @media (min-width: 768px) and (max-width:1023px) {}
-.placeholder-animation {
+
+/* .placeholder-animation {
   position: relative;
 }
 
@@ -90,15 +96,17 @@ a {
   justify-content: center;
   align-items: center;
   animation: slide 2s ease-in-out infinite;
-}
+} */
 
 @keyframes slide {
   0% {
     transform: translateY(0);
   }
+
   50% {
     transform: translateY(-50%);
   }
+
   100% {
     transform: translateY(-100%);
   }

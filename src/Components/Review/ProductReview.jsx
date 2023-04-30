@@ -60,18 +60,18 @@ const ProductReview = ({ authToken, setProceed, setOpenAlert, id }) => {
     }
     useEffect(() => {
         fetchReviews()
-    }, [title,id])
+    }, [title, id])
 
     const handleSubmitReview = async (e) => {
         e.preventDefault()
         if (!comment && !value) {
-            toast.error("Please Fill the all Fields", { autoClose: 500, })
+            toast.error("Please Fill the all Fields", { theme: "colored", autoClose: 500, })
         }
         else if (comment.length <= 4) {
-            toast.error("Please add more than 4 characters", { autoClose: 500, })
+            toast.error("Please add more than 4 characters", { theme: "colored", autoClose: 500, })
         }
         else if (value <= 0) {
-            toast.error("Please add rating", { autoClose: 500, })
+            toast.error("Please add rating", { theme: "colored", autoClose: 500, })
         }
         else if (comment.length >= 4 && value > 0) {
             try {
@@ -81,7 +81,7 @@ const ProductReview = ({ authToken, setProceed, setOpenAlert, id }) => {
                             'Authorization': authToken
                         }
                     })
-                    toast.success(data.msg, { autoClose: 500, })
+                    toast.success(data.msg, { theme: "colored", autoClose: 500, })
                     fetchReviews()
                 }
                 else {
@@ -91,7 +91,7 @@ const ProductReview = ({ authToken, setProceed, setOpenAlert, id }) => {
                 setValue(null)
             }
             catch (error) {
-                toast.error(error.response.data.msg, { autoClose: 600, })
+                toast.error(error.response.data.msg, { theme: "colored",autoClose: 600, })
                 setComment('')
                 setValue('')
             }
@@ -140,7 +140,7 @@ const ProductReview = ({ authToken, setProceed, setOpenAlert, id }) => {
                     />
 
                     <Tooltip title='Send Review'>
-                        <Button className='form-btn' variant='contained' type='submit' endIcon={<MdSend /> }>Send</Button>
+                        <Button className='form-btn' variant='contained' type='submit' endIcon={<MdSend />}>Send</Button>
                     </Tooltip>
 
                 </form>

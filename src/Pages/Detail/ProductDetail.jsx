@@ -15,6 +15,7 @@ import {
     Rating,
     ButtonGroup,
     Skeleton,
+    IconButton,
 } from '@mui/material';
 import Slide from '@mui/material/Slide';
 import { MdAddShoppingCart } from 'react-icons/md'
@@ -172,7 +173,7 @@ const ProductDetail = () => {
                             </div>
                         </div>
                     )}
-                    {   loading ? (
+                    {loading ? (
                         <section style={{ display: 'flex', flexWrap: "wrap", width: "100%", justifyContent: "space-around", alignItems: 'center' }}>
                             <Skeleton variant='rectangular' height={200} width="200px" />
                             <Skeleton variant='text' height={400} width={700} />
@@ -232,7 +233,10 @@ const ProductDetail = () => {
                                     <Button variant='contained' className='all-btn' startIcon={<MdAddShoppingCart />} onClick={(() => addToCart(product))}>Buy</Button>
                                 </Tooltip>
                                 <Tooltip title='Add To Wishlist'>
-                                    <Button style={{ marginLeft: 10, paddingLeft: 18 }} variant='contained' className='all-btn' startIcon={<AiFillHeart />} onClick={(() => addToWhishList(product))}>Wishlist</Button>
+                                    <Button style={{ marginLeft: 10, }} size='small' variant='contained' className='all-btn' onClick={(() => addToWhishList(product))}>
+                                        {<AiFillHeart fontSize={20}/>}
+                                    </Button>
+
                                 </Tooltip>
                                 <Tooltip title='Share'>
                                     <Button style={{ marginLeft: 10 }} variant='contained' className='all-btn' startIcon={<AiOutlineShareAlt />} onClick={() => shareProduct(product)}>Share</Button>

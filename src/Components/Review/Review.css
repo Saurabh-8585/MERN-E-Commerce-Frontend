@@ -29,17 +29,16 @@
 }
 
 .form-img-box {
-    height: 450px;
-    width: 550px;
+    height: 550px;
+    width: 500px;
     /* border: 2px solid black; */
 }
 
 .review-img {
     height: 100%;
     width: 100%;
-    object-fit: contain;
+    /* object-fit: cover; */
     margin-bottom: 20px;
-    animation: floating 5s linear infinite;
 }
 
 .expression-icon {
@@ -67,7 +66,7 @@
 
     .form-img-box {
         height: 350px;
-        width: 450px;
+        width: 400px;
     }
 }
 
@@ -86,9 +85,10 @@
     }
 
     .form-img-box {
-        height: 250px;
+        height: 400px;
         width: 350px;
     }
+  
 }
 
 @media (min-width: 900px) and (max-width:1096px) {
