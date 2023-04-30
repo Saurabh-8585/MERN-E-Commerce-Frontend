@@ -37,10 +37,11 @@ a {
 
 .toastContainerBox {
   display: flex;
+  /* justify-content: center;
+  align-items: center; */
   width: 300px;
   z-index: 1000;
-  margin: 50px auto;
-
+  margin:50px auto;
 }
 
 .margin {
@@ -56,6 +57,14 @@ a {
     justify-content: center;
     align-items: center;
   }
+
+  .toastContainerBox {
+    /* max-width: 250px; */
+    /* top: 50px;
+    left: 140px; */
+
+  }
+
   .margin {
     margin-top: 70px;
   }
