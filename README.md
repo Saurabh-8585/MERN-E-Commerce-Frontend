@@ -18,10 +18,18 @@ You can access the live application at [https://e-shopit.vercel.app/](https://e-
 - Cart management
 - Order history
 
+## Tech Stack
+- MongoDB
+- ReactJS
+- NodeJS
+- ExpressJS
 ## Images
 
 ![Dashboard](https://res.cloudinary.com/dxguqzge7/image/upload/v1682853694/Stat1_asehhd.png)
 ![Dashboard](https://res.cloudinary.com/dxguqzge7/image/upload/v1682853694/Stat2_tw25cm.png)
+![Dashboard](https://res.cloudinary.com/dxguqzge7/image/upload/v1682956688/Stat3_rslfzi.png)
+![Orders](https://res.cloudinary.com/dxguqzge7/image/upload/v1682956689/Orders_cyfzkp.png)
+![Users](https://res.cloudinary.com/dxguqzge7/image/upload/v1682956689/Users_nxx1cs.png)
 ![HomePage](https://res.cloudinary.com/dxguqzge7/image/upload/v1682853694/Home_bcr44v.png)
 ![Products](https://res.cloudinary.com/dxguqzge7/image/upload/v1682853695/Products_vxf8pr.png)
 ![Product](https://res.cloudinary.com/dxguqzge7/image/upload/v1682853694/Product_tnba6w.png)
@@ -33,12 +41,7 @@ You can access the live application at [https://e-shopit.vercel.app/](https://e-
 
 The backend of the application is built with NodeJS and ExpressJS and uses a MongoDB database to store the product and user data. The source code for the backend can be found at [https://github.com/Saurabh-8585/MERN-E-Commerce-Backend](https://github.com/Saurabh-8585/MERN-E-Commerce-Backend).
 
-## Tech Stack
 
-- MongoDB
-- ReactJS
-- NodeJS
-- ExpressJS
 
 ## Installation and Usage
 

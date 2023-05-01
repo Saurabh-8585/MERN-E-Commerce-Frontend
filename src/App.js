@@ -29,7 +29,7 @@ import SingleProduct from './Admin/Pages/SingleProduct';
 function App() {
   return (
     <>
-      <ToastContainer toastClassName='toastContainerBox' transition={Flip} position='top-center'  />
+      <ToastContainer toastClassName='toastContainerBox' transition={Flip} position='top-center' />
       <Router>
         <DesktopNavigation />
         <div className='margin'>
