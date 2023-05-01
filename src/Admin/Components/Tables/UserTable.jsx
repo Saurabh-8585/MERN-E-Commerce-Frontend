@@ -50,9 +50,9 @@ const UserTable = ({ user, getUser }) => {
     const handleSearchInputChange = (event) => {
         setSearchQuery(event.target.value);
     };
+    const sortedUser = user.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
-
-    const filteredUsers = user.filter((user) => {
+    const filteredUsers = sortedUser.filter((user) => {
         const firstName = user.firstName.toLowerCase();
         const lastName = user.lastName.toLowerCase();
         const fullName = user.firstName.toLowerCase() + user.lastName.toLowerCase();
@@ -83,13 +83,9 @@ const UserTable = ({ user, getUser }) => {
                     }}
                 />
             </Container>
-            <AddUser getUser={getUser} user={user} />
+            <AddUser getUser={getUser} user={sortedUser} />
             <Paper
-                style={{
-                    overflow: "auto",
-                    // maxHeight: "300px"
-                }}
-            >
+                style={{overflow: "auto"}}>
                 <TableContainer component={Paper} sx={{ maxHeight: '400px' }}>
                     <Table stickyHeader aria-label="sticky table" >
                         <TableHead sx={{ position: 'sticky', top: 0 }}>

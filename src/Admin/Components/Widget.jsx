@@ -44,7 +44,7 @@ const Widget = ({ numbers, heading, color, icon }) => {
                         }}
                     >
                         <Typography variant="h4" sx={{ color: "white", textAlign: 'center' }}>
-                            <CountUp start={0} prefix={prefix} end={value} duration={4} separator="," delay={0.5} />
+                            <CountUp start={0} prefix={prefix} end={value} duration={4} separator="," />
 
                         </Typography>
                     </Box>

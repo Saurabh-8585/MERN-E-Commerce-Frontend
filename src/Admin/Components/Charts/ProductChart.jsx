@@ -13,7 +13,7 @@ const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, per
         </text>
     );
 };
-const ProductChart = ({ products, review, cart, wishlist, paymentData, user }) => {
+const ProductChart = ({ products, review, cart, wishlist, paymentData }) => {
 
     const productData = [
         {
@@ -106,7 +106,7 @@ const ProductChart = ({ products, review, cart, wishlist, paymentData, user }) =
         },
     ];
 
-    const groupedData = paymentData.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+    const groupedData = paymentData.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt))
         .reduce((acc, item) => {
             const month = item.createdAt.substr(0, 7); // Extract month from createdAt
             const index = acc.findIndex((el) => el.month === month); // Check if month already exists in accumulator
@@ -131,8 +131,6 @@ const ProductChart = ({ products, review, cart, wishlist, paymentData, user }) =
                 <div style={{ width: '100%', height: 300 }}>
                     <ResponsiveContainer >
                         <AreaChart
-                            // width={500}
-                            // height={200}
                             data={groupedData}
                             margin={{
                                 top: 10,
@@ -182,7 +180,6 @@ const ProductChart = ({ products, review, cart, wishlist, paymentData, user }) =
                     <h3 style={{ color: '#8884d8' }}>Jewelry</h3>
                     <h2 style={{ color: "#8884d8" }}>&#9632;</h2>
                 </div>
-                {/* <Container sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}> */}
                 <div style={{ width: '100%', height: 400 }}>
                     <ResponsiveContainer>
                         <PieChart >
@@ -205,7 +202,6 @@ const ProductChart = ({ products, review, cart, wishlist, paymentData, user }) =
                         </PieChart>
                     </ResponsiveContainer>
                 </div>
-                {/* </Container> */}
                 <h3 style={{ textAlign: "center", margin: "30px 0", color: "#e377c2    " }}>Users Wishlist</h3>
                 <div style={{ width: '100%', height: 400 }}>
                     <ResponsiveContainer >
@@ -235,10 +231,6 @@ const ProductChart = ({ products, review, cart, wishlist, paymentData, user }) =
                     </ResponsiveContainer>
 
                 </div>
-                <div style={{ width: '100%', height: 400 }}>
-
-                </div>
-
             </Container>
         </>
     )
