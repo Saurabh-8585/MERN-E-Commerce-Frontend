@@ -126,7 +126,7 @@ const ProductChart = ({ products, review, cart, wishlist, paymentData }) => {
     const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', "#8884d8"];
     return (
         <>
-            <Container sx={{ marginTop: 5, marginBottom: 15 }}>
+            <Container sx={{ marginTop: 5,  }}>
                 <h3 style={{ textAlign: "center", margin: "30px 0", color: "#9932CC" }}>Payment</h3>
                 <div style={{ width: '100%', height: 300 }}>
                     <ResponsiveContainer >

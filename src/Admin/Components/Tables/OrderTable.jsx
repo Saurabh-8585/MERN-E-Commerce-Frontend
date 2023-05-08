@@ -63,7 +63,14 @@ const OrderTable = ({ orders }) => {
                                             <Link to={`user/${order.user}`}>{order.userData.phoneNumber}</Link></TableCell>
                                         <TableCell>
                                             <Link to={`user/${order.user}`}>{order.totalAmount}</Link></TableCell>
-                                        <TableCell><Link to={`user/${order.user}`}>{order.createdAt}</Link></TableCell>
+                                        <TableCell><Link to={`user/${order.user}`}>{
+                                            new Date(order.createdAt).toLocaleDateString('en-us', {
+                                                weekday: "long", year: "numeric", month: "short", day: "numeric"
+                                            }
+                                            )
+                                        }
+                                            {" "}
+                                            {new Date(order.createdAt).toLocaleTimeString('en-US')}</Link></TableCell>
                                     </TableRow>
                                     <TableRow>
                                         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
