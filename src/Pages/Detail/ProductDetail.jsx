@@ -26,6 +26,7 @@ import { ContextFunction } from '../../Context/Context';
 import ProductReview from '../../Components/Review/ProductReview';
 import ProductCard from '../../Components/Card/Product Card/ProductCard';
 import { Transition, getSingleProduct } from '../../Constants/Constant';
+import CopyRight from '../../Components/CopyRight/CopyRight';
 
 
 
@@ -260,6 +261,8 @@ const ProductDetail = () => {
                 </Box>
 
             </Container >
+            <CopyRight   sx={{ mt: 8, mb: 10 }} />
+
         </>
     )
 }

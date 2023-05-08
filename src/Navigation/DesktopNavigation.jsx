@@ -37,23 +37,23 @@ const DesktopNavigation = () => {
                 <span className='nav-icon-span'>  Home</span>
               </NavLink>
             </li>
-            <li className="nav-links">
+            {/* <li className="nav-links">
               <NavLink to='/contact'>
                 <span className='nav-icon-span'>  Contact Us</span>
               </NavLink>
-            </li>
+            </li> */}
 
             <li className="nav-links">
               <Tooltip title='Cart'>
                 <Link to="/cart">
-                  <span className='nav-icon-span'>    <Badge badgeContent={setProceed ? cart.length : 0}> <AiOutlineShoppingCart className='nav-icon' /></Badge></span>
+                  <span className='nav-icon-span'>Cart    <Badge badgeContent={setProceed ? cart.length : 0}> <AiOutlineShoppingCart className='nav-icon' /></Badge></span>
                 </Link>
               </Tooltip>
             </li>
             <li className="nav-links">
               <Tooltip title='Wishlist'>
                 <Link to="/wishlist">
-                  <span className='nav-icon-span'>    <Badge badgeContent={setProceed ? wishlistData.length : 0}> <AiOutlineHeart className='nav-icon' /></Badge></span>
+                  <span className='nav-icon-span'>Wishlist  <Badge badgeContent={setProceed ? wishlistData.length : 0}> <AiOutlineHeart className='nav-icon' /></Badge></span>
                 </Link>
               </Tooltip>
             </li>

@@ -9,6 +9,7 @@ import { Box, Button, Dialog, DialogActions, DialogContent, Typography } from '@
 import { AiFillCloseCircle, AiOutlineLogin } from 'react-icons/ai'
 import { EmptyCart } from '../../Assets/Images/Image';
 import { Transition } from '../../Constants/Constant'
+import CopyRight from '../../Components/CopyRight/CopyRight'
 
 const Wishlist = () => {
     const { wishlistData, setWishlistData } = useContext(ContextFunction)
@@ -91,6 +92,7 @@ const Wishlist = () => {
                     <Button variant='contained' color='error' endIcon={<AiFillCloseCircle />} onClick={handleClose}>Close</Button>
                 </DialogActions>
             </Dialog>
+            <CopyRight sx={{ mt: 8, mb: 10 }} />
         </>
     )
 }

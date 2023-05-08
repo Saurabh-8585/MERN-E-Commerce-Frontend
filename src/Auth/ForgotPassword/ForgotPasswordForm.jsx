@@ -5,7 +5,6 @@ import { MdLockOutline, MdMailOutline } from 'react-icons/md'
 import axios from 'axios'
 import { toast } from 'react-toastify'
 import CopyRight from '../../Components/CopyRight/CopyRight'
-import { Link } from 'react-router-dom'
 
 
 const ForgotPasswordForm = () => {

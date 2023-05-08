@@ -66,7 +66,7 @@ To run the application on your local machine, follow these steps:
    npm start
    ```
 
-4. Set up the environment variables by creating a `.env` file in the root directory and adding the following variables::
+<!-- 4. Set up the environment variables by creating a `.env` file in the root directory and adding the following variables::
 
    ```
    REACT_APP_LOGIN=http://localhost:5000/api/auth/login
@@ -109,9 +109,9 @@ To run the application on your local machine, follow these steps:
    REACT_APP_ADMIN_DELETE_CART=http://localhost:5000/api/admin/usercart
    REACT_APP_ADMIN_DELETE_WISHLIST=http://localhost:5000/api/admin/userwishlist
    REACT_APP_ADMIN_DELETE_PRODUCT=http://localhost:5000/api/admin/deleteproduct
-   ```
+   ``` -->
 
-5. Open [http://localhost:3000](http://localhost:3000) in your web browser.
+4. Open [http://localhost:3000](http://localhost:3000) in your web browser.
 
 ## Contributing
 

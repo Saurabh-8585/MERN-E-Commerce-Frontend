@@ -8,6 +8,7 @@ import { ContextFunction } from '../../Context/Context'
 import { Link, useNavigate } from 'react-router-dom'
 import { profile } from '../../Assets/Images/Image'
 import { toast } from 'react-toastify'
+import CopyRight from '../CopyRight/CopyRight'
 
 const CheckoutForm = () => {
     const { cart } = useContext(ContextFunction)
@@ -111,42 +112,46 @@ const CheckoutForm = () => {
     }
 
     return (
-        <Container sx={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column', marginBottom: 10 }}>
-            <Typography variant='h6' sx={{ margin: '20px 0' }}>Checkout</Typography>
-            <form noValidate autoComplete="off" className={styles.checkout_form} onSubmit={checkOutHandler} >
-                <Grid container spacing={2}>
-                    <Grid item xs={12} sm={6}>
-                        <TextField inputProps={{ readOnly: true }} label="First Name" name='firstName' value={userDetails.firstName || ''} onChange={handleOnchange} variant="outlined" fullWidth />
+        <>
+            <Container sx={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column', marginBottom: 10 }}>
+                <Typography variant='h6' sx={{ margin: '20px 0' }}>Checkout</Typography>
+                <form noValidate autoComplete="off" className={styles.checkout_form} onSubmit={checkOutHandler} >
+                    <Grid container spacing={2}>
+                        <Grid item xs={12} sm={6}>
+                            <TextField inputProps={{ readOnly: true }} label="First Name" name='firstName' value={userDetails.firstName || ''} onChange={handleOnchange} variant="outlined" fullWidth />
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                            <TextField inputProps={{ readOnly: true }} label="Last Name" name='lastName' value={userDetails.lastName || ''} onChange={handleOnchange} variant="outlined" fullWidth />
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                            <TextField inputProps={{ readOnly: true }} label="Contact Number" type='tel' name='phoneNumber' value={userDetails.phoneNumber || ''} onChange={handleOnchange} variant="outlined" fullWidth />
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                            <TextField inputProps={{ readOnly: true }} label="Email" name='userEmail' value={userDetails.userEmail || ''} onChange={handleOnchange} variant="outlined" fullWidth />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField label="Address" name='address' value={userDetails.address || ''} onChange={handleOnchange} variant="outlined" fullWidth />
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                            <TextField label="City" name='city' value={userDetails.city || ''} onChange={handleOnchange} variant="outlined" fullWidth />
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                            <TextField type='tel' label="Postal/Zip Code" name='zipCode' value={userDetails.zipCode || ''} onChange={handleOnchange} variant="outlined" fullWidth />
+                        </Grid>
+                        <Grid item xs={12} >
+                            <TextField label="Province/State" name='userState' value={userDetails.userState || ''} onChange={handleOnchange} variant="outlined" fullWidth />
+                        </Grid>
                     </Grid>
-                    <Grid item xs={12} sm={6}>
-                        <TextField inputProps={{ readOnly: true }} label="Last Name" name='lastName' value={userDetails.lastName || ''} onChange={handleOnchange} variant="outlined" fullWidth />
-                    </Grid>
-                    <Grid item xs={12} sm={6}>
-                        <TextField inputProps={{ readOnly: true }} label="Contact Number" type='tel' name='phoneNumber' value={userDetails.phoneNumber || ''} onChange={handleOnchange} variant="outlined" fullWidth />
-                    </Grid>
-                    <Grid item xs={12} sm={6}>
-                        <TextField inputProps={{ readOnly: true }} label="Email" name='userEmail' value={userDetails.userEmail || ''} onChange={handleOnchange} variant="outlined" fullWidth />
-                    </Grid>
-                    <Grid item xs={12}>
-                        <TextField label="Address" name='address' value={userDetails.address || ''} onChange={handleOnchange} variant="outlined" fullWidth />
-                    </Grid>
-                    <Grid item xs={12} sm={6}>
-                        <TextField label="City" name='city' value={userDetails.city || ''} onChange={handleOnchange} variant="outlined" fullWidth />
-                    </Grid>
-                    <Grid item xs={12} sm={6}>
-                        <TextField type='tel' label="Postal/Zip Code" name='zipCode' value={userDetails.zipCode || ''} onChange={handleOnchange} variant="outlined" fullWidth />
-                    </Grid>
-                    <Grid item xs={12} >
-                        <TextField label="Province/State" name='userState' value={userDetails.userState || ''} onChange={handleOnchange} variant="outlined" fullWidth />
-                    </Grid>
-                </Grid>
-                <Container sx={{ display: 'flex', gap: 10, justifyContent: 'center', marginTop: 5 }}>
-                    <Link to='/update'> <Button variant='contained' endIcon={<MdUpdate />}>Update</Button></Link>
-                    <Button variant='contained' endIcon={<BsFillCartCheckFill />} type='submit'>Checkout</Button>
-                </Container>
-            </form >
+                    <Container sx={{ display: 'flex', gap: 10, justifyContent: 'center', marginTop: 5 }}>
+                        <Link to='/update'> <Button variant='contained' endIcon={<MdUpdate />}>Update</Button></Link>
+                        <Button variant='contained' endIcon={<BsFillCartCheckFill />} type='submit'>Checkout</Button>
+                    </Container>
+                </form >
 
-        </Container >
+            </Container >
+            <CopyRight sx={{ mt: 8, mb: 10 }} />
+
+        </>
     )
 }
 

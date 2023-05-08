@@ -19,7 +19,7 @@ const Widget = ({ numbers, heading, color, icon }) => {
                 backgroundColor: color,
                 borderRadius: 4,
                 p: 2,
-                maxWidth: isSmallScreen ? "100 % " : 300,
+                width:"auto",
                 display: "flex", justifyContent: "space-between", alignItems: "center",
                 boxShadow: '0px 8px 13px rgba(0, 0, 0, 0.2)',
                 transition: 'transform 0.2s ease-in-out',

@@ -164,7 +164,7 @@ const ProductReview = ({ authToken, setProceed, setOpenAlert, id }) => {
 
             </Box>
                 :
-                <Typography sx={{ textAlign: 'center' }}>Be the First will review This Product</Typography>
+                <Typography sx={{ textAlign: 'center' }}>No reviews have been submitted for this product yet. Be the first to add a review!</Typography>
             }
             <Box className='review-box' >
                 {

@@ -12,6 +12,7 @@ import {
     Typography,
 } from '@mui/material';
 import { MdKeyboardArrowDown } from 'react-icons/md'
+import { Link } from 'react-router-dom';
 
 const OrderTable = ({ orders }) => {
     const [openOrderId, setOpenOrderId] = useState("");
@@ -52,12 +53,17 @@ const OrderTable = ({ orders }) => {
                                         </TableCell>
 
                                         <TableCell component="th" scope="row">
-                                            {`${order.userData.firstName} ${order.userData.lastName}`}
+                                            <Link to={`user/${order.user}`}>
+                                                {`${order.userData.firstName} ${order.userData.lastName}`}
+                                            </Link>
                                         </TableCell>
-                                        <TableCell>{order.userData.userEmail}</TableCell>
-                                        <TableCell>{order.userData.phoneNumber}</TableCell>
-                                        <TableCell>{order.totalAmount}</TableCell>
-                                        <TableCell>{order.createdAt}</TableCell>
+                                        <TableCell>
+                                            <Link to={`user/${order.user}`}>{order.userData.userEmail}</Link></TableCell>
+                                        <TableCell>
+                                            <Link to={`user/${order.user}`}>{order.userData.phoneNumber}</Link></TableCell>
+                                        <TableCell>
+                                            <Link to={`user/${order.user}`}>{order.totalAmount}</Link></TableCell>
+                                        <TableCell><Link to={`user/${order.user}`}>{order.createdAt}</Link></TableCell>
                                     </TableRow>
                                     <TableRow>
                                         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -82,20 +88,29 @@ const OrderTable = ({ orders }) => {
                                                             {order.productData.map(product => (
                                                                 <TableRow key={product._id}>
                                                                     <TableCell align="left" >
-                                                                        {product.productId.name}
+                                                                        <Link to={`/admin/home/product/${product.productId.type}/${product.productId._id}`}>
+                                                                            {product.productId.name}
+                                                                        </Link>
                                                                     </TableCell>
                                                                     <TableCell align="left">
-                                                                        <img src={product.productId.image} alt={product.productId.name} style={{ width: "100px", height: "100px", objectFit: "contain" }} />
-
+                                                                        <Link to={`/admin/home/product/${product.productId.type}/${product.productId._id}`}>
+                                                                            <img src={product.productId.image} alt={product.productId.name} style={{ width: "100px", height: "100px", objectFit: "contain" }} />
+                                                                        </Link>
                                                                     </TableCell>
                                                                     <TableCell align="left" >
-                                                                        {product.productId.price}
+                                                                        <Link to={`/admin/home/product/${product.productId.type}/${product.productId._id}`}>
+                                                                            {product.productId.price}
+                                                                        </Link>
                                                                     </TableCell>
                                                                     <TableCell align="left" >
-                                                                        {product.quantity}
+                                                                        <Link to={`/admin/home/product/${product.productId.type}/${product.productId._id}`}>
+                                                                            {product.quantity}
+                                                                        </Link>
                                                                     </TableCell>
                                                                     <TableCell align="left" >
-                                                                        {product.productId.rating}
+                                                                        <Link to={`/admin/home/product/${product.productId.type}/${product.productId._id}`}>
+                                                                            {product.productId.rating}
+                                                                        </Link>
                                                                     </TableCell>
 
                                                                 </TableRow>
