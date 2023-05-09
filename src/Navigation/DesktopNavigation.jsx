@@ -45,29 +45,29 @@ const DesktopNavigation = () => {
 
             <li className="nav-links">
               <Tooltip title='Cart'>
-                <Link to="/cart">
+                <NavLink to="/cart">
                   <span className='nav-icon-span'>Cart    <Badge badgeContent={setProceed ? cart.length : 0}> <AiOutlineShoppingCart className='nav-icon' /></Badge></span>
-                </Link>
+                </NavLink>
               </Tooltip>
             </li>
             <li className="nav-links">
               <Tooltip title='Wishlist'>
-                <Link to="/wishlist">
+                <NavLink to="/wishlist">
                   <span className='nav-icon-span'>Wishlist  <Badge badgeContent={setProceed ? wishlistData.length : 0}> <AiOutlineHeart className='nav-icon' /></Badge></span>
-                </Link>
+                </NavLink>
               </Tooltip>
             </li>
 
             {
               setProceed ?
                 <>
-                  <Link to='/update'>
-                    <li className="nav-links" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '8px 25px 0 10px' }}>
-                      <Tooltip title='Profile'>
-                        <span className='nav-icon-span'>   <CgProfile style={{ fontSize: 29, color: 'black', marginTop: 7 }} /></span>
-                      </Tooltip>
-                    </li>
-                  </Link>
+                  <li className="nav-links">
+                    <Tooltip title='Profile'>
+                      <NavLink to='/update'>
+                        <span className='nav-icon-span'>  <CgProfile style={{ fontSize: 29, marginTop: 7,marginRight:10 }} /></span>
+                      </NavLink>
+                    </Tooltip>
+                  </li>
                   <li style={{ display: 'flex', alignItems: 'center', justifyItems: 'center' }} onClick={() => handleClickOpen(setOpenAlert)}>
                     <Button variant='contained' className='nav-icon-span' sx={{ marginBottom: 1 }} endIcon={<FiLogOut />}>
                       <Typography variant='button'> Logout</Typography>

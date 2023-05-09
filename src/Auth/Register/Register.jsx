@@ -36,14 +36,15 @@ const Register = () => {
       if (!credentials.email && !credentials.firstName && !credentials.password && !credentials.phoneNumber && !credentials.lastName) {
         toast.error("All fields are required", { autoClose: 500, theme: 'colored' })
       }
-      else if (credentials.firstName.length <= 3 || credentials.lastName.length <= 3) {
-        toast.error("Please enter name with more than 3 characters", { autoClose: 500, theme: 'colored' })
+      else if (credentials.firstName.length < 1 || credentials.lastName.length < 1) {
+        toast.error("Please enter valid name", { autoClose: 500, theme: 'colored' })
       }
-      else if (!emailRegex.test(credentials.email)) {
+      else if (emailRegex.test(credentials.email)===false) {
         toast.error("Please enter valid email", { autoClose: 500, theme: 'colored' })
       }
-      else if (!phoneRegex.test(credentials.phoneNumber)) {
-        toast.error("Please enter a valid phone number", { autoClose: 500, theme: 'colored' })
+      else if (phoneRegex.test(credentials.phoneNumber)===false) {
+        toast.error("Please enter a valid phone number33", { autoClose: 500, theme: 'colored' })
+        console.log(1);
       }
       else if (credentials.password.length < 5) {
         toast.error("Please enter password with more than 5 characters", { autoClose: 500, theme: 'colored' })
@@ -62,14 +63,16 @@ const Register = () => {
           toast.success("Registered Successfully", { autoClose: 500, theme: 'colored' })
           localStorage.setItem('Authorization', receive.authToken)
           navigate('/')
+          console.log(receive);
         }
-        else{
+        else {
           toast.error("Something went wrong, Please try again", { autoClose: 500, theme: 'colored' })
           navigate('/')
         }
       }
     } catch (error) {
-      toast.error(error.response.data.error, { autoClose: 500, theme: 'colored' })
+      toast.error(error.response.data.error[0].msg, { autoClose: 500, theme: 'colored' })
+
     }
 
   }
@@ -130,6 +133,7 @@ const Register = () => {
                   value={credentials.email}
                   onChange={handleOnChange}
                   autoComplete="email"
+
                 />
               </Grid>
               <Grid item xs={12}>
@@ -154,7 +158,7 @@ const Register = () => {
                   id="password"
                   InputProps={{
                     endAdornment: (
-                      <InputAdornment position="end" onClick={handleClickShowPassword} sx={{cursor:'pointer'}}>
+                      <InputAdornment position="end" onClick={handleClickShowPassword} sx={{ cursor: 'pointer' }}>
                         {showPassword ? <RiEyeFill /> : <RiEyeOffFill />}
                       </InputAdornment>
                     )

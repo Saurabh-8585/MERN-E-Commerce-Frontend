@@ -53,7 +53,7 @@ const MobileNavigation = () => {
                     setProceed ?
                         <>
                             <NavLink to='/update' style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }} >
-                                <div className='links' onClick={() => navigate('/login')}>
+                                <div className='links'>
                                     <CgProfile style={{ fontSize: 23, }} />
 
                                 </div>
@@ -64,7 +64,7 @@ const MobileNavigation = () => {
                             </div>
                         </>
                         : <NavLink to='/login' style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }} >
-                            <div className='links' onClick={() => navigate('/login')}>
+                            <div className='links'>
                                 <CgProfile style={{ fontSize: 23, }} />
                                 {/* <span style={{ fontSize: 12 }}>Login</span> */}
                             </div>
