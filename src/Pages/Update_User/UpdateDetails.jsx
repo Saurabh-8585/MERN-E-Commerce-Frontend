@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom'
 import styles from './Update.module.css'
 import { toast } from 'react-toastify'
 import { RiEyeFill, RiEyeOffFill } from 'react-icons/ri';
+import { TiArrowBackOutline } from 'react-icons/ti';
 
 import { Transition } from '../../Constants/Constant'
 import CopyRight from '../../Components/CopyRight/CopyRight'
@@ -109,6 +110,7 @@ const UpdateDetails = () => {
                 if (data.success === true) {
                     toast.success("Updated Successfully", { autoClose: 500, theme: 'colored' })
                     getUserData()
+                    
                 }
                 else {
                     toast.error("Something went wrong", { autoClose: 500, theme: 'colored' })
@@ -200,7 +202,8 @@ const UpdateDetails = () => {
                         </Grid>
                     </Grid>
                     <Container sx={{ display: 'flex', justifyContent: 'space-around', marginTop: 5 }}>
-                        <Button variant='contained' endIcon={<AiOutlineFileDone />} type='submit'>Save</Button>
+                        <Button variant='contained' endIcon={<TiArrowBackOutline />} onClick={()=>navigate(-1)} >Back</Button>
+                        <Button variant='contained' endIcon={<AiOutlineFileDone />}  type='submit'>Save</Button>
                     </Container>
                 </form >
 

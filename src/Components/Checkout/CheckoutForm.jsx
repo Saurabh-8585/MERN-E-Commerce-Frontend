@@ -25,13 +25,12 @@ const CheckoutForm = () => {
     useEffect(() => {
         if (setProceed) {
             getUserData()
+
         }
         else {
             navigate('/')
         }
-        if (!userDetails.address && !userDetails.city && !userDetails.zipCode && !userDetails.userState) {
-            setOpenAlert(true)
-        }
+
     }, [])
 
     const [userDetails, setUserDetails] = useState({
@@ -53,6 +52,10 @@ const CheckoutForm = () => {
                 }
             })
             setUserData(data);
+            if (!data.address || !data.city || !data.zipCode || !data.userState) {
+                setOpenAlert(true);
+                console.log(1);
+              }
             userDetails.firstName = data.firstName
             userDetails.lastName = data.lastName
             userDetails.userEmail = data.email
@@ -117,7 +120,7 @@ const CheckoutForm = () => {
         setUserDetails({ ...userDetails, [e.target.name]: e.target.value })
     }
 
-   
+
 
     return (
         <>
@@ -164,7 +167,7 @@ const CheckoutForm = () => {
                     aria-describedby="alert-dialog-slide-description"
                 >
                     <DialogContent sx={{ width: { xs: 280, md: 350, xl: 400 }, display: 'flex', justifyContent: 'center' }}>
-                        <Typography variant='h6'>Add Permanent Address then you don't have to add again.  </Typography>
+                        <Typography variant='h6'>Add permanent address then you don't have to add again.  </Typography>
                     </DialogContent>
                     <DialogActions sx={{ display: 'flex', justifyContent: 'space-evenly' }}>
                         <Link to='/update'> <Button variant='contained' endIcon={<AiOutlineSave />} color='primary' >Add</Button></Link>

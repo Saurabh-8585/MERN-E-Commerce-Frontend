@@ -43,7 +43,7 @@ const Register = () => {
         toast.error("Please enter valid email", { autoClose: 500, theme: 'colored' })
       }
       else if (phoneRegex.test(credentials.phoneNumber)===false) {
-        toast.error("Please enter a valid phone number33", { autoClose: 500, theme: 'colored' })
+        toast.error("Please enter a valid phone number", { autoClose: 500, theme: 'colored' })
         console.log(1);
       }
       else if (credentials.password.length < 5) {
