@@ -14,7 +14,9 @@ import { Transition, getCart, getWishList, handleClickOpen, handleClose, handleL
 
 const MobileNavigation = () => {
     const { cart, setCart, wishlistData, setWishlistData } = useContext(ContextFunction)
+    
     const [openAlert, setOpenAlert] = useState(false);
+
     const navigate = useNavigate()
 
     let authToken = localStorage.getItem('Authorization')

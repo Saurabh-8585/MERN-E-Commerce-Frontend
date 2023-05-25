@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { Button, Container, Grid, TextField, Typography } from '@mui/material'
+import { Button, Container, Dialog, DialogActions, DialogContent, Grid, TextField, Typography } from '@mui/material'
 import styles from './Chekout.module.css'
 import { BsFillCartCheckFill } from 'react-icons/bs'
 import { MdUpdate } from 'react-icons/md'
@@ -9,10 +9,13 @@ import { Link, useNavigate } from 'react-router-dom'
 import { profile } from '../../Assets/Images/Image'
 import { toast } from 'react-toastify'
 import CopyRight from '../CopyRight/CopyRight'
+import { Transition, handleClose } from '../../Constants/Constant'
+import { AiFillCloseCircle, AiOutlineSave } from 'react-icons/ai'
 
 const CheckoutForm = () => {
     const { cart } = useContext(ContextFunction)
     const [userData, setUserData] = useState([])
+    const [openAlert, setOpenAlert] = useState(false);
 
     let authToken = localStorage.getItem('Authorization')
     let setProceed = authToken ? true : false
@@ -25,6 +28,9 @@ const CheckoutForm = () => {
         }
         else {
             navigate('/')
+        }
+        if (!userDetails.address && !userDetails.city && !userDetails.zipCode && !userDetails.userState) {
+            setOpenAlert(true)
         }
     }, [])
 
@@ -111,6 +117,8 @@ const CheckoutForm = () => {
         setUserDetails({ ...userDetails, [e.target.name]: e.target.value })
     }
 
+   
+
     return (
         <>
             <Container sx={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column', marginBottom: 10 }}>
@@ -118,16 +126,16 @@ const CheckoutForm = () => {
                 <form noValidate autoComplete="off" className={styles.checkout_form} onSubmit={checkOutHandler} >
                     <Grid container spacing={2}>
                         <Grid item xs={12} sm={6}>
-                            <TextField inputProps={{ readOnly: true }} label="First Name" name='firstName' value={userDetails.firstName || ''} onChange={handleOnchange} variant="outlined" fullWidth />
+                            <TextField inputProps={{ readOnly: true }} disabled label="First Name" name='firstName' value={userDetails.firstName || ''} onChange={handleOnchange} variant="outlined" fullWidth />
                         </Grid>
                         <Grid item xs={12} sm={6}>
-                            <TextField inputProps={{ readOnly: true }} label="Last Name" name='lastName' value={userDetails.lastName || ''} onChange={handleOnchange} variant="outlined" fullWidth />
+                            <TextField inputProps={{ readOnly: true }} disabled label="Last Name" name='lastName' value={userDetails.lastName || ''} onChange={handleOnchange} variant="outlined" fullWidth />
                         </Grid>
                         <Grid item xs={12} sm={6}>
-                            <TextField inputProps={{ readOnly: true }} label="Contact Number" type='tel' name='phoneNumber' value={userDetails.phoneNumber || ''} onChange={handleOnchange} variant="outlined" fullWidth />
+                            <TextField inputProps={{ readOnly: true }} disabled label="Contact Number" type='tel' name='phoneNumber' value={userDetails.phoneNumber || ''} onChange={handleOnchange} variant="outlined" fullWidth />
                         </Grid>
                         <Grid item xs={12} sm={6}>
-                            <TextField inputProps={{ readOnly: true }} label="Email" name='userEmail' value={userDetails.userEmail || ''} onChange={handleOnchange} variant="outlined" fullWidth />
+                            <TextField inputProps={{ readOnly: true }} disabled label="Email" name='userEmail' value={userDetails.userEmail || ''} onChange={handleOnchange} variant="outlined" fullWidth />
                         </Grid>
                         <Grid item xs={12}>
                             <TextField label="Address" name='address' value={userDetails.address || ''} onChange={handleOnchange} variant="outlined" fullWidth />
@@ -147,6 +155,22 @@ const CheckoutForm = () => {
                         <Button variant='contained' endIcon={<BsFillCartCheckFill />} type='submit'>Checkout</Button>
                     </Container>
                 </form >
+
+                <Dialog
+                    open={openAlert}
+                    TransitionComponent={Transition}
+                    keepMounted
+                    onClose={() => handleClose(setOpenAlert)}
+                    aria-describedby="alert-dialog-slide-description"
+                >
+                    <DialogContent sx={{ width: { xs: 280, md: 350, xl: 400 }, display: 'flex', justifyContent: 'center' }}>
+                        <Typography variant='h6'>Add Permanent Address then you don't have to add again.  </Typography>
+                    </DialogContent>
+                    <DialogActions sx={{ display: 'flex', justifyContent: 'space-evenly' }}>
+                        <Link to='/update'> <Button variant='contained' endIcon={<AiOutlineSave />} color='primary' >Add</Button></Link>
+                        <Button variant='contained' color='error' endIcon={<AiFillCloseCircle />} onClick={() => handleClose(setOpenAlert)}>Close</Button>
+                    </DialogActions>
+                </Dialog>
 
             </Container >
             <CopyRight sx={{ mt: 8, mb: 10 }} />

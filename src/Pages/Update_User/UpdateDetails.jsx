@@ -85,17 +85,17 @@ const UpdateDetails = () => {
             else if (!phoneRegex.test(userDetails.phoneNumber)) {
                 toast.error("Please enter a valid phone number", { autoClose: 500, theme: 'colored' })
             }
-            else if (userDetails.zipCode.length !== 6) {
+            else if (!userDetails.address) {
+                toast.error("Please add address", { autoClose: 500, theme: 'colored' })
+            }
+            else if (!userDetails.city) {
+                toast.error("Please add city", { autoClose: 500, theme: 'colored' })
+            }
+            else if (!userDetails.zipCode) {
                 toast.error("Please enter valid Zip code", { autoClose: 500, theme: 'colored' })
             }
-            else if (userDetails.address.length <= 3) {
-                toast.error("Please enter address,more than 3 characters", { autoClose: 500, theme: 'colored' })
-            }
-            else if (userDetails.userState.length <= 3) {
-                toast.error("Please enter address,more than 3 characters", { autoClose: 500, theme: 'colored' })
-            }
-            else if (userDetails.city.length <= 3) {
-                toast.error("Please enter address,more than 3 characters", { autoClose: 500, theme: 'colored' })
+            else if (!userDetails.userState) {
+                toast.error("Please add state", { autoClose: 500, theme: 'colored' })
             }
             else {
                 const { data } = await axios.put(`${process.env.REACT_APP_UPDATE_USER_DETAILS}`, {
@@ -116,6 +116,7 @@ const UpdateDetails = () => {
             }
         }
         catch (error) {
+            console.log(error);
             toast.error(error.response.data, { autoClose: 500, theme: 'colored' })
 
         }
