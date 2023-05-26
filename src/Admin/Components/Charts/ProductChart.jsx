@@ -108,12 +108,12 @@ const ProductChart = ({ products, review, cart, wishlist, paymentData }) => {
 
     const groupedData = paymentData.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt))
         .reduce((acc, item) => {
-            const month = item.createdAt.substr(0, 7); // Extract month from createdAt
-            const index = acc.findIndex((el) => el.month === month); // Check if month already exists in accumulator
+            const month = item.createdAt.substr(0, 7); 
+            const index = acc.findIndex((el) => el.month === month); 
             if (index !== -1) {
-                acc[index].totalAmount += item.totalAmount; // Add total amount to existing month
+                acc[index].totalAmount += item.totalAmount; 
             } else {
-                acc.push({ month: month, totalAmount: item.totalAmount }); // Add new month to accumulator
+                acc.push({ month: month, totalAmount: item.totalAmount }); 
             }
             return acc;
         }, []);

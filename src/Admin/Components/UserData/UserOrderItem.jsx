@@ -1,7 +1,5 @@
 import { Box, Container, Typography } from '@mui/material';
-import axios from 'axios';
 import React, { useEffect, useState } from 'react'
-import { toast } from 'react-toastify';
 import ProductCard from '../../../Components/Card/Product Card/ProductCard';
 import { Link } from 'react-router-dom';
 
@@ -12,7 +10,6 @@ const UserOrderItem = ({ commonGetRequest, id }) => {
         commonGetRequest(process.env.REACT_APP_ADMIN_GET_ORDER, id, setData);
     }, [])
     const total = data.reduce((acc, curr) => (acc + curr.totalAmount), 0);
-    console.log(data);
     return (
         <Container>
             <Typography variant='h6' fontWeight="bold" sx={{ margin: '20px 0', textAlign: 'center' }}>User Orders</Typography>
