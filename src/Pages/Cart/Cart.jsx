@@ -34,7 +34,7 @@ const Cart = () => {
 
     const navigate = useNavigate()
     let authToken = localStorage.getItem('Authorization')
-    let setProceed = authToken ? true : false
+    const isAuthenticated = !!authToken;
 
 
     useEffect(() => {
@@ -49,12 +49,13 @@ const Cart = () => {
 
     }, [])
 
-    useEffect(() => {
-        if (setProceed) {
-            setTotal(cart.reduce((acc, curr) => (acc + ((curr.productId?.price * curr.quantity) + shippingCoast)), 0))
-        }
-
-    }, [cart])
+   const total = React.useMemo(() => {
+      const itemsTotal = cart.reduce(
+    (acc, curr) => acc + (curr.productId?.price * curr.quantity),
+    0
+      );
+  return itemsTotal + shippingCoast;
+    }, [cart]);
 
     const getCart = async () => {
         if (setProceed) {
